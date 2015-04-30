@@ -34,14 +34,12 @@ int = {}
 
 function int.createMac(side)
 	local sideNum = {top = 0,bottom = 1,left = 2,right = 3,back = 4}
-	local mac = os.computerID() * math.random(1,200) + sideNum[side]
-	mac = utils.toHex(mac)
-	return mac
+	return utils.toHex(os.computerID() * math.random(1,200) + sideNum[side])
 end
 
 function int.getMac(side)
 	if mac[side] then
-	return mac
+		return mac
 	else
 		mac[side] = int.create(side)
 		return mac[side]

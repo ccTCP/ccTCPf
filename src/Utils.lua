@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 function toHex(num)
 	local hexTemp = '0123456789abcdef'
-	 hex = ''
+	hex = ''
 	while num > 0 do
 		local mod = math.fmod(num, 16)
 		hex = string.sub(hexTemp, mod+1, mod+1) .. hex
@@ -34,4 +34,13 @@ function toHex(num)
 	end
 	return hex == " " and 0 or hex
 end
-
+function toDec(num)
+	local final = 0
+	local str = tostring(num)
+	local pow = 0
+	for i = #str,1,-1 do
+		final = final + tonumber(str:sub(i,i))*math.pow(16,pow)
+		pow = pow + 1
+	end
+	return final
+end

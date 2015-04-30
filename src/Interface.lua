@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 --Global Variables
 local mac = {}
---]]
+
 utils = require('Utils')
 int = {}
 
@@ -54,4 +54,3 @@ end
 
 function int.setMac(side, newMac)
 end
---]]

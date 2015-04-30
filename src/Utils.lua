@@ -32,7 +32,6 @@ function toHex(num)
 		hex = string.sub(hexTemp, mod+1, mod+1) .. hex
 		num = math.floor(num / 16)
 	end
-	if hex == '' then hex = '0' end
-	return hex
+	return hex == " " and 0 or hex
 end
 

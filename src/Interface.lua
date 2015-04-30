@@ -40,7 +40,12 @@ function int.createMac(side)
 end
 
 function int.getMac(side)
+	if mac[side] then
 	return mac
+	else
+		mac[side] = int.create(side)
+		return mac[side]
+	end
 end
 
 function int.getMacString(side)

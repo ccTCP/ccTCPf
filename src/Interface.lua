@@ -26,23 +26,32 @@ THE SOFTWARE.
 
 --Interface
 
+--Variables
+local mac = 0
+
+--Functions
+
 utils = require('Utils')
 int = {}
 
 function int.createMac(side)
 	local sideNum = {top = 0,bottom = 1,left = 2,right = 3,back = 4}
-	local mac = os.computerID() * math.random(1,200) + sideNum[side]
-	mac = utils.toHex(mac)
+	local macBuffer = os.computerID() * math.random(1,200) + sideNum[side]
+	macBuffer = utils.toHex(mac)
 	return mac
 end
 
 function int.getMac(side)
+	return mac
 end
 
 function int.getMacString(side)
+
 end
 
 function int.setMac(side, newMac)
 end
 
 --]]
+
+mac = int.createMac(peripheral.find("modem"))

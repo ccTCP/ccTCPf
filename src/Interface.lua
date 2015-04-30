@@ -27,7 +27,7 @@ THE SOFTWARE.
 --Interface
 
 --Global Variables
-local mac = 0
+local mac = {}
 
 utils = require('Utils')
 int = {}

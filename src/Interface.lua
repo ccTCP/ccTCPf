@@ -29,7 +29,7 @@ THE SOFTWARE.
 --Global Variables
 local mac = {}
 
-utils = require('Utils')
+utils = require('Utils') 
 int = {}
 
 function int.createMac(side)

@@ -1,9 +1,19 @@
---[[
-    Defines OSI L1 & L2
-    Defines TCP L1
-]]
+-- Interface
 
-function getMac(side)
-    local sideNum = {top = 0,bottom = 1,left = 2,right = 3,back = 4}
-    return os.computerID() * 6 + sideNum[side]
+
+int = {}
+
+function int.createMac(side)
+	sideNum = {top = 0,bottom = 1,left = 2,right = 3,back = 4}
+	local mac = os.computerID() * math.random(1,200) + sideNum[side]
+	return mac
+end
+
+function int.getMac(side)
+end
+
+function int.getMacString(side)
+end
+
+function int.setMac(side, newMac)
 end

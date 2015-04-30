@@ -24,24 +24,18 @@ THE SOFTWARE.
 
 --]]
 
---[[
-	Description: what is it?
-]]--
-
 --Interface
 
---Variables
+--Global Variables
 local mac = 0
-
---Functions
 
 utils = require('Utils')
 int = {}
 
 function int.createMac(side)
 	local sideNum = {top = 0,bottom = 1,left = 2,right = 3,back = 4}
-	local macBuffer = os.computerID() * math.random(1,200) + sideNum[side]
-	macBuffer = utils.toHex(mac)
+	local mac = os.computerID() * math.random(1,200) + sideNum[side]
+	mac = utils.toHex(mac)
 	return mac
 end
 

@@ -28,10 +28,19 @@ THE SOFTWARE.
 local mac = {}
 
 utils = require('Utils') 
-int = {}
 
---L2 functions
-function int.createMac(side)
+-- Functions
+
+local function checksum(msg)
+	local buffer = {msg:byte(1,#msg)}
+	local add = 0
+	for i,v in pairs(buffer) do
+		add = add + v
+	end
+	return utils.toHex(add)
+end
+
+function createMac(side)
 	sideTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
 	if side and sideTable[side] then
 		local macBuffer = tostring(utils.toHex(os.computerID() * 6 + sideTable[side]))
@@ -40,13 +49,13 @@ function int.createMac(side)
 	return false
 end
 
-function int.getMac(side)
+function getMac(side)
 	if mac[side] then return mac[side] else
 		mac[side] = int.createMac(side)
 		return mac[side]
 	end
 end
 
-function int.getMacString(side)
+function getMacString(side)
 	return utils.toDec(int.getMac(side))
 end

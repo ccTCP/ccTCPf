@@ -31,7 +31,7 @@ utils = require('Utils')
 
 -- Functions
 
-local function checksum(msg)
+function checksum(msg)
 	local buffer = {msg:byte(1,#msg)}
 	local add = 0
 	for i,v in pairs(buffer) do
@@ -51,11 +51,11 @@ end
 
 function getMac(side)
 	if mac[side] then return mac[side] else
-		mac[side] = int.createMac(side)
+		mac[side] = createMac(side)
 		return mac[side]
 	end
 end
 
 function getMacString(side)
-	return utils.toDec(int.getMac(side))
+	return utils.toDec(getMac(side))
 end

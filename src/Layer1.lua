@@ -27,7 +27,6 @@ THE SOFTWARE.
 --Variables--
 local side = peripheral.find("modem")
 local modem = peripheral.wrap(side)
-local mac = 
 
 
 --Functions--

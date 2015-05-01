@@ -48,3 +48,6 @@ end
 function deactivate()
     os.pullEvent = ospulleventbackup
 end
+
+--auto enable
+activate()

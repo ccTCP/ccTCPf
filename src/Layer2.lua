@@ -23,3 +23,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ]]
+
+
+local mac = {}
+
+utils = require('Utils') 
+int = {}
+
+--L2 functions
+function int.createMac(side)
+	return utils.toHex(os.computerID() * 6 + {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}[side])
+end
+
+function int.getMac(side)
+	if mac[side] then
+		return mac
+	else
+		mac[side] = int.createMac(side)
+		return mac[side]
+	end
+end
+
+function int.getMacString(side)
+	if mac[side] then
+		return utils.toDec(mac[side])
+	else
+		mac[side] = int.createMac(side)
+		return utils.toDec(mac[side])
+	end
+end

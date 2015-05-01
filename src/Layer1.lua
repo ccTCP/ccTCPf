@@ -34,13 +34,9 @@ local modem = peripheral.wrap(side)
 local channel = 20613
 
 
---Functions--
-
-Layer1 = {
-	send = function(address1,address2,mesage)
+--Functions-
+function int.send(interface,data)
 	
-	end
-}
-
+end
 --Initializing code--
 modem.open(channel)

@@ -37,5 +37,10 @@ local channel = 20613
 --Functions--
 
 Layer1 = {
-	send = function(addrType,address,mesage)  end
+	send = function(address1,address2,mesage) 
+		
+	end
 }
+
+--Initializing code--
+modem.open(channel)

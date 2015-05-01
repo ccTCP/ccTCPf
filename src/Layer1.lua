@@ -25,8 +25,11 @@ THE SOFTWARE.
 --]]
 
 --Variables--
-local side = peripheral.find("modem")
+local side = peripheral.find("wireless_modem") or peripheral.find("modem")
 local modem = peripheral.wrap(side)
 
-
 --Functions--
+
+Layer1 = {
+	send = function(addrType,address,mesage)  end
+}

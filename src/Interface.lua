@@ -32,6 +32,7 @@ local mac = {}
 utils = require('Utils') 
 int = {}
 
+--L2 functions
 function int.createMac(side)
 	local sideNum = {top = 0,bottom = 1,left = 2,right = 3,back = 4}
 	return utils.toHex(os.computerID() * math.random(1,200) + sideNum[side])
@@ -41,14 +42,14 @@ function int.getMac(side)
 	if mac[side] then
 		return mac
 	else
-		mac[side] = int.create(side)
+		mac[side] = int.createMac(side)
 		return mac[side]
 	end
 end
 
 function int.getMacString(side)
-
 end
 
 function int.setMac(side, newMac)
 end
+

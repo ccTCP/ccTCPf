@@ -36,9 +36,7 @@ function int.createMac(side)
 end
 
 function int.getMac(side)
-	if mac[side] then
-		return mac
-	else
+	if mac[side] then return mac[side] else
 		mac[side] = int.createMac(side)
 		return mac[side]
 	end

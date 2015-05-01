@@ -36,9 +36,18 @@ local channel = 20613
 
 --Functions--
 
+local checksum(msg)
+	local buffer = {msg:byte(1,#msg)}
+	local add = 0
+	for i,v in pairs(buffer) do
+		add = add + v
+	end
+	return utils.toHex(add)
+end
+
 Layer1 = {
 	send = function(address1,address2,mesage) 
-		
+
 	end
 }
 

@@ -24,10 +24,15 @@ THE SOFTWARE.
 
 --]]
 
+--Frame structure
+--mac address: 
+
+
 --Variables--
 local side = peripheral.find("wireless_modem") or peripheral.find("modem")
 local modem = peripheral.wrap(side)
 local channel = 20613
+
 
 --Functions--
 

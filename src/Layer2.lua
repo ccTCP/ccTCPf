@@ -32,7 +32,11 @@ int = {}
 
 --L2 functions
 function int.createMac(side)
-	return side and utils.toHex(os.computerID() * 6 + {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}[side])
+	if side then
+		local macBuffer = tostring(utils.toHex(os.computerID() * 6 + {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}[side]))
+		return string.rep("0",48-#macBuffer).. macBuffer
+	end
+	return false
 end
 
 function int.getMac(side)

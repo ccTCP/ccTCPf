@@ -45,10 +45,5 @@ function int.getMac(side)
 end
 
 function int.getMacString(side)
-	if mac[side] then
-		return utils.toDec(mac[side])
-	else
-		mac[side] = int.createMac(side)
-		return utils.toDec(mac[side])
-	end
+	return utils.toDec(int.getMac(side))
 end

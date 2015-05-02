@@ -35,7 +35,7 @@ local channel = 20613
 
 
 --Functions-
-function int.send(interface,data)
+function send(interface,data)
 	
 end
 --Initializing code--

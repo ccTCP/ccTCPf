@@ -24,14 +24,14 @@ THE SOFTWARE.
 
 ]]
 
+--utils = require('Utils')
 
 local mac = {}
-
---utils = require('Utils') 
-
+frame = {preamble,dstMac,srcMac,packet or data,fcs(packet or data)}
+dotQFrame = {preamble,dstMac,srcMac,vlan,packet or data,fcs(packet or data)}
 -- Functions
 
-function checksum(msg)
+function fcs(msg)
 	local buffer = {msg:byte(1,#msg)}
 	local add = 0
 	for i,v in pairs(buffer) do

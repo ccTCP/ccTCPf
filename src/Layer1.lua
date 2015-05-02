@@ -24,10 +24,6 @@ THE SOFTWARE.
 
 --]]
 
---Frame structure
---mac address: 
-
-
 --Variables--
 local side = peripheral.find("wireless_modem") or peripheral.find("modem")
 local modem = peripheral.wrap(side)
@@ -35,7 +31,7 @@ local channel = 20613
 
 
 --Functions-
-function send(interface,data)
+function send(interface,frame or dotQFrame)
 	
 end
 --Initializing code--

@@ -40,7 +40,7 @@ __All Devices__:
 
 ## Maintainers
 
-* CmdPwnd:       &lt;cmdstack@gmail.com&gt; (Active)
+* CmdPwnd:       &lt;cmdpwnd.github@gmail.com&gt; (Active)
 * RainbowDashDC: &lt;rainbowdashdc@pony.so&gt; (Active)
 * InDieTasten:   &lt;&gt;(Active)
 * Creator:       &lt;creator.github@gmail.com&gt; (Active)

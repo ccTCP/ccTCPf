@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 local mac = {}
 
-utils = require('Utils') 
+--utils = require('Utils') 
 
 -- Functions
 
@@ -50,10 +50,10 @@ function createMac(side)
 end
 
 function getMac(side)
-	if mac[side] then return mac[side] else
+	if not mac[side] then
 		mac[side] = createMac(side)
-		return mac[side]
 	end
+	return mac[side]
 end
 
 function getMacString(side)

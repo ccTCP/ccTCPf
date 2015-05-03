@@ -38,7 +38,7 @@ function fcs(msg)
 	for i,v in pairs(buffer) do
 		add = add + v
 	end
-	return utils.toHex(tonumber(string.rep("0",6-#add)..add))
+	return string.rep("0",6-#tostring(add))..tostring(utils.toHex(add))
 end
 
 function createMac(side)

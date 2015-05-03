@@ -46,7 +46,7 @@ function createMac(side)
 	sideTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
 	if side and sideTable[side] then
 		local macBuffer = tostring(utils.toHex(os.computerID() * 6 + sideTable[side]))
-		return string.rep("0",12-#macBuffer).. macBuffer
+		return string.rep("0",6-#macBuffer).. macBuffer
 	end
 	return error("Failed: "..side.."is not a side", 2)
 end

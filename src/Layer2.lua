@@ -26,12 +26,10 @@ THE SOFTWARE.
 --The checksum is 5 chars long in hex
 --utils = require('Utils')
 
-
+--Init Variables
 local mac = {}
-local frame = {preamble,dstMac,srcMac,packet or data,fcs(packet or data)}
-local dotQFrame = {preamble,dstMac,srcMac,vlan,packet or data,fcs(packet or data)}
 
--- Functions
+--Functions
 
 function fcs(msg)
 	local buffer = {msg:byte(1,#msg)}
@@ -63,6 +61,13 @@ function getMacString(side)
 	return utils.toDec(getMac(side))
 end
 
+--End: Functions]]
+
+--Templates
+frame = {preamble,dstMac,srcMac,packet or data,fcs}
+dotQFrame = {preamble,dstMac,srcMac,vlan,packet or data,fcs}
+
+--Active / Test Code
 calc = function()
 	print(utils.toHex(255*1518))
 end

@@ -38,7 +38,10 @@ function send(msg,interface)
 end
 
 function receive(interface)
-	
+	while true do
+		local event = {os.pullEvent("modem_message")}
+		
+	end
 end
 --End: L1:Functions]]
 

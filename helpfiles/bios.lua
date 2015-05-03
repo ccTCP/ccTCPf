@@ -1,7 +1,7 @@
 
 --[[
 -- Install safe versions of various library functions
--- These will not put cfunctions on the stack, so don't break serialisation
+-- These will not put cfunctions on the stack, so don't break serialisation]]
 xpcall = function( _fn, _fnErrorHandler )
     local typeT = type( _fn )
     assert( typeT == "function", "bad argument #1 to xpcall (function expected, got "..typeT..")" )

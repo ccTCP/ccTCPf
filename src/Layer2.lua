@@ -38,14 +38,14 @@ function fcs(msg)
 	for i,v in pairs(buffer) do
 		add = add + v
 	end
-	return string.rep("0",6-#tostring(add))..tostring(utils.toHex(add))
+	return string.rep("0",6-#tostring(add))..tostring(Utils.toHex(add))
 end
 
 function createMac(side)
 	side = tostring(side)
 	local sideTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
 	if side and sideTable[side] then
-		local macBuffer = tostring(utils.toHex(os.computerID() * 6 + sideTable[side]))
+		local macBuffer = tostring(Utils.toHex(os.computerID() * 6 + sideTable[side]))
 		return string.rep("0",6-#macBuffer).. macBuffer
 	end
 	return error("Failed: "..side.."is not a side", 2)
@@ -59,7 +59,7 @@ function getMac(side)
 end
 
 function getMacString(side)
-	return utils.toDec(getMac(side))
+	return Utils.toDec(getMac(side))
 end
 
 --End: L2:Functions]]
@@ -69,7 +69,4 @@ frame = {preamble,dstMac,srcMac,packet or data,fcs}
 dotQFrame = {preamble,dstMac,srcMac,vlan,packet or data,fcs}
 
 --Active / Test Code
-calc = function()
-	print(utils.toHex(255*1518))
-end
 --End: L2:Active / Test Code]]

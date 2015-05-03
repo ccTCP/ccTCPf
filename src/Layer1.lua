@@ -43,7 +43,7 @@ function receive(interface)
 			local destMac = event[4]:sub(1,6)
 			local sendMac = event[4]:sub(7,12)
 			if destMac == Layer1.getMac(event[2]) then
-				print("youhou")
+				return event[4]
 			end
 		end
 	end

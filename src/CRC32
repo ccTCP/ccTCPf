@@ -46,7 +46,7 @@ local crc_table = memoize(function(i)
 end)
 
 
-function M.crc32_byte(byte, crc)
+function crc32_byte(byte, crc)
   crc = bnot(crc or 0)
   local v1 = rshift(crc, 8)
   local v2 = crc_table[bxor(crc % 256, byte)]
@@ -55,7 +55,7 @@ end
 local M_crc32_byte = M.crc32_byte
 
 
-function M.crc32_string(s, crc)
+function crc32_string(s, crc)
   crc = crc or 0
   for i=1,#s do
     crc = M_crc32_byte(s:byte(i), crc)
@@ -65,7 +65,7 @@ end
 local M_crc32_string = M.crc32_string
 
 
-function M.crc32(s, crc)
+function crc32(s, crc)
   if type(s) == 'string' then
     return M_crc32_string(s, crc)
   else
@@ -77,4 +77,4 @@ end
 M.bit = bit  -- bit library used
 
 
-return M
+--return M

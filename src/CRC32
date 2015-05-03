@@ -3,7 +3,9 @@
 ]]--
 
 
-local M = {_TYPE='module', _NAME='digest.crc32', _VERSION='0.3.20111128'}
+_TYPE='module'
+_NAME='digest.crc32'
+_VERSION='0.3.20111128'
 
 local type = type
 local setmetatable = setmetatable
@@ -74,7 +76,7 @@ function crc32(s, crc)
 end
 
 
-M.bit = bit  -- bit library used
+-- bit library used
 
 
 --return M

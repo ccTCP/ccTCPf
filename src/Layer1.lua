@@ -27,17 +27,18 @@ THE SOFTWARE.
 --Variables
 local side = {"top","bottom","left","right","back"}
 local modem = {}
-local channel = 20613
+local channelReceive = 20613
+local channelSend = 20614
 local defaultSide = ""
 
 
 --Functions
 function send(msg,interface)
-	modem[interface or defaultSide].transmit(channel,channel,msg)
+	modem[interface or defaultSide].transmit(channelSend,channelSend,msg)
 end
 
 function receive(interface)
-	
+
 end
 
 --Wraps peripherals under modem array

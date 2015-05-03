@@ -41,7 +41,7 @@ repeat
 	if (peripheral.isPresent(side[a])) then 
 		if (peripheral.getType(side[a]) = "wireless_modem" or "modem") then
 			local new = side[a]
-			modem[new] = peripheral.wrap(side)
+			modem[new] = peripheral.wrap(new)
 		end
 	end
 	a = a+1

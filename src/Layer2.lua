@@ -23,13 +23,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 ]]
-
+--The checksum is 5 chars long in hex
 --utils = require('Utils')
 
 
 local mac = {}
-frame = {preamble,dstMac,srcMac,packet or data,fcs(packet or data)}
-dotQFrame = {preamble,dstMac,srcMac,vlan,packet or data,fcs(packet or data)}
+local frame = {preamble,dstMac,srcMac,packet or data,fcs(packet or data)}
+local dotQFrame = {preamble,dstMac,srcMac,vlan,packet or data,fcs(packet or data)}
 
 -- Functions
 
@@ -39,12 +39,12 @@ function fcs(msg)
 	for i,v in pairs(buffer) do
 		add = add + v
 	end
-	return utils.toHex(add)
+	return utils.toHex(tonumber(string.rep("0",6-#add)..add))
 end
 
 function createMac(side)
 	side = tostring(side)
-	sideTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5})
+	sideTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
 	if side and sideTable[side] then
 		local macBuffer = tostring(utils.toHex(os.computerID() * 6 + sideTable[side]))
 		return string.rep("0",12-#macBuffer).. macBuffer
@@ -61,4 +61,8 @@ end
 
 function getMacString(side)
 	return utils.toDec(getMac(side))
+end
+
+calc = function()
+	print(utils.toHex(255*1518))
 end

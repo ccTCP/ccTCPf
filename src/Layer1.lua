@@ -36,7 +36,7 @@ function send(msg,interface)
 	modem[interface or defaultSide].transmit(channel,channel,msg)
 end
 
-function receive(interface)
+function receive()
 	while true do
 		local event = {os.pullEvent("modem_message")}
 		if event[3] == channel then

@@ -40,7 +40,13 @@ end
 function receive(interface)
 	while true do
 		local event = {os.pullEvent("modem_message")}
-		
+		if event[3] == channelReceive then
+			local destMac = event[4]:sub(1,6)
+			local sendMac = event[4]:sub(7,12)
+			if destMac == Layer1.getMac(event[2]) then
+				print("youhou")
+			end
+		end
 	end
 end
 --End: L1:Functions]]

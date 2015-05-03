@@ -38,10 +38,9 @@ end
 --Wraps peripherals under modem array
 local a = 1
 repeat
-	if (peripheral.isPresent(side[a])) then 
-		if (peripheral.getType(side[a]) = "wireless_modem" or "modem") then
-			local new = side[a]
-			modem[new] = peripheral.wrap(new)
+	if peripheral.isPresent(side[a]) then 
+		if peripheral.getType(side[a]) == "wireless_modem" or peripheral.getType(side[a]) == "wireless_modem" then
+			modem[side[a]] = peripheral.wrap(side[a])
 		end
 	end
 	a = a+1

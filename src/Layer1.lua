@@ -1,4 +1,4 @@
---[[
+--[[License
 
 The MIT License (MIT)
 
@@ -24,15 +24,15 @@ THE SOFTWARE.
 
 --]]
 
---Variables
+--L1:Variables
 local side = {"top","bottom","left","right","back"}
 local modem = {}
 local channelReceive = 20613
 local channelSend = 20614
 local defaultSide = ""
+--End: L1:Variables]]
 
-
---Functions
+--L1:Functions
 function send(msg,interface)
 	modem[interface or defaultSide].transmit(channelSend,channelSend,msg)
 end
@@ -40,8 +40,12 @@ end
 function receive(interface)
 	
 end
+--End: L1:Functions]]
 
---Wraps peripherals under modem array
+
+--L1:Active / Test Code
+
+--Wraps interfaces to modem{} and assigns defaultSide to first wrapped interface
 local a = 1
 repeat
 	if peripheral.isPresent(side[a]) then 
@@ -52,3 +56,4 @@ repeat
 	end
 	a = a+1
 until a = 5
+--End: L1:Active / Test Code]]

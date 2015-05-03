@@ -36,8 +36,8 @@ function send(msg,interface)
 	modem[interface or defaultSide].transmit(channel,channel,msg)
 end
 
-function receive()
-
+function receive(interface)
+	
 end
 
 --Wraps peripherals under modem array

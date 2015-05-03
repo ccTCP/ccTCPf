@@ -43,7 +43,7 @@ end
 
 function createMac(side)
 	side = tostring(side)
-	sideTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
+	local sideTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
 	if side and sideTable[side] then
 		local macBuffer = tostring(utils.toHex(os.computerID() * 6 + sideTable[side]))
 		return string.rep("0",6-#macBuffer).. macBuffer

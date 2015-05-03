@@ -55,7 +55,7 @@ end
 local M_crc32_byte = M.crc32_byte
 
 
-function crc32_string(s, crc)
+function M_crc32_string(s, crc)
   crc = crc or 0
   for i=1,#s do
     crc = M_crc32_byte(s:byte(i), crc)

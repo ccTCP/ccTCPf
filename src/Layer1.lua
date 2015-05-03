@@ -28,18 +28,24 @@ THE SOFTWARE.
 local side = {"top","bottom","left","right","back"}
 local modem = {}
 local channel = 20613
+local defaultSide = ""
 
 
 --Functions
-function send(interface)
-	modem[interface].transmit(channel,channel,textutils.serialize(frame or dotQFrame))
+function send(msg,interface)
+	modem[interface or defaultSide].transmit(channel,channel,msg)
+end
+
+function receive()
+
 end
 
 --Wraps peripherals under modem array
 local a = 1
 repeat
 	if peripheral.isPresent(side[a]) then 
-		if peripheral.getType(side[a]) == "wireless_modem" or peripheral.getType(side[a]) == "wireless_modem" then
+		if peripheral.getType(side[a]) == "wireless_modem" or peripheral.getType(side[a]) == "modem" then
+			if defaultSide == "" then defaultSide = side[a] end
 			modem[side[a]] = peripheral.wrap(side[a])
 		end
 	end

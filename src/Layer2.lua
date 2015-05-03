@@ -30,6 +30,7 @@ THE SOFTWARE.
 local mac = {}
 frame = {preamble,dstMac,srcMac,packet or data,fcs(packet or data)}
 dotQFrame = {preamble,dstMac,srcMac,vlan,packet or data,fcs(packet or data)}
+
 -- Functions
 
 function fcs(msg)

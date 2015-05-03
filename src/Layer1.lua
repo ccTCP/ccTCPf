@@ -24,15 +24,25 @@ THE SOFTWARE.
 
 --]]
 
---Variables--
-local side = peripheral.find("wireless_modem") or peripheral.find("modem")
-local modem = peripheral.wrap(side)
+--Variables
+local side = {"top","bottom","left","right","back"}
+local modem = {}
 local channel = 20613
 
 
---Functions-
-function send(interface,frame or dotQFrame)
-	
+--Functions
+function send(interface)
+	modem[interface].transmit(channel,channel,textutils.serialize(frame or dotQFrame))
 end
---Initializing code--
-modem.open(channel)
+
+--Wraps peripherals under modem array
+local a = 1
+repeat
+	if (peripheral.isPresent(side[a])) then 
+		if (peripheral.getType(side[a]) = "wireless_modem" or "modem") then
+			local new = side[a]
+			modem[new] = peripheral.wrap(side)
+		end
+	end
+	a = a+1
+until a = 5

@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 --utils = require('Utils')
 
+
 local mac = {}
 frame = {preamble,dstMac,srcMac,packet or data,fcs(packet or data)}
 dotQFrame = {preamble,dstMac,srcMac,vlan,packet or data,fcs(packet or data)}
@@ -41,12 +42,13 @@ function fcs(msg)
 end
 
 function createMac(side)
-	sideTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
+	side = tostring(side)
+	sideTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5})
 	if side and sideTable[side] then
 		local macBuffer = tostring(utils.toHex(os.computerID() * 6 + sideTable[side]))
 		return string.rep("0",12-#macBuffer).. macBuffer
 	end
-	return false
+	return error("Failed: "..side.."is not a side", 2)
 end
 
 function getMac(side)

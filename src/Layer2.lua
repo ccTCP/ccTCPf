@@ -32,15 +32,6 @@ local mac = {}
 
 --L2:Functions
 
-function fcs(msg)
-	local buffer = {msg:byte(1,#msg)}
-	local add = 0
-	for i,v in pairs(buffer) do
-		add = add + v
-	end
-	return string.rep("0",6-#tostring(add))..tostring(Utils.toHex(add))
-end
-
 function createMac(side)
 	side = tostring(side)
 	local sideTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}

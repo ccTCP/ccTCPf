@@ -24,6 +24,17 @@ THE SOFTWARE.
 
 --]]
 
+
+function fcs(msg)
+	local buffer = {msg:byte(1,#msg)}
+	local add = 0
+	for i,v in pairs(buffer) do
+		add = add + v
+	end
+	return string.rep("0",6-#tostring(add))..tostring(Utils.toHex(add))
+end
+
+
 function toHex(num)
 	local hexTemp = '0123456789abcdef'
 	hex = ''

@@ -38,7 +38,7 @@ function send(msg,interface)
 end
 
 function receive(interface)
-
+	
 end
 
 --Wraps peripherals under modem array

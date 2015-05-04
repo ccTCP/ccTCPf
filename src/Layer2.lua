@@ -32,6 +32,7 @@ local mac = {}
 
 --L2:Functions
 
+
 function createMac(side)
 	side = tostring(side)
 	local sideTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
@@ -56,6 +57,10 @@ end
 function receive()
 	local msg = Layer1.receive()
 	print(msg)
+	local checksum = msg:sub(-5,-1)
+	if checksum == Utils.fcs(msg:sub(1,-6)) then
+		print("yay")
+	end
 end
 
 --End: L2:Functions]]

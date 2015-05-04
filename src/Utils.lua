@@ -31,7 +31,7 @@ function fcs(msg)
 	for i,v in pairs(buffer) do
 		add = add + v
 	end
-	return string.rep("0",6-#tostring(add))..tostring(Utils.toHex(add))
+	return string.rep("0",5-#tostring(Utils.toHex(add)))..tostring(Utils.toHex(add))
 end
 
 

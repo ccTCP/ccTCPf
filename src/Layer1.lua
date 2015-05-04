@@ -60,8 +60,9 @@ repeat
 		if peripheral.getType(side[a]) == "wireless_modem" or peripheral.getType(side[a]) == "modem" then
 			if defaultSide == "" then defaultSide = side[a] end
 			modem[side[a]] = peripheral.wrap(side[a])
+			modem[side[a]].open(channel)
 		end
 	end
 	a = a+1
-until a = 5
+until a == 5
 --End: L1:Active / Test Code]]

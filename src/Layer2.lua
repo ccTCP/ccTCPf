@@ -53,6 +53,11 @@ function getMacString(side)
 	return Utils.toDec(getMac(side))
 end
 
+function receive()
+	local msg = Layer1.receive()
+	print(msg)
+end
+
 --End: L2:Functions]]
 
 --Post Init Variables

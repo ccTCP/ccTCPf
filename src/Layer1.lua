@@ -40,9 +40,9 @@ function receive()
 	while true do
 		local event = {os.pullEvent("modem_message")}
 		if event[3] == channel then
-			local destMac = event[4]:sub(1,6)
-			local sendMac = event[4]:sub(7,12)
-			if destMac == Layer1.getMac(event[2]) then
+			local destMac = string.sub(event[4],1,6)
+			local sendMac = string.sub(event[4],7,12)
+			if destMac == Layer2.getMac(event[2]) then
 				return event[4]
 			end
 		end
@@ -54,8 +54,7 @@ end
 --L1:Active / Test Code
 
 --Wraps interfaces to modem{} and assigns defaultSide to first wrapped interface
-local a = 1
-repeat
+for a = 1,5 do 
 	if peripheral.isPresent(side[a]) then 
 		if peripheral.getType(side[a]) == "wireless_modem" or peripheral.getType(side[a]) == "modem" then
 			if defaultSide == "" then defaultSide = side[a] end
@@ -64,5 +63,5 @@ repeat
 		end
 	end
 	a = a+1
-until a == 5
+end
 --End: L1:Active / Test Code]]

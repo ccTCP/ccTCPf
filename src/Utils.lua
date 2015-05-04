@@ -56,3 +56,4 @@ function toDec(num)
 	end
 	return final
 end
+ 

@@ -43,7 +43,7 @@ function receive()
 			local destMac = string.sub(event[5],1,6)
 			local sendMac = string.sub(event[5],7,12)
 			if destMac == Layer2.getMac(event[2]) then
-				return event[5]
+				return event[5], event[4]
 			end
 		end
 	end

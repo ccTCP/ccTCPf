@@ -55,11 +55,13 @@ function getMacString(side)
 end
 
 function receive()
-	local msg = Layer1.receive()
+	local msg, identifier = Layer1.receive()
 	print(msg)
 	local checksum = msg:sub(-5,-1)
 	if checksum == Utils.fcs(msg:sub(1,-6)) then
 		print("yay")
+	else
+		--ask for message identifier
 	end
 end
 

@@ -25,7 +25,7 @@ THE SOFTWARE.
 --]]
 
 --L1:Variables
-local side = {"top","bottom","left","right","back"}
+local side = {"top","bottom","left","right","back","front"}
 local modem = {}
 local channel = 20613
 local defaultSide = ""
@@ -54,7 +54,7 @@ end
 --L1:Active / Test Code
 
 --Wraps interfaces to modem{} and assigns defaultSide to first wrapped interface
-for a = 1,5 do 
+for a = 1,6 do 
 	if peripheral.isPresent(side[a]) then 
 		if peripheral.getType(side[a]) == "wireless_modem" or peripheral.getType(side[a]) == "modem" then
 			if defaultSide == "" then defaultSide = side[a] end

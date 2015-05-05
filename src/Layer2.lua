@@ -155,8 +155,8 @@ end
 --End: L2:Functions]]
 
 --Post Init Variables
-frame = {preamble,dstMac,srcMac,packet or data,fcs}
-dotQFrame = {preamble,dstMac,srcMac,vlan,packet or data,fcs}
+frame = {preamble,dstMac,srcMac,packet or data,fcs()}
+dotQFrame = {preamble,dstMac,srcMac,vlan,packet or data,fcs()}
 
 --Active / Test Code
 macBind()

@@ -32,6 +32,7 @@ local mac = {}
 
 --L2:Functions
 
+
 function createMac(side)
 	side = tostring(side)
 	if (side and sidesTable[side]) then
@@ -139,6 +140,17 @@ function macBind(...)
 	end
 	return error("Failed: something went wrong",2)
 	--End: Running Code
+end
+
+function receive()
+	local msg, identifier = Layer1.receive()
+	print(msg)
+	local checksum = msg:sub(-5,-1)
+	if checksum == Utils.fcs(msg:sub(1,-6)) then
+		print("yay")
+	else
+		--ask for message identifier
+	end
 end
 --End: L2:Functions]]
 

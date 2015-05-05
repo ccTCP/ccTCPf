@@ -25,15 +25,44 @@ THE SOFTWARE.
 --]]
 
 --L1:Variables
-local side = {"top","bottom","left","right","back"}
+local sides = {"top","bottom","left","right","back","front"}
+local sidesTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
 local modem = {}
-local channel = 20613
 local defaultSide = ""
+local channel  = 20613
 --End: L1:Variables]]
 
 --L1:Functions
-function send(msg,interface)
-	modem[interface or defaultSide].transmit(channel,channel,msg)
+local function wrap()
+	for a = 1,6 do 
+		if peripheral.isPresent(sides[a]) then 
+			if peripheral.getType(sides[a]) == "wireless_modem" or peripheral.getType(sides[a]) == "modem" then
+				if defaultSide == "" then defaultSide = sides[a] end
+				modem[sides[a]] = peripheral.wrap(sides[a])
+				modem[sides[a]].open(channel)
+			end
+		end
+		a = a+1
+	end
+end
+
+function intOpen(int)
+	modem[sides[int]].open(channel)
+end
+
+function intClose(int)
+	modem[sides[int]].close()
+end
+
+function send(int,data)
+	
+	if (not data == nil) then
+		modem[int or defaultSide].transmit(channel,channel,data)
+	else
+	modem[int or defaultSide].transmit(channel,channel,frame)
+	frame = {preamble = "",dstMac = "",srcMac = "",packet = "" or data = "",fcs()}
+	dotQFrame = {preamble = "",dstMac = "",srcMac = "",vlan = "",packet = "" or data = "",fcs()}
+	end
 end
 
 function receive()
@@ -42,7 +71,7 @@ function receive()
 		if event[3] == channel then
 			local destMac = event[4]:sub(1,6)
 			local sendMac = event[4]:sub(7,12)
-			if destMac == Layer1.getMac(event[2]) then
+			if destMac == getMac(event[2]) then
 				return event[4]
 			end
 		end
@@ -52,16 +81,5 @@ end
 
 
 --L1:Active / Test Code
-
---Wraps interfaces to modem{} and assigns defaultSide to first wrapped interface
-local a = 1
-repeat
-	if peripheral.isPresent(side[a]) then 
-		if peripheral.getType(side[a]) == "wireless_modem" or peripheral.getType(side[a]) == "modem" then
-			if defaultSide == "" then defaultSide = side[a] end
-			modem[side[a]] = peripheral.wrap(side[a])
-		end
-	end
-	a = a+1
-until a = 5
+wrap()
 --End: L1:Active / Test Code]]

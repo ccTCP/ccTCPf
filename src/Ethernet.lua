@@ -23,14 +23,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 --]]
+--[[REQUIRES
+::Utils::
 
---The checksum is 5 chars long in hex
---utils = require('Utils')
+]]--
+--[[SPECIFICATIONS
+::The checksum is 5 chars long in hex
 
---Init Variables
+]]--
+
+--Variables
 local mac = {}
 
---L2:Functions
+--Functions
 
 
 function createMac(side)

@@ -35,7 +35,9 @@ This is designed for OmniOS, and thus I, Creator, am the only one coding it.
 --[[::VARIABLES::]]--
 ccTCP = {}
 
---[[::FUNCTIONS::]]--
-function ccTCP.newConnection()
 
+--[[::FUNCTIONS::]]--
+function ccTCP.newInstance(threadID)
+	local toReturn = {}
+	
 end

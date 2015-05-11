@@ -41,3 +41,7 @@ function ccTCP.newInstance(threadID)
 	local toReturn = {}
 	
 end
+
+while true do
+	local event
+end

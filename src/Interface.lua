@@ -24,16 +24,13 @@ THE SOFTWARE.
 
 --]]
 
---L1:Variables
 local sides = {"top","bottom","left","right","back","front"}
 local sidesTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
 local modem = {}
 local defaultSide = ""
 local channel  = 20613
---End: L1:Variables]]
 
---L1:Functions
-local function wrap()
+function wrap()
 	for a = 1,6 do 
 		if peripheral.isPresent(sides[a]) then 
 			if peripheral.getType(sides[a]) == "wireless_modem" or peripheral.getType(sides[a]) == "modem" then
@@ -55,13 +52,13 @@ function intClose(int)
 end
 
 function send(int,data)
-	
-	if (not data == nil) then
+	local frame = standFrame or QFrame
+	if (not data == nil) then 
 		modem[int or defaultSide].transmit(channel,channel,data)
 	else
-	modem[int or defaultSide].transmit(channel,channel,frame)
-	frame = {preamble = "",dstMac = "",srcMac = "",packet = "" or data = "",fcs()}
-	dotQFrame = {preamble = "",dstMac = "",srcMac = "",vlan = "",packet = "" or data = "",fcs()}
+		modem[int or defaultSide].transmit(channel,channel,frame)
+		standFrame = standFrame_Temp
+		QFrame = QFrame_Temp
 	end
 end
 
@@ -71,15 +68,9 @@ function receive()
 		if event[3] == channel then
 			local destMac = string.sub(event[5],1,6)
 			local sendMac = string.sub(event[5],7,12)
-			if destMac == Ethernet.getMac(event[2]) then
+			if destMac == getMac(event[2]) then
 				return event[5], event[4]
 			end
 		end
 	end
 end
---End: L1:Functions]]
-
-
---L1:Active / Test Code
-wrap()
---End: L1:Active / Test Code]]

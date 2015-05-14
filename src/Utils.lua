@@ -24,36 +24,24 @@ THE SOFTWARE.
 
 --]]
 
+function DecToBase(val,base)
+	local b,k,result,d=base or 10, "0123456789ABCDEFGHIJKLMNOPQRSTUVW",""
+	while val>0 do
+		val,d=math.floor(val/b),math.fmod(val,b)+1
+		result=string.sub(k,d,d)..result
+	end
+	return result
+end
 
-function fcs(msg)
+function toDec(val,base)
+	return tonumber(val,base)
+end
+
+function crc(msg)
 	local buffer = {msg:byte(1,#msg)}
 	local add = 0
 	for i,v in pairs(buffer) do
 		add = add + v
 	end
-	return string.rep("0",5-#tostring(Utils.toHex(add)))..tostring(Utils.toHex(add))
-end
-
-
-function toHex(num)
-	local hexTemp = '0123456789abcdef'
-	hex = ''
-	while num > 0 do
-		local mod = math.fmod(num, 16)
-		hex = string.sub(hexTemp, mod+1, mod+1) .. hex
-		num = math.floor(num / 16)
-	end
-	return hex == " " and 0 or hex
-end
-
-function toDec(num)
-	local hexTable = {["0"]=0,["1"]=1,["2"]=2,["3"]=3,["4"]=4,["5"]=5,["6"]=6,["7"]=7,["8"]=8,["9"]=9,["a"]=10,["b"]=11,["c"]=12,["d"]=13,["e"]=14,["f"]=15}	
-	local final = 0
-	local str = tostring(num)
-	local pow = 0
-	for i = #str,1,-1 do
-		final = final + hexTable[str:sub(i,i)]*math.pow(16,pow)
-		pow = pow + 1
-	end
-	return final
+	return string.rep("0",5-#tostring(DecToBase(add,16)))..tostring(DecToBase(add,16))
 end

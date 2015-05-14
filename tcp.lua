@@ -10,6 +10,7 @@ local Ethernet = {}
 local Event_Hook = {}
 local Interface = {}
 local Utils = {}
+local Layer3 = {}
 
 --Function
 
@@ -28,12 +29,14 @@ local function requireAPI(_sPath)
 	for k,v in pairs( tEnv ) do
 		tAPI[k] =  v
 	end
-	return tAPI	
+	return tAPI
 end
 
 local function loadModules()
 	for i,v in pairs(fs.list(dir)) do
-		print(v)
+		if not fs.isDir(dir..v) then
+			print(v)
+		end
 	end
 end
 

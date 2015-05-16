@@ -5,7 +5,7 @@ local QFrame_Temp = {preamble = "",dstMac = "",srcMac = "",vlan = "",packet = ""
 standFrame = {preamble = "",dstMac = "",srcMac = "",packet = "" or data = "",crc()}
 QFrame = {preamble = "",dstMac = "",srcMac = "",vlan = "",packet = "" or data = "",crc()}
 
-function NOTmacBind(...)
+function macBind(...)
 --[[
 	No Args: generates a mac for each interface found, sets a default-interface, and writes the bindings to macBindings
 	One Arg: Will generate a mac for the interface given, and write the data to macBindings file.

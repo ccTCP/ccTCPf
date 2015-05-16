@@ -36,7 +36,6 @@ function wrap()
 			if peripheral.getType(sides[a]) == "wireless_modem" or peripheral.getType(sides[a]) == "modem" then
 				if defaultSide == "" then defaultSide = sides[a] end
 				modem[sides[a]] = peripheral.wrap(sides[a])
-				modem[sides[a]].open(channel)
 			end
 		end
 		a = a+1
@@ -74,3 +73,5 @@ function receive()
 		end
 	end
 end
+
+wrap()

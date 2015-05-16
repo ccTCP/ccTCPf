@@ -104,11 +104,11 @@ function NOTmacBind(...)
 	local Args = {...}
 	
 	local function macGen(side)
-	side = tostring(side)
-	if (side and sidesTable[side]) then
-		local macBuffer = tostring(DecToBase(os.computerID() * 6 + sidesTable[side],16))
-		return string.rep("0",6-#macBuffer).. macBuffer
-	end
+		side = tostring(side)
+		if (side and sidesTable[side]) then
+			local macBuffer = tostring(DecToBase(os.computerID() * 6 + sidesTable[side],16))
+			return string.rep("0",6-#macBuffer).. macBuffer
+		end
 end
 	
 	--Running Code
@@ -120,8 +120,10 @@ end
 				local file = fs.open("ccTCP/macBindings","w")
 				repeat --write bindings to file
 					file.writeLine(sides[r] "=" macGen(r))
+					macTable[sides[r]] = macGen(r)
 				until r=6
 				file.close()
+				return
 		else
 			--yes
 				wrap()--poll and open interfaces

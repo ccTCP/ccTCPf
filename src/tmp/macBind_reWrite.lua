@@ -104,8 +104,12 @@ function NOTmacBind(...)
 	local Args = {...}
 	
 	local function macGen(side)
-	
+	side = tostring(side)
+	if (side and sidesTable[side]) then
+		local macBuffer = tostring(DecToBase(os.computerID() * 6 + sidesTable[side],16))
+		return string.rep("0",6-#macBuffer).. macBuffer
 	end
+end
 	
 	--Running Code
 	if(no args) then 

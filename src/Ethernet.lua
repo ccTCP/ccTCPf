@@ -38,15 +38,17 @@ local sidesTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
 
 --Functions
 function createMac(side)
+	if not side then error("You have to specify a side",2) end
 	side = tostring(side)
 	if side and sidesTable[side] then
-		local macBuffer = tostring(Utils.toHex(os.computerID() * 6 + sidesTable[side]))
+		local macBuffer = tostring(Utils.DecToBase(os.computerID() * 6 + sidesTable[side],16))
 		return string.rep("0",6-#macBuffer).. macBuffer
 	end
 	return error("Failed: "..side.."is not a side", 2)
 end
 
 function getMac(side)
+	if not side then error("You have to specify a side",2) end
 	if not mac[side] then
 		mac[side] = createMac(side)
 	end

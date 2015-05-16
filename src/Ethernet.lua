@@ -53,7 +53,7 @@ function getMac(side)
 end
 
 function getMacDec(side)
-	return utils.toDec(getMac(side))
+	return Utils.toDec(getMac(side))
 end
 
 --Moved bind to tmp/Ethernet.lua
@@ -71,10 +71,10 @@ end
 --End: L2:Functions]]
 
 --Post Init Variables
-frame = {preamble,dstMac,srcMac,packet or data,fcs()}
-dotQFrame = {preamble,dstMac,srcMac,vlan,packet or data,fcs()}
+--frame = {preamble,dstMac,srcMac,packet or data,fcs()}
+--dotQFrame = {preamble,dstMac,srcMac,vlan,packet or data,fcs()}
 
 --Active / Test Code
-macBind()
+--macBind()
 --End: L2:Active / Test Code]]
 

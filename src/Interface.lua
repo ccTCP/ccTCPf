@@ -43,11 +43,11 @@ function wrap()
 end
 
 function intOpen(int)
-	modem[sides[int]].open(channel)
+	modem[int].open(channel)
 end
 
 function intClose(int)
-	modem[sides[int]].close()
+	modem[int].close()
 end
 
 function send(int,data)

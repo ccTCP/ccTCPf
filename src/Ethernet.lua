@@ -62,10 +62,11 @@ end
 --Moved bind to tmp/Ethernet.lua
 
 function receive()
-	local msg, identifier = Layer1.receive()
+	local msg, identifier = Interface.receive()
 	print(msg)
+	print(identifier)
 	local checksum = msg:sub(-5,-1)
-	if checksum == Utils.fcs(msg:sub(1,-6)) then
+	if checksum == Utils.crc(msg:sub(1,-6)) then
 		print("yay")
 	else
 		--ask for message identifier

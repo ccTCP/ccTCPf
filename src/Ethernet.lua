@@ -34,12 +34,13 @@ THE SOFTWARE.
 
 --Variables
 local mac = {}
+local sidesTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
 
 --Functions
 function createMac(side)
 	side = tostring(side)
-	if (side and sidesTable[side]) then
-		local macBuffer = tostring(utils.toHex(os.computerID() * 6 + sidesTable[side]))
+	if side and sidesTable[side] then
+		local macBuffer = tostring(Utils.toHex(os.computerID() * 6 + sidesTable[side]))
 		return string.rep("0",6-#macBuffer).. macBuffer
 	end
 	return error("Failed: "..side.."is not a side", 2)

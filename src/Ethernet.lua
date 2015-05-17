@@ -63,12 +63,14 @@ end
 
 function receive()
 	local msg, identifier = Interface.receive()
-	print(msg)
-	print(identifier)
 	local checksum = msg:sub(-5,-1)
+	print(checksum)
+	print(Utils.crc(msg:sub(1,-6)))
+	print(msg:sub(1,-6))
 	if checksum == Utils.crc(msg:sub(1,-6)) then
 		print("yay")
 	else
+		print("Sorry, boy!")
 		--ask for message identifier
 	end
 end

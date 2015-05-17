@@ -25,10 +25,10 @@ THE SOFTWARE.
 --]]
 
 function DecToBase(val,base)
-	local b,k,result,d=base or 10, "0123456789ABCDEFGHIJKLMNOPQRSTUVW",""
-	while val>0 do
-		val,d=math.floor(val/b),math.fmod(val,b)+1
-		result=string.sub(k,d,d)..result
+	local b, k, result, d = base or 10, "0123456789ABCDEFGHIJKLMNOPQRSTUVW",""
+	while val > 0 do
+		val, d = math.floor(val/b), math.fmod(val,b)+1
+		result = string.sub(k,d,d)..result
 	end
 	return result
 end

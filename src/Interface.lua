@@ -61,7 +61,7 @@ function send(int,data)
 	end
 end
 
-function receive()
+function oldReceive()
 	while true do
 		local event = {os.pullEvent("modem_message")}
 		if event[3] == channel then
@@ -70,6 +70,15 @@ function receive()
 			if destMac == Ethernet.getMac(event[2]) then
 				return event[5], event[2]
 			end
+		end
+	end
+end
+
+function receive()
+	while true do
+		local event = {os.pullEvent("modem_message")}
+		if event[3] == channel then
+			return event[5], event[2]
 		end
 	end
 end

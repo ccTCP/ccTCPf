@@ -62,16 +62,17 @@ end
 --Moved bind to tmp/Ethernet.lua
 
 function receive()
-	local msg, identifier = Interface.receive()
-	local checksum = msg:sub(-5,-1)
-	print(checksum)
-	print(Utils.crc(msg:sub(1,-6)))
-	print(msg:sub(1,-6))
-	if checksum == Utils.crc(msg:sub(1,-6)) then
-		print("yay")
-	else
-		print("Sorry, boy!")
-		--ask for message identifier
+	local frame, identifier = Interface.receive()
+	local checksum = frame:sub(-5,-1)
+	local destMac = frame:sub(1,6)
+	local sourceMac = frame:sub(7,12)
+	if destMac == getMac(identifier) then
+		if checksum == Utils.crc(frame:sub(1,-6)) then
+			print("yay")
+		else
+			print("Sorry, boy!")
+			--ask for message identifier
+		end
 	end
 end
 --End: L2:Functions]]

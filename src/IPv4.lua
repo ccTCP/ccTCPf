@@ -25,7 +25,6 @@ THE SOFTWARE.
 --]]
 
 --Variables
-
 local local_addresses = {
 	["10.0.0.0/8"] = true,
 	["172.16.0.0/12"] = true,
@@ -33,3 +32,7 @@ local local_addresses = {
 }
 
 --Functions
+
+local function getBinaryAddress(address)
+	if type(address) ~= "string" then error("Expected string, got "..type(address).."!",2)
+end

@@ -38,5 +38,11 @@ local function getBinaryAddress(address)
 	local place = address:find("/")
 	local addr = address:sub(1,place-1)
 	local mask = address:sub(place+1,-1)
+	local result = ""
+	for token in addr:gmatch("[^%.]+") do
+		result = result..string.rep("0",8-#tostring(Utils.DecToBase(tonumber(token),2)))..tostring(Utils.DecToBase(tonumber(token),2))
+	end
+	print(result)
+	print(#result)
 end
 getBinaryAddress("10.0.0.0/8")

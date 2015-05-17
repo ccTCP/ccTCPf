@@ -25,6 +25,7 @@ THE SOFTWARE.
 --]]
 
 function DecToBase(val,base)
+	if val == 0 then return 0 end
 	local b, k, result, d = base or 10, "0123456789ABCDEFGHIJKLMNOPQRSTUVW",""
 	while val > 0 do
 		val, d = math.floor(val/b), math.fmod(val,b)+1

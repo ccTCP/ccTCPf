@@ -34,5 +34,9 @@ local local_addresses = {
 --Functions
 
 local function getBinaryAddress(address)
-	if type(address) ~= "string" then error("Expected string, got "..type(address).."!",2)
+	if type(address) ~= "string" then error("Expected string, got "..type(address).."!",2) end
+	local place = address:find("/")
+	local addr = address:sub(1,place-1)
+	local mask = address:sub(place+1,-1)
 end
+getBinaryAddress("10.0.0.0/8")

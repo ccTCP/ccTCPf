@@ -32,8 +32,17 @@ local local_addresses = {
 }
 
 --Functions
+function getNetworkAddress(address)
+	if type(address) ~= "string" then error("Expected string, got "..type(address).."!",2) end
+	local place = address:find("/")
+	local binary = getBinaryAddress(address)
+	local mask = tonumber(address:sub(place+1,-1))
+	local network = binary:sub(1,mask)
+	local machine = binary:sub(mask+1,-1)
+	return network, machine, mask
+end
 
-local function getBinaryAddress(address)
+function getBinaryAddress(address)
 	if type(address) ~= "string" then error("Expected string, got "..type(address).."!",2) end
 	local place = address:find("/")
 	local addr = address:sub(1,place-1)
@@ -42,7 +51,6 @@ local function getBinaryAddress(address)
 	for token in addr:gmatch("[^%.]+") do
 		result = result..string.rep("0",8-#tostring(Utils.DecToBase(tonumber(token),2)))..tostring(Utils.DecToBase(tonumber(token),2))
 	end
-	print(result)
-	print(#result)
+	return result
 end
-getBinaryAddress("10.0.0.0/8")
+--getNetworkAddress("10.0.0.0/8")

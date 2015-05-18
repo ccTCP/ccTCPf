@@ -52,7 +52,7 @@ end
 
 function send(int,data)
 	local frame = standFrame or QFrame
-	if (not data == nil) then 
+	if data then 
 		modem[int or defaultSide].transmit(channel,channel,data)
 	else
 		modem[int or defaultSide].transmit(channel,channel,frame)

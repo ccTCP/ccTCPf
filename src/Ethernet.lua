@@ -48,15 +48,15 @@ function getMac(side)
 end
 
 function getMacDec(side)
-	return Utils.toDec(getMac(side))
+	return Utils.toDec(getMac(side),10)
 end
 
 function receive()
-	local frame, identifier = Interface.receive()
+	local frame, recvInt = Interface.receive()
 	local checksum = frame:sub(-5,-1)
 	local destMac = frame:sub(1,6)
 	local sourceMac = frame:sub(7,12)
-	if destMac == getMac(identifier) then
+	if destMac == getMac(recvInt) then
 		if checksum == Utils.crc(frame:sub(1,-6)) then
 			return frame:sub(13,-6)
 		else

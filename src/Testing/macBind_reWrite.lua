@@ -30,7 +30,7 @@ end
 				local r=1
 				local file = fs.open(config.dir.."macBindings","w")
 				repeat --write bindings to file
-					file.writeLine(sides[r] "=" macGen(r))
+					file.writeLine(sides[r].."="..macGen(r))
 					macTable[sides[r]] = macGen(r)
 				until r=6
 				file.close()
@@ -46,8 +46,8 @@ end
 		end
 	else
 		if(1 arg) then 
-			--generate a mac
-			--take side given and write binding to file
+			local file = fs.open(config.dir.."Bindings","a")--take side given and write binding to file
+			file.writeLine(Args[1].."="..genMac())
 		else
 			if(2 args) then 
 				--is this mac valid?

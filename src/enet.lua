@@ -23,14 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 --]]
---[[REQUIRES
-::Utils::
-
-]]--
---[[SPECIFICATIONS
-::The checksum is 5 chars long in hex
-
-]]--
 
 --Variables
 local mac = {}
@@ -59,8 +51,6 @@ function getMacDec(side)
 	return Utils.toDec(getMac(side))
 end
 
---Moved bind to tmp/Ethernet.lua
-
 function receive()
 	local frame, identifier = Interface.receive()
 	local checksum = frame:sub(-5,-1)
@@ -76,13 +66,3 @@ function receive()
 		end
 	end
 end
---End: L2:Functions]]
-
---Post Init Variables
---frame = {preamble,dstMac,srcMac,packet or data,fcs()}
---dotQFrame = {preamble,dstMac,srcMac,vlan,packet or data,fcs()}
-
---Active / Test Code
---macBind()
---End: L2:Active / Test Code]]
-

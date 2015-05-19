@@ -42,11 +42,11 @@ function wrap()
 	end
 end
 
-function intOpen(int)
+function open(int)
 	modem[int].open(channel)
 end
 
-function intClose(int)
+function close(int)
 	modem[int].close()
 end
 
@@ -61,19 +61,6 @@ function send(int,data)
 	end
 end
 
-function oldReceive()
-	while true do
-		local event = {os.pullEvent("modem_message")}
-		if event[3] == channel then
-			local destMac = string.sub(event[5],1,6)
-			local sendMac = string.sub(event[5],7,12)
-			if destMac == Ethernet.getMac(event[2]) then
-				return event[5], event[2]
-			end
-		end
-	end
-end
-
 function receive()
 	while true do
 		local event = {os.pullEvent("modem_message")}
@@ -82,5 +69,4 @@ function receive()
 		end
 	end
 end
-
 wrap()

@@ -11,6 +11,7 @@ function loadAPI(func)
 	local tEnv = {}
 	setmetatable( tEnv, { __index = _G } )
     setfenv(func,tEnv)
+    pcall(func)
     local tAPI = {}
     for k,v in pairs( tEnv ) do
         tAPI[k] =  v
@@ -23,6 +24,7 @@ end
 for i,v in pairs(t) do
 	local funct = loadstring(v)
 	setfenv(funct,getfenv())
+	print(i)
 	_G[i] = loadAPI(funct)
 end]]
 

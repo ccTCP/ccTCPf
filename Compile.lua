@@ -7,9 +7,10 @@ local files = fs.list("ccTCPf/src")
 local t = {}
 local ending = [[
 function loadAPI(func)
+	if type(func) ~= "function" then error("Expected function, got "..type(func).."!",2) end
 	local tEnv = {}
 	setmetatable( tEnv, { __index = _G } )
-    setfenv(func, tEnv )
+    setfenv(func,tEnv)
     local tAPI = {}
     for k,v in pairs( tEnv ) do
         tAPI[k] =  v
@@ -20,10 +21,10 @@ end
 
 
 for i,v in pairs(t) do
-	_G[i] = loadAPI(v)
-end
-
-]]
+	local funct = loadstring(v)
+	setfenv(funct,getfenv())
+	_G[i] = loadAPI(funct)
+end]]
 
 
 --Functions
@@ -33,16 +34,13 @@ local function createFile(path)
 	file.close()
 	local name = string.match(fs.getName(path),"[^%.]+")
 	print(name)
-	local header = "function "..name.."()"
-	local footer = "end"
-	local endResult = header.."\n"..data.."\n"..footer
-	return endResult
+	return data
 end
 
 for i,v in pairs(files) do
 	t[string.match(v,"[^%.]+")] = createFile("ccTCPf/src/"..v)
 end
 
-local file = fs.open("well","w")
+local file = fs.open("well.lua","w")
 file.write("t = "..textutils.serialize(t).."\n\n"..ending)
 file.close()

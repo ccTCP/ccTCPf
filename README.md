@@ -42,5 +42,5 @@ __All Devices__:
 
 * CmdPwnd:       &lt;cmdpwnd.github@gmail.com&gt; (Active)
 * RainbowDashDC: &lt;rainbowdashdc@pony.so&gt; (Active)
-* InDieTasten:   &lt;&gt;(Active)
+* InDieTasten:   &lt;&gt;(Left Project 5/18/2015)
 * Creator:       &lt;creator.github@gmail.com&gt; (Active)

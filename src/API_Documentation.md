@@ -14,18 +14,18 @@ ccTCPf is an API that introduces TCP/IPv4 into ComputerCraft to be used either i
 ### Layer 1
 
     int.open(int)
-opens a wired or wireless modem on the side given.
+  opens a wired or wireless modem on the side given.
 
-ex.
+  ex.
 
 >int.open("back")
 
 ---
     int.close(int)
 
-closes a wired or wireless modem on the side given.
+  closes a wired or wireless modem on the side given.
 
-ex.
+  ex.
 
 >int.close("back")
 
@@ -33,11 +33,11 @@ ex.
 
     raw.send(int,data)
 
-sends data out of the side given with the data specified.
+  sends data out of the side given with the data specified.
 
-*Does not follow tcp/ip structure hence "raw"*
+  *Does not follow tcp/ip structure hence "raw"*
 
-ex.
+  ex.
 
 >raw.send("back","hello")
 

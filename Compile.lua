@@ -10,14 +10,6 @@ function loadAPI(func)
 	local tEnv = {}
 	setmetatable( tEnv, { __index = _G } )
     setfenv(func, tEnv )
-    local ok, err = pcall(func)
-    if not ok then
-        printError( err )
-        return false
-    end
-    printError( err )
-    return false
-
     local tAPI = {}
     for k,v in pairs( tEnv ) do
         tAPI[k] =  v
@@ -28,8 +20,10 @@ end
 
 
 for i,v in pairs(t) do
+	_G[i] = loadAPI(v)
+end
 
-end]]
+]]
 
 
 --Functions
@@ -46,9 +40,9 @@ local function createFile(path)
 end
 
 for i,v in pairs(files) do
-	t[v] = createFile("ccTCPf/src/"..v)
+	t[string.match(v,"[^%.]+")] = createFile("ccTCPf/src/"..v)
 end
 
 local file = fs.open("well","w")
-file.write("t = "..textutils.serialize(t).."\n")
+file.write("t = "..textutils.serialize(t).."\n\n"..ending)
 file.close()

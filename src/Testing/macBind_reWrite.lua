@@ -5,14 +5,12 @@ local QFrame_Temp = {preamble = "",dstMac = "",srcMac = "",vlan = "",packet = ""
 standFrame = {preamble = "",dstMac = "",srcMac = "",packet = "" or data = "",crc()}
 QFrame = {preamble = "",dstMac = "",srcMac = "",vlan = "",packet = "" or data = "",crc()}
 
-function macBind(...)
+function macBind(int,addr)
 --[[
 	No Args: generates a mac for each interface found, sets a default-interface, and writes the bindings to macBindings
 	One Arg: Will generate a mac for the interface given, and write the data to macBindings file.
 	Two Arg: Will assign the given interface with the given mac address. This data will be recorded in macBindings.
 ]]
-
-	local Args = {...}
 	
 	local function macGen(side)
 		side = tostring(side)
@@ -23,21 +21,21 @@ function macBind(...)
 end
 	
 	--Running Code
-	if(no args) then 
-		if(isFile() == false) then--look for file
+	if(int=nil and addr=nil) then 
+		if(isFile()==false) then--look for file
 			--no, but file has now been created.
-				wrap()--poll and open interfaces
-				local r=1
-				local file = fs.open(config.dir.."macBindings","w")
-				repeat --write bindings to file
-					file.writeLine(sides[r].."="..macGen(r))
-					macTable[sides[r]] = macGen(r)
-				until r=6
-				file.close()
-				return
+			wrap()--poll and open interfaces
+			local r=1
+			local file = fs.open(config.dir.."macBindings","w")
+			repeat --write bindings to file
+				file.writeLine(sides[r].."="..macGen(r))
+				macTable[sides[r]] = macGen(r)
+			until r=6
+			file.close()
+			return
 		else
 			--yes
-				wrap()--poll and open interfaces
+			wrap()--poll and open interfaces
 				--are there any new interfaces?
 					--yes
 						--generate a mac for each new interface and write it to file
@@ -45,18 +43,20 @@ end
 						--generate a mac for each interface and write it to file
 		end
 	else
-		if(1 arg) then 
+		if(int==true and addr==nil) then 
 			local file = fs.open(config.dir.."Bindings","a")--take side given and write binding to file
-			file.writeLine(Args[1].."="..genMac())
+			file.writeLine(int.."="..genMac())
+      file.close()
+      return true
 		else
-			if(2 args) then 
+			if(int==true and addr==true) then 
 				--is this mac valid?
 					--yes
 						--write binding to file
 					--no
 						--give me a REAL MAC dimby
 			else 
-				--So you dont want me to give you a mac nor did you give me a mac to remember? WHATS YOUR PROBLEM?!!
+				return error("Invalid Args",3)--So you dont want me to give you a mac nor did you give me a mac to remember? WHATS YOUR PROBLEM?!!
 			end 
 		end 
 	end
@@ -88,6 +88,3 @@ end
 
 config = {}
 config.dir = "ccTCP/"
-function config.macBindings()
-
-end

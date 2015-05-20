@@ -5,6 +5,7 @@
 ]]--
 
 function log(destination,message,app)
+	if not doLog then return end
 	local finalMsg = "["..os.day()..":"..os.time().."]"
 	if app then
 		finalMsg = finalMsg..".["..tostring(app).."]:"..tostring(message)

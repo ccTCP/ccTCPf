@@ -25,7 +25,7 @@ THE SOFTWARE.
 --]]
 
 --Variables
-local local_addresses = {
+local address_classes = {
 	["10.0.0.0/8"] = true,
 	["172.16.0.0/12"] = true,
 	["192.168.0.0/16"] = true,
@@ -54,3 +54,12 @@ function getBinaryAddress(address)
 	return result
 end
 --getNetworkAddress("10.0.0.0/8")
+
+function getNetworkAddress2(addr)
+  if not type(addr) = "string" then error("Expected string, got "..type(addr).."!",2) end
+  local delim = addr:find("/")
+  local binAddr = getBinaryAddress(addr:sub(1,-4))
+  local binAddrOctect = {Utils.toDec(binAddr:sub(1,8),2),Utils.toDec(binAddr:sub(9,16),2),Utils.toDec(binAddr(17,24),2),Utils.toDec(binAddr(25,32),2)}
+  local cidr = addr:sub(-2,-1)
+  
+end

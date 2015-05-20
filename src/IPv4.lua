@@ -55,7 +55,7 @@ end
 --getNetworkAddress("10.0.0.0/8")
 
 function getNetworkAddress2(addr)
-  if not type(addr) = "string" then error("Expected string, got "..type(addr).."!",2) end
+  if not type(addr) == "string" then error("Expected string, got "..type(addr).."!",2) end
   local delim = addr:find("/")
   local binAddr = getBinaryAddress(addr:sub(1,-4))
   local binAddrOctet = {Utils.toDec(binAddr:sub(1,8),2),Utils.toDec(binAddr:sub(9,16),2),Utils.toDec(binAddr:sub(17,24),2),Utils.toDec(binAddr:sub(25,32),2)}

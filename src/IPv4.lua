@@ -58,8 +58,8 @@ function getNetworkAddress2(addr)
   if not type(addr) = "string" then error("Expected string, got "..type(addr).."!",2) end
   local delim = addr:find("/")
   local binAddr = getBinaryAddress(addr:sub(1,-4))
-  local binAddrOctect = {Utils.toDec(binAddr:sub(1,8),2),Utils.toDec(binAddr:sub(9,16),2),Utils.toDec(binAddr(17,24),2),Utils.toDec(binAddr(25,32),2)}
+  local binAddrOctect = {Utils.toDec(binAddr:sub(1,8),2),Utils.toDec(binAddr:sub(9,16),2),Utils.toDec(binAddr:sub(17,24),2),Utils.toDec(binAddr:sub(25,32),2)}
   local binMask = cidrDecTbl[addr:sub(-2,-1)]
-  local binMaskOctect = {Utils.toDec(binMask:sub(1,8),2),Utils.toDec(binMask:sub(9,16),2),Utils.toDec(binMask:sub(17,24),2),Utils.toDec(binMask:sub(25,32),2),}
+  local binMaskOctect = {Utils.toDec(binMask:sub(1,8),2),Utils.toDec(binMask:sub(9,16),2),Utils.toDec(binMask:sub(17,24),2),Utils.toDec(binMask:sub(25,32),2)}
   
 end

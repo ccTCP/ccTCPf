@@ -58,11 +58,15 @@ function receive()
 	local sourceMac = frame:sub(7,12)
 	if destMac == getMac(recvInt) then
 		if checksum == Utils.crc(frame:sub(1,-6)) then
+			print(frame:sub(13,-6)
+)
 			return frame:sub(13,-6)
 		else
 			print("Sorry, boy!")
 			--ask for the message to be resent
 			--ask for message identifier
 		end
+	else
+		print("man")
 	end
 end

@@ -12,7 +12,7 @@ function log(destination,message,app)
 	else
 		finalMsg = finalMsg..":"..tostring(message)
 	end
-	local m = fs.open("ccTCPf/Logs/"..destination..".log","a")
+	local m = fs.open(config.dir.."Logs/"..destination..".log","a")
 	m.write(finalMsg.."\n")
 	m.close()
 end

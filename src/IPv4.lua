@@ -31,7 +31,7 @@ local address_classes = {
 	["192.168.0.0/16"] = true,
 }
 
-local cidrDecTbl = {128,192,224,240,248,252,254,255}
+local cidrDecTbl = {getBinaryAddress("128.0.0.0"),getBinaryAddress("192.0.0.0"),getBinaryAddress("224.0.0.0"),getBinaryAddress("240.0.0.0"),getBinaryAddress("248.0.0.0"),getBinaryAddress("252.0.0.0"),getBinaryAddress("254.0.0.0"),getBinaryAddress("255.0.0.0"),getBinaryAddress("255.128.0.0"),getBinaryAddress("255.192.0.0"),getBinaryAddress("255.224.0.0"),getBinaryAddress("255.240.0.0"),getBinaryAddress("255.248.0.0"),getBinaryAddress("255.252.0.0"),getBinaryAddress("255.254.0.0"),getBinaryAddress("255.255.0.0"),getBinaryAddress("255.255.128.0"),getBinaryAddress("255.255.192.0"),getBinaryAddress("255.255.224.0"),getBinaryAddress("255.255.240.0"),getBinaryAddress("255.255.248.0"),getBinaryAddress("255.255.252.0"),getBinaryAddress("255.255.254.0"),getBinaryAddress("255.255.255.0"),getBinaryAddress("255.255.255.128"),getBinaryAddress("255.255.255.192"),getBinaryAddress("255.255.255.224"),getBinaryAddress("255.255.255.240"),getBinaryAddress("255.255.255.248"),getBinaryAddress("255.255.255.252"),getBinaryAddress("255.255.255.254"),getBinaryAddress("255.255.255.255")}
 
 --Functions
 function getNetworkAddress(address)
@@ -46,9 +46,6 @@ end
 
 function getBinaryAddress(address)
 	if type(address) ~= "string" then error("Expected string, got "..type(address).."!",2) end
-	local place = address:find("/")
-	local addr = address:sub(1,place-1)
-	local mask = address:sub(place+1,-1)
 	local result = ""
 	for token in addr:gmatch("[^%.]+") do
 		result = result..string.rep("0",8-#tostring(Utils.DecToBase(tonumber(token),2)))..tostring(Utils.DecToBase(tonumber(token),2))
@@ -62,6 +59,6 @@ function getNetworkAddress2(addr)
   local delim = addr:find("/")
   local binAddr = getBinaryAddress(addr:sub(1,-4))
   local binAddrOctect = {Utils.toDec(binAddr:sub(1,8),2),Utils.toDec(binAddr:sub(9,16),2),Utils.toDec(binAddr(17,24),2),Utils.toDec(binAddr(25,32),2)}
-  local cidr = addr:sub(-2,-1)
+  local binMaskf = cidrDecTbl[addr:sub(-2,-1)]
   
 end

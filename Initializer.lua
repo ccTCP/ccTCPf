@@ -1,3 +1,4 @@
+doLog = true
 function loadAPI( _sPath )
     local sName = fs.getName( _sPath )
     local tEnv = {}
@@ -29,4 +30,4 @@ for i,v in pairs(fs.list("ccTCPf/src")) do
         loadAPI("ccTCPf/src/"..v)
     end
 end
-Interface.intOpen("top")
+Interface.open("top")

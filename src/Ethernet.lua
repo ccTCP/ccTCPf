@@ -69,5 +69,7 @@ function receive()
 			--ask for the message to be resent
 			--ask for message identifier
 		end
+	else
+		print("man")
 	end
 end

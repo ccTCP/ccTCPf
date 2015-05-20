@@ -50,15 +50,8 @@ function close(int)
 	modem[int].close()
 end
 
-function send(int,data)
-	local frame = standFrame or QFrame
-	if data then 
-		modem[int or defaultSide].transmit(channel,channel,data)
-	else
-		modem[int or defaultSide].transmit(channel,channel,frame)
-		standFrame = standFrame_Temp
-		QFrame = QFrame_Temp
-	end
+function send(data,int)
+	modem[int or defaultSide].transmit(channel,channel,data)
 end
 
 function receive()

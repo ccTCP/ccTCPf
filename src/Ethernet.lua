@@ -32,7 +32,7 @@ local sidesTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
 function createMac(side)
 	if not side then error("You have to specify a side",2) end
 	side = tostring(side)
-	if side and sidesTable[side] then
+	if sidesTable[side] then
 		local macBuffer = tostring(Utils.DecToBase(os.computerID() * 6 + sidesTable[side],16))
 		return string.rep("0",6-#macBuffer).. macBuffer
 	end
@@ -56,11 +56,16 @@ function receive()
 	local checksum = frame:sub(-5,-1)
 	local destMac = frame:sub(1,6)
 	local sourceMac = frame:sub(7,12)
+  local payloadLen = string.len(frame:sub(13,-6))
 	if destMac == getMac(recvInt) then
 		if checksum == Utils.crc(frame:sub(1,-6)) then
-			return frame:sub(13,-6)
+      if payloadLen > MTU then
+        return frame:sub(13,-6)
+      else
+        return error("MTU exceeded. Payload: "..payloadLen.." > MTU: "..MTU,2)
+      end
 		else
-			print("Sorry, boy!")
+			print("Frame invalid")
 			--ask for the message to be resent
 			--ask for message identifier
 		end

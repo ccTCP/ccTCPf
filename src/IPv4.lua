@@ -61,5 +61,5 @@ function getNetworkAddress2(addr)
   local binAddrOctet = {Utils.toDec(binAddr:sub(1,8),2),Utils.toDec(binAddr:sub(9,16),2),Utils.toDec(binAddr:sub(17,24),2),Utils.toDec(binAddr:sub(25,32),2)}
   local binMask = cidrDecTbl[addr:sub(-2,-1)]
   local binMaskOctet = {Utils.toDec(binMask:sub(1,8),2),Utils.toDec(binMask:sub(9,16),2),Utils.toDec(binMask:sub(17,24),2),Utils.toDec(binMask:sub(25,32),2)}
-  print(Utils.toDec(binAddrOctet[1],2))
+  print(Utils.toDec(binAddrOctet[1],2).." "..Utils.toDec(binMaskOctet[1],2))
 end

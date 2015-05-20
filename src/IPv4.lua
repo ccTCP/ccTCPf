@@ -31,6 +31,8 @@ local address_classes = {
 	["192.168.0.0/16"] = true,
 }
 
+local cidrDecTbl = {128,192,224,240,248,252,254,255}
+
 --Functions
 function getNetworkAddress(address)
 	if type(address) ~= "string" then error("Expected string, got "..type(address).."!",2) end

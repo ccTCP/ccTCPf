@@ -39,8 +39,12 @@ local function createFile(path)
 	return data
 end
 
+t["Utils"] = createFile("ccTCPf/src/Utils.lua")
+
 for i,v in pairs(files) do
-	t[string.match(v,"[^%.]+")] = createFile("ccTCPf/src/"..v)
+	if v ~= "Utils.lua" then
+		t[string.match(v,"[^%.]+")] = createFile("ccTCPf/src/"..v)
+	end
 end
 
 local file = fs.open("well.lua","w")

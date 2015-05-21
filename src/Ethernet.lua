@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 --]]
 
+--Ethernet
 --Variables
 local mac = {}
 

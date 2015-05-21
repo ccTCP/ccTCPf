@@ -1,3 +1,4 @@
+
 --[[License
 
 The MIT License (MIT)
@@ -23,6 +24,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 --]]
+
+--Variables
 
 local sides = {"top","bottom","left","right","back","front"}
 local sidesTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}

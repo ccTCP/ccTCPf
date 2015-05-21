@@ -27,8 +27,8 @@ THE SOFTWARE.
 --Ethernet
 --Variables
 local mac = {}
-local stndFrameTemp = {preamble,dstMac,srcMac,type_len,data,crc}
-local dotQFrameTemp = {preamble,dstMac,srcMac,vlan,type_len,data,crc}
+local stndFrameTemp = {preamble = 0x100,dstMac,srcMac,type_len = 1500,data,crc}
+local dotQFrameTemp = {preamble = 0x200,dstMac,srcMac,vlan,type_len = 1504,data,crc}
 local stndFrame = stndFrameTemp
 local dotQFrame = dotQFrameTemp
 

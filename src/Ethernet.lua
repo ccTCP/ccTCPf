@@ -27,6 +27,10 @@ THE SOFTWARE.
 --Ethernet
 --Variables
 local mac = {}
+local stndFrameTemp = {preamble,dstMac,srcMac,type_len,data,crc}
+local dotQFrameTemp = {preamble,dstMac,srcMac,vlan,type_len,data,crc}
+local stndFrame = stndFrameTemp
+local dotQFrame = dotQFrameTemp
 
 --Functions
 function createMac(side)
@@ -73,6 +77,8 @@ function receive()
 end
 
 
-function send(data,destination,int)
+
+function send(destination,data,int,option)
+  
 	Interface.send(destination..getMac(int)..data..Utils.crc(data),int)
 end

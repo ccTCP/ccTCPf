@@ -60,7 +60,7 @@ function getNetworkAddress2(addr)
   local binAddr = getBinaryAddress(addr:sub(1,-4))
   local binAddrOctet = {Utils.toDec(binAddr:sub(1,8),2),Utils.toDec(binAddr:sub(9,16),2),Utils.toDec(binAddr:sub(17,24),2),Utils.toDec(binAddr:sub(25,32),2)}
   local binMask = cidrDecTbl[addr:sub(-2,-1)]
-  local binMaskOctet = {Utils.DecToBase(binMask:sub(1,8),2),Utils.DecToBase(binMask:sub(9,16),2),Utils.DecToBase(binMask:sub(17,24),2),Utils.DecToBase(binMask:sub(25,32),2)}
+  local binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)}
   print(Utils.toDec(binAddrOctet[1],2).." "..Utils.toDec(binMaskOctet[1],2))
 end
 

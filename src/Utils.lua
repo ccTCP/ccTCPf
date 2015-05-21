@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 config = {}
 config.dir = "ccTCP/"
+
 function DecToBase(val,base)
 	if val == 0 then return 0 end
 	local b, k, result, d = base or 10, "0123456789ABCDEFGHIJKLMNOPQRSTUVW",""

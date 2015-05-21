@@ -26,7 +26,6 @@ THE SOFTWARE.
 
 --Variables
 local mac = {}
-local sidesTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
 
 --Functions
 function createMac(side)
@@ -36,7 +35,6 @@ function createMac(side)
 		local macBuffer = tostring(Utils.DecToBase(os.computerID() * 6 + sidesTable[side],16))
 		return string.rep("0",6-#macBuffer).. macBuffer
 	end
-	return error("Failed: "..side.."is not a side", 2)
 end
 
 function getMac(side)
@@ -60,9 +58,10 @@ function receive()
 	if destMac == getMac(recvInt) then
 		if checksum == Utils.crc(frame:sub(1,-6)) then
       if payloadLen > MTU then
-        return frame:sub(13,-6)
-      else
         return error("MTU exceeded. Payload: "..payloadLen.." > MTU: "..MTU,2)
+      else
+        return frame:sub(13,-6)
+        
       end
 		else
 			print("Frame invalid")

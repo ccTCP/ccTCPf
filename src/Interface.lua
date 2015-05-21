@@ -28,7 +28,7 @@ local sides = {"top","bottom","left","right","back","front"}
 local sidesTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
 local modem = {}
 local defaultSide = ""
-local channel  = 20613
+local channel = 20613
 
 function wrap()
 	for a = 1,6 do 
@@ -62,4 +62,5 @@ function receive()
 		end
 	end
 end
+
 wrap()

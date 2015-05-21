@@ -71,3 +71,8 @@ function receive()
 		end
 	end
 end
+
+
+function send(data,destination,int)
+	Interface.send(destination..getMac(int)..data..Utils.crc(data),int)
+end

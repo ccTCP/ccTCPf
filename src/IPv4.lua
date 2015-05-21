@@ -61,7 +61,7 @@ function getNetworkAddress2(addr)
   print(binAddr)
   local binAddrOctet = {binAddr:sub(1,8),binAddr:sub(9,16),binAddr:sub(17,24),binAddr:sub(25,32)} --binary addr segmented by octet
   print("\n"..binAddrOctet[1].."\n"..binAddrOctet[2].."\n"..binAddrOctet[3].."\n"..binAddrOctet[4])
-  local binMask = cidrDecTbl[tonumber(addr:sub(-2,-1))] --gets the full binary value of the converted cidr mask eg. /24 = 255.255.255.0 = 11111111111111111111111100000000 **SOMEHOW WORKING BUT NOT RETURNING ANY VALUE????**
+  local binMask = getBinaryAddress(cidrDecTbl[tonumber(addr:sub(-2,-1))]) --gets the full binary value of the converted cidr mask eg. /24 = 255.255.255.0 = 11111111111111111111111100000000 **SOMEHOW WORKING BUT NOT RETURNING ANY VALUE????**
   print(binMask)
   local binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)} --binary mask segmented by octect
 end

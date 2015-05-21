@@ -27,10 +27,10 @@ THE SOFTWARE.
 --Ethernet
 --Variables
 local mac = {}
-local stndFrame = {preamble = 100,dstMac,srcMac,type_len = 1500,data,crc = Utils.crc(stndFrame)}
-local dotQFrame = {preamble = 200,dstMac,srcMac,vlan,type_len = 1504,data,crc = Utils.crc(dotQFrame)}
-local stndFrameTemp = {preamble = 100,dstMac,srcMac,type_len = 1500,data,crc = Utils.crc(stndFrame)}
-local dotQFrameTemp = {preamble = 200,dstMac,srcMac,vlan,type_len = 1504,data,crc = Utils.crc(dotQFrame)}
+local stndFrame = {preamble = {100},dstMac,srcMac,type_len = 1500,data,crc = Utils.crc(stndFrame)}
+local dotQFrame = {preamble = {200},dstMac,srcMac,vlan,type_len = 1504,data,crc = Utils.crc(dotQFrame)}
+local stndFrameTemp = {preamble = {100},dstMac,srcMac,type_len = 1500,data,crc = Utils.crc(stndFrame)}
+local dotQFrameTemp = {preamble = {200},dstMac,srcMac,vlan,type_len = 1504,data,crc = Utils.crc(dotQFrame)}
 
 --Functions
 function createMac(side)
@@ -79,6 +79,17 @@ end
 
 
 function send(destination,data,int,option)
-  
-	Interface.send(destination..getMac(int)..data..Utils.crc(data),int)
+  if option == "dotQ" then
+    dotQFrame.dstMac = destination
+    dotQFrame.srcMac = getMac(int)
+    dotQFrame.data = data
+    Interface.send(dotQFrame,int)
+    dotQFrame = dotQFrameTemp
+  else
+    stndFrame.dstMac = destination
+    stndFrame.srcMac = getMac(int)
+    stndFrame.data = data
+    Interface.send(stndFrame,int)
+    stndFrame = stndFrameTemp
+  end
 end

@@ -31,7 +31,6 @@ local address_classes = {
 	["192.168.0.0/16"] = true,
 }
 
-local cidrDecTbl = {getBinaryAddress("128.0.0.0"),getBinaryAddress("192.0.0.0"),getBinaryAddress("224.0.0.0"),getBinaryAddress("240.0.0.0"),getBinaryAddress("248.0.0.0"),getBinaryAddress("252.0.0.0"),getBinaryAddress("254.0.0.0"),getBinaryAddress("255.0.0.0"),getBinaryAddress("255.128.0.0"),getBinaryAddress("255.192.0.0"),getBinaryAddress("255.224.0.0"),getBinaryAddress("255.240.0.0"),getBinaryAddress("255.248.0.0"),getBinaryAddress("255.252.0.0"),getBinaryAddress("255.254.0.0"),getBinaryAddress("255.255.0.0"),getBinaryAddress("255.255.128.0"),getBinaryAddress("255.255.192.0"),getBinaryAddress("255.255.224.0"),getBinaryAddress("255.255.240.0"),getBinaryAddress("255.255.248.0"),getBinaryAddress("255.255.252.0"),getBinaryAddress("255.255.254.0"),getBinaryAddress("255.255.255.0"),getBinaryAddress("255.255.255.128"),getBinaryAddress("255.255.255.192"),getBinaryAddress("255.255.255.224"),getBinaryAddress("255.255.255.240"),getBinaryAddress("255.255.255.248"),getBinaryAddress("255.255.255.252"),getBinaryAddress("255.255.255.254"),getBinaryAddress("255.255.255.255")}
 
 --Functions
 function getNetworkAddress(address)
@@ -53,6 +52,7 @@ function getBinaryAddress(address)
 	return result
 end
 --getNetworkAddress("10.0.0.0/8")
+local cidrDecTbl = {getBinaryAddress("128.0.0.0"),getBinaryAddress("192.0.0.0"),getBinaryAddress("224.0.0.0"),getBinaryAddress("240.0.0.0"),getBinaryAddress("248.0.0.0"),getBinaryAddress("252.0.0.0"),getBinaryAddress("254.0.0.0"),getBinaryAddress("255.0.0.0"),getBinaryAddress("255.128.0.0"),getBinaryAddress("255.192.0.0"),getBinaryAddress("255.224.0.0"),getBinaryAddress("255.240.0.0"),getBinaryAddress("255.248.0.0"),getBinaryAddress("255.252.0.0"),getBinaryAddress("255.254.0.0"),getBinaryAddress("255.255.0.0"),getBinaryAddress("255.255.128.0"),getBinaryAddress("255.255.192.0"),getBinaryAddress("255.255.224.0"),getBinaryAddress("255.255.240.0"),getBinaryAddress("255.255.248.0"),getBinaryAddress("255.255.252.0"),getBinaryAddress("255.255.254.0"),getBinaryAddress("255.255.255.0"),getBinaryAddress("255.255.255.128"),getBinaryAddress("255.255.255.192"),getBinaryAddress("255.255.255.224"),getBinaryAddress("255.255.255.240"),getBinaryAddress("255.255.255.248"),getBinaryAddress("255.255.255.252"),getBinaryAddress("255.255.255.254"),getBinaryAddress("255.255.255.255")}
 
 function getNetworkAddress2(addr)
   if not type(addr) == "string" then error("Expected string, got "..type(addr).."!",2) end

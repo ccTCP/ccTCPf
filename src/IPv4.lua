@@ -43,10 +43,10 @@ function getNetworkAddress(address)
 	return network, machine, mask
 end
 
-function getBinaryAddress(address)
-	if type(address) ~= "string" then error("Expected string, got "..type(address).."!",2) end
+function getBinaryAddress(addr)
+	if type(addr) ~= "string" then error("Expected string, got "..type(addr).."!",2) end
 	local result = ""
-	for token in address:gmatch("[^%.]+") do
+	for token in addr:gmatch("[^%.]+") do
 		result = result..string.rep("0",8-#tostring(Utils.DecToBase(tonumber(token),2)))..tostring(Utils.DecToBase(tonumber(token),2))
 	end
 	return result
@@ -58,15 +58,11 @@ function getNetworkAddress2(addr)
   if not type(addr) == "string" then error("Expected string, got "..type(addr).."!",2) end
   local delim = addr:find("/")
   local binAddr = getBinaryAddress(addr:sub(1,-4))
-  local binAddrOctet = {Utils.toDec(binAddr:sub(1,8),2),Utils.toDec(binAddr:sub(9,16),2),Utils.toDec(binAddr:sub(17,24),2),Utils.toDec(binAddr:sub(25,32),2)}
+  print(binAddr)
+  local binAddrOctet = {binAddr:sub(1,8),binAddr:sub(9,16),binAddr:sub(17,24),binAddr:sub(25,32)}
+  print(binAddrOctet[1].."\n"..binAddrOctet[2].."\n"..binAddrOctet[3].."\n"..binAddrOctet[4])
   local binMask = cidrDecTbl[addr:sub(-2,-1)]
+  print(binMask)
   local binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)}
   print(Utils.toDec(binAddrOctet[1],2).." "..Utils.toDec(binMaskOctet[1],2))
-end
-
-function getBinaryAddress2(addr)
-  if not type(addr) == "string" then error("Expected string, got "..type(addr).."!",2) end
-  for octet in addr:gmatch("[^%.]+") do --match against values not equal to ".": should grab each octet
-    
-  end
 end

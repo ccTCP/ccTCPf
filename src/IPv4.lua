@@ -66,3 +66,27 @@ function getNetworkAddress2(addr)
   local binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)} --binary mask segmented by octect
   print("\n"..binMaskOctet[1].."\n"..binMaskOctet[2].."\n"..binMaskOctet[3].."\n"..binMaskOctet[4])
 end
+
+function getNetworkAddress2v2(address)
+  if not type(address) == "string" then error("Expected string, got "..type(addr).."!",2) end
+  --split address from cidr
+  local i = 1
+  for token in addr:gmatch("[^%/]+") do --finds values not equal to "/" which will be the address before "/" and the cidr mask after "/"
+    split[i] = token
+    i=i+1
+  end
+  local addr = split[1]
+  local cidr = split[2]
+  local binAddr = getBinaryAddress(addr)
+  local binAddrOctet = {binAddr:sub(1,8),binAddr:sub(9,16),binAddr:sub(17,24),binAddr:sub(25,32)}
+  local mask = cidrDecTbl[tonumber(cidr)]
+  local binMask = getBinaryAddress(mask)
+  local binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)}
+  print(addr)
+  print("\n"..binAddr)
+  print("\n"..binAddrOctet[1].."\n"..binAddrOctet[2].."\n"..binAddrOctet[3].."\n"..binAddrOctet[4].."\n")
+  print(cidr)
+  print(mask)
+  print("\n"..binMask)
+  print("\n"..binMaskOctet[1].."\n"..binMaskOctet[2].."\n"..binMaskOctet[3].."\n"..binMaskOctet[4].."\n")
+end

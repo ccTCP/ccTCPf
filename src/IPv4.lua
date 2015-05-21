@@ -70,11 +70,12 @@ function getNetworkAddress2(address)
   local mask = cidrDecTbl[tonumber(cidr)]
   local binMask = getBinaryAddress(mask)
   local binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)}
-  print(addr)
+  print("input: "..address)
+  print("address: "..addr)
   print("\n"..binAddr)
   print("\n"..binAddrOctet[1].."\n"..binAddrOctet[2].."\n"..binAddrOctet[3].."\n"..binAddrOctet[4].."\n")
-  print(cidr)
-  print(mask)
+  print("CIDR Mask: "..cidr)
+  print("Decimal Mask: "..mask)
   print("\n"..binMask)
   print("\n"..binMaskOctet[1].."\n"..binMaskOctet[2].."\n"..binMaskOctet[3].."\n"..binMaskOctet[4].."\n")
 end

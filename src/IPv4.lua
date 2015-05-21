@@ -71,7 +71,7 @@ function getNetworkAddress2v2(address)
   if not type(address) == "string" then error("Expected string, got "..type(addr).."!",2) end
   --split address from cidr
   local i = 1
-  for token in addr:gmatch("[^%/]+") do --finds values not equal to "/" which will be the address before "/" and the cidr mask after "/"
+  for token in address:gmatch("[^%/]+") do --finds values not equal to "/" which will be the address before "/" and the cidr mask after "/"
     split[i] = token
     i=i+1
   end

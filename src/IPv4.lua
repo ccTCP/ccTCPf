@@ -46,7 +46,7 @@ end
 function getBinaryAddress(address)
 	if type(address) ~= "string" then error("Expected string, got "..type(address).."!",2) end
 	local result = ""
-	for token in addr:gmatch("[^%.]+") do
+	for token in address:gmatch("[^%.]+") do
 		result = result..string.rep("0",8-#tostring(Utils.DecToBase(tonumber(token),2)))..tostring(Utils.DecToBase(tonumber(token),2))
 	end
 	return result

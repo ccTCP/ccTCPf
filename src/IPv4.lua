@@ -52,7 +52,7 @@ function getBinaryAddress(addr)
 	return result
 end
 
-local cidrDecTbl = {getBinaryAddress("128.0.0.0"),getBinaryAddress("192.0.0.0"),getBinaryAddress("224.0.0.0"),getBinaryAddress("240.0.0.0"),getBinaryAddress("248.0.0.0"),getBinaryAddress("252.0.0.0"),getBinaryAddress("254.0.0.0"),getBinaryAddress("255.0.0.0"),getBinaryAddress("255.128.0.0"),getBinaryAddress("255.192.0.0"),getBinaryAddress("255.224.0.0"),getBinaryAddress("255.240.0.0"),getBinaryAddress("255.248.0.0"),getBinaryAddress("255.252.0.0"),getBinaryAddress("255.254.0.0"),getBinaryAddress("255.255.0.0"),getBinaryAddress("255.255.128.0"),getBinaryAddress("255.255.192.0"),getBinaryAddress("255.255.224.0"),getBinaryAddress("255.255.240.0"),getBinaryAddress("255.255.248.0"),getBinaryAddress("255.255.252.0"),getBinaryAddress("255.255.254.0"),getBinaryAddress("255.255.255.0"),getBinaryAddress("255.255.255.128"),getBinaryAddress("255.255.255.192"),getBinaryAddress("255.255.255.224"),getBinaryAddress("255.255.255.240"),getBinaryAddress("255.255.255.248"),getBinaryAddress("255.255.255.252"),getBinaryAddress("255.255.255.254"),getBinaryAddress("255.255.255.255")}
+local cidrDecTbl = {"128.0.0.0","192.0.0.0","224.0.0.0","240.0.0.0","248.0.0.0","252.0.0.0","254.0.0.0","255.0.0.0","255.128.0.0","255.192.0.0","255.224.0.0","255.240.0.0","255.248.0.0","255.252.0.0","255.254.0.0","255.255.0.0","255.255.128.0","255.255.192.0","255.255.224.0","255.255.240.0","255.255.248.0","255.255.252.0","255.255.254.0","255.255.255.0","255.255.255.128","255.255.255.192","255.255.255.224","255.255.255.240","255.255.255.248","255.255.255.252","255.255.255.254","255.255.255.255"}
 
 function getNetworkAddress2(addr)
   if not type(addr) == "string" then error("Expected string, got "..type(addr).."!",2) end

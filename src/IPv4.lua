@@ -54,20 +54,7 @@ end
 
 local cidrDecTbl = {"128.0.0.0","192.0.0.0","224.0.0.0","240.0.0.0","248.0.0.0","252.0.0.0","254.0.0.0","255.0.0.0","255.128.0.0","255.192.0.0","255.224.0.0","255.240.0.0","255.248.0.0","255.252.0.0","255.254.0.0","255.255.0.0","255.255.128.0","255.255.192.0","255.255.224.0","255.255.240.0","255.255.248.0","255.255.252.0","255.255.254.0","255.255.255.0","255.255.255.128","255.255.255.192","255.255.255.224","255.255.255.240","255.255.255.248","255.255.255.252","255.255.255.254","255.255.255.255"}
 
-function getNetworkAddress2(addr)
-  if not type(addr) == "string" then error("Expected string, got "..type(addr).."!",2) end
-  local delim = addr:find("/")
-  local binAddr = getBinaryAddress(addr:sub(1,-4)) --full binary addr eg. 192.168.1.1 = 1100000010100000000000100000001
-  print("\n"..binAddr)
-  local binAddrOctet = {binAddr:sub(1,8),binAddr:sub(9,16),binAddr:sub(17,24),binAddr:sub(25,32)} --binary addr segmented by octet
-  print("\n"..binAddrOctet[1].."\n"..binAddrOctet[2].."\n"..binAddrOctet[3].."\n"..binAddrOctet[4])
-  local binMask = getBinaryAddress(cidrDecTbl[tonumber(addr:sub(-2,-1))]) --gets the full binary value of the converted cidr mask eg. /24 = 255.255.255.0 = 11111111111111111111111100000000 **SOMEHOW WORKING BUT NOT RETURNING ANY VALUE????**
-  print("\n"..binMask)
-  local binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)} --binary mask segmented by octect
-  print("\n"..binMaskOctet[1].."\n"..binMaskOctet[2].."\n"..binMaskOctet[3].."\n"..binMaskOctet[4])
-end
-
-function getNetworkAddress2v2(address)
+function getNetworkAddress2(address)
   if not type(address) == "string" then error("Expected string, got "..type(addr).."!",2) end
   --split address from cidr
   local i = 1

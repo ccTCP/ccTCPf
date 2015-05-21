@@ -2,6 +2,7 @@
 	Log API
 	by Creator
 	for TheOS
+	License: The thing that obtsucts you the most from doing anything without having to pay me 1 million dollars
 ]]--
 
 args = {...}

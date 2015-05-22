@@ -57,11 +57,11 @@ local cidrDecTbl = {"128.0.0.0","192.0.0.0","224.0.0.0","240.0.0.0","248.0.0.0",
 function getNetworkAddress2(address)
   if not type(address) == "string" then error("Expected string, got "..type(addr).."!",2) end
   --split address from cidr
-  local i = 1
+  local a = 1
   local split = {}
   for token in address:gmatch("[^%/]+") do --finds values not equal to "/" which will be the address before "/" and the cidr mask after "/"
-    split[i] = token
-    i=i+1
+    split[a] = token
+    a=a+1
   end
   local addr = split[1]
   local cidr = split[2]
@@ -70,7 +70,24 @@ function getNetworkAddress2(address)
   local mask = cidrDecTbl[tonumber(cidr)]
   local binMask = getBinaryAddress(mask)
   local binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)}
-  print(bit.band(binMask,binAddr))
+  local netAddr = ""
+  local b = 1
+  local c = 1
+  repeat
+    repeat
+      if(binMaskOctet[b]:sub(c,c) == "1" and binAddrOctet[b]:sub(c,c) == "1") then 
+        netAddr = netAddr.. "1"
+        c=c+1
+      else
+        netAddr = netAddr.. "0"
+        c=c+1
+      end
+    until c == 8
+    b=b+1
+    c=1
+  until b == 4
+  netAddrOctet = {netAddr:sub(1,8),netAddr:sub(9,16),netAddr:sub(17,24),netAddr:sub(25,32)}
+  print(netAddrOctet[1].."."..netAddrOctet[2].."."..netAddrOctet[3].."."..netAddrOctet[4])
 end
 
 function getAddressInfo(address)

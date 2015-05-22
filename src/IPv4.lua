@@ -71,22 +71,25 @@ function getNetworkAddress2(address)
   local binMask = getBinaryAddress(mask)
   local binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)}
   local netAddr = ""
+  local netAddrOctet = {"","","",""}
   local b = 1
   local c = 1
   repeat
     repeat
       if(binMaskOctet[b]:sub(c,c) == "1" and binAddrOctet[b]:sub(c,c) == "1") then 
         netAddr = netAddr.. "1"
+        netAddrOctet[b] = netAddrOctet[b].. "1"
         c=c+1
       else
         netAddr = netAddr.. "0"
+        netAddrOctet[b] = netAddrOctet[b].. "0"
         c=c+1
       end
     until c == 8
     b=b+1
     c=1
   until b == 4
-  netAddrOctet = {netAddr:sub(1,8),netAddr:sub(9,16),netAddr:sub(17,24),netAddr:sub(25,32)}
+  --netAddrOctet = {netAddr:sub(1,8),netAddr:sub(9,16),netAddr:sub(17,24),netAddr:sub(25,32)}
   print(netAddrOctet[1].."."..netAddrOctet[2].."."..netAddrOctet[3].."."..netAddrOctet[4])
 end
 

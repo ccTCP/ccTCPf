@@ -3,7 +3,7 @@
 ]]--
 
 --Variables
-local files = fs.list("ccTCP/ccTCPf/src")
+local files = fs.list("src")
 local t = {}
 local ending = [[
 function loadAPI(func)
@@ -47,11 +47,11 @@ else
   end
 end
 
-t["Utils"] = createFile("ccTCP/ccTCPf/src/Utils.lua")
+t["Utils"] = createFile("src/Utils.lua")
 
 for i,v in pairs(files) do
 	if v ~= "Utils.lua" then
-		t[string.match(v,"[^%.]+")] = createFile("ccTCP/ccTCPf/src/"..v)
+		t[string.match(v,"[^%.]+")] = createFile("src/"..v)
 	end
 end
 

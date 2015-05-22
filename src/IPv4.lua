@@ -83,28 +83,39 @@ function getNetworkAddress(address)
   print(Utils.toDec(netAddrOctet[1],2).."."..Utils.toDec(netAddrOctet[2],2).."."..Utils.toDec(netAddrOctet[3],2).."."..Utils.toDec(netAddrOctet[4],2))
 end
 
-function getAddressInfo(address)
+function getAddressInfo(address,rtnAddr,rtnFormat)
   if not type(address) == "string" then error("Expected string, got "..type(addr).."!",2) end
-  --split address from cidr
+  --split address from cidr mask
   local i = 1
   local split = {}
-  for token in address:gmatch("[^%/]+") do --finds values not equal to "/" which will be the address before "/" and the cidr mask after "/"
+  for token in address:gmatch("[^%/]+") do
     split[i] = token
     i=i+1
   end
+  --init vars
   local addr = split[1]
   local cidr = split[2]
+  
   local binAddr = getBinaryAddress(addr)
   local binAddrOctet = {binAddr:sub(1,8),binAddr:sub(9,16),binAddr:sub(17,24),binAddr:sub(25,32)}
+  
   local mask = cidrDecTbl[tonumber(cidr)]
   local binMask = getBinaryAddress(mask)
   local binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)}
-  print("input: "..address.."\n")
-  print("address: "..addr)
-  print(binAddr)
-  print(binAddrOctet[1].."\n"..binAddrOctet[2].."\n"..binAddrOctet[3].."\n"..binAddrOctet[4].."\n")
-  print("CIDR Mask: "..cidr)
-  print("Decimal Mask: "..mask)
-  print(binMask)
-  print(binMaskOctet[1].."\n"..binMaskOctet[2].."\n"..binMaskOctet[3].."\n"..binMaskOctet[4].."\n")
+  
+  local netAddr = ""
+  local netAddrOctet = {"","","",""}
+  
+  local numHost = ""
+  local hostAddr = {}
+  
+  local bcastAddr = ""
+  --End: init vars
+  
+  --Pre-IF code
+  
+  
+  
+  --End: Pre-IF code
+  
 end

@@ -3,7 +3,7 @@
 ]]--
 
 --Variables
-local files = fs.list("ccTCPf/src")
+local files = fs.list("ccTCP/ccTCPf/src")
 local t = {}
 local ending = [[
 function loadAPI(func)
@@ -39,14 +39,22 @@ local function createFile(path)
 	return data
 end
 
-t["Utils"] = createFile("ccTCPf/src/Utils.lua")
+if fs.exists("ccTCP/") then 
+  fs.delete("ccTCPf/")
+else 
+  if fs.exists("ccTCPf/") then
+    fs.delete("ccTCPf/")
+  end
+end
+
+t["Utils"] = createFile("ccTCP/ccTCPf/src/Utils.lua")
 
 for i,v in pairs(files) do
 	if v ~= "Utils.lua" then
-		t[string.match(v,"[^%.]+")] = createFile("ccTCPf/src/"..v)
+		t[string.match(v,"[^%.]+")] = createFile("ccTCP/ccTCPf/src/"..v)
 	end
 end
 
-local file = fs.open("well.lua","w")
+local file = fs.open("mount.lua","w")
 file.write("t = "..textutils.serialize(t).."\n\n"..ending)
 file.close()

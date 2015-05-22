@@ -78,11 +78,11 @@ function getNetworkAddress(address)
         write("0")
         c=c+1
       end
-    until c == 8
+    until c == 9
     print()
     b=b+1
     c=1
-  until b == 4
+  until b == 5
   --netAddrOctet = {netAddr:sub(1,8),netAddr:sub(9,16),netAddr:sub(17,24),netAddr:sub(25,32)}
   print(netAddrOctet[1].."."..netAddrOctet[2].."."..netAddrOctet[3].."."..netAddrOctet[4])
 end

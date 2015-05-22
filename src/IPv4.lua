@@ -105,17 +105,51 @@ function getAddressInfo(address,rtnAddr,rtnFormat)
   
   local netAddr = ""
   local netAddrOctet = {"","","",""}
-  
+  local bcastAddr = ""
+  local netLen = ""
   local numHost = ""
   local hostAddr = {}
-  
-  local bcastAddr = ""
   --End: init vars
   
   --Pre-IF code
   
+    --Get Network Addr: Performs true bitwise AND
+  local b = 1
+  local c = 1
+  repeat
+    repeat
+      if(binMaskOctet[b]:sub(c,c) == "1" and binAddrOctet[b]:sub(c,c) == "1") then 
+        netAddr = netAddr.. "1"
+        netAddrOctet[b] = netAddrOctet[b].. "1"
+        c=c+1
+      else
+        netAddr = netAddr.. "0"
+        netAddrOctet[b] = netAddrOctet[b].. "0"
+        c=c+1
+      end
+    until c == 9
+    b=b+1
+    c=1
+  until b == 5
   
+    --Get network length
+  local d = 1
+  local e = 1
+  repeat
+    repeat
+      if(binMaskOctet[d]:sub(e,e) == "1") then 
+        netLen = netLen.. "0"
+      else
+        netLen = netLen.. "1"
+      end
+    until e == 9
+  until d == 5
   
+    --Get BCast Addr :: Network + Len
+  
+   
+    --Get number of hosts in network range
+  numHost = netLen-2
+    
   --End: Pre-IF code
-  
 end

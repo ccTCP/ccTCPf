@@ -33,15 +33,6 @@ local address_classes = {
 
 
 --Functions
-function getNetworkAddress(address)
-	if type(address) ~= "string" then error("Expected string, got "..type(address).."!",2) end
-	local place = address:find("/")
-	local binary = getBinaryAddress(address)
-	local mask = tonumber(address:sub(place+1,-1))
-	local network = binary:sub(1,mask)
-	local machine = binary:sub(mask+1,-1)
-	return network, machine, mask
-end
 
 function getBinaryAddress(addr)
 	if type(addr) ~= "string" then error("Expected string, got "..type(addr).."!",2) end
@@ -79,13 +70,16 @@ function getNetworkAddress2(address)
       if(binMaskOctet[b]:sub(c,c) == "1" and binAddrOctet[b]:sub(c,c) == "1") then 
         netAddr = netAddr.. "1"
         netAddrOctet[b] = netAddrOctet[b].. "1"
+        write("1")
         c=c+1
       else
         netAddr = netAddr.. "0"
         netAddrOctet[b] = netAddrOctet[b].. "0"
+        write("0")
         c=c+1
       end
     until c == 8
+    print()
     b=b+1
     c=1
   until b == 4

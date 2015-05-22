@@ -70,7 +70,7 @@ function getNetworkAddress2(address)
   local mask = cidrDecTbl[tonumber(cidr)]
   local binMask = getBinaryAddress(mask)
   local binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)}
-  
+  print(bit.band(binMask,binAddr))
 end
 
 function getAddressInfo(address)

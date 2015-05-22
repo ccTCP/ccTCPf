@@ -83,8 +83,7 @@ function getNetworkAddress(address)
     b=b+1
     c=1
   until b == 5
-  --netAddrOctet = {netAddr:sub(1,8),netAddr:sub(9,16),netAddr:sub(17,24),netAddr:sub(25,32)}
-  print(netAddrOctet[1].."."..netAddrOctet[2].."."..netAddrOctet[3].."."..netAddrOctet[4])
+  print(Utils.toDec(netAddrOctet[1],2).."."..Utils.toDec(netAddrOctet[2],2).."."..Utils.toDec(netAddrOctet[3],2).."."..Utils.toDec(netAddrOctet[4],2))
 end
 
 function getAddressInfo(address)

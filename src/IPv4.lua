@@ -70,16 +70,13 @@ function getNetworkAddress(address)
       if(binMaskOctet[b]:sub(c,c) == "1" and binAddrOctet[b]:sub(c,c) == "1") then 
         netAddr = netAddr.. "1"
         netAddrOctet[b] = netAddrOctet[b].. "1"
-        write("1")
         c=c+1
       else
         netAddr = netAddr.. "0"
         netAddrOctet[b] = netAddrOctet[b].. "0"
-        write("0")
         c=c+1
       end
     until c == 9
-    print()
     b=b+1
     c=1
   until b == 5

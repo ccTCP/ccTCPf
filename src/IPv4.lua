@@ -92,27 +92,30 @@ function getAddressInfo(address,rtnAddr,rtnFormat)
     split[i] = token
     i=i+1
   end
+  
   --init vars
-  local addr = split[1]
-  local cidr = split[2]
+  local vars = {
+    addr = split[1]
+    cidr= split[2]
   
-  local binAddr = getBinaryAddress(addr)
-  local binAddrOctet = {binAddr:sub(1,8),binAddr:sub(9,16),binAddr:sub(17,24),binAddr:sub(25,32)}
+    binAddr = getBinaryAddress(addr)
+    binAddrOctet = {binAddr:sub(1,8),binAddr:sub(9,16),binAddr:sub(17,24),binAddr:sub(25,32)}
   
-  local mask = cidrDecTbl[tonumber(cidr)]
-  local binMask = getBinaryAddress(mask)
-  local binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)}
-  local wildMask = ""
+    mask = cidrDecTbltonumber[(cidr)]
+    binMask = getBinaryAddress(mask)
+    binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)}
+    wildMask = ""
   
-  local binNetAddr = ""
-  local binNetAddrOctet = {"","","",""}
-  local netAddr = ""
-  local bcastAddr = ""
-  local netLen = ""
-  local numHost = ""
-  local hostAddr = {}
-  --End: init vars
-  
+    binNetAddr = ""
+    binNetAddrOctet = {"","","",""}
+    netAddr = ""
+    binBcastAddr = ""
+    binBcastAddrOctet = {"","","",""}
+    netLen = ""
+    numHost = ""
+    hostAddr = {}
+  }
+
   --Pre-IF code
   
     --Get Network Addr: Performs true bitwise AND
@@ -120,7 +123,7 @@ function getAddressInfo(address,rtnAddr,rtnFormat)
   local c = 1
   repeat
     repeat
-      if(binMaskOctet[b]:sub(c,c) == "1" and binAddrOctet[b]:sub(c,c) == "1") then 
+      if(vars.binMaskOctet[b]:sub(c,c) == "1" and binAddrOctet[b]:sub(c,c) == "1") then 
         binNetAddr = binNetAddr.. "1"
         binNetAddrOctet[b] = binNetAddrOctet[b].. "1"
         c=c+1
@@ -158,5 +161,4 @@ function getAddressInfo(address,rtnAddr,rtnFormat)
   numHost = netLen-2
     
   --End: Pre-IF code
-  print("Network: "..netAddr
 end

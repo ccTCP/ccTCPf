@@ -61,26 +61,26 @@ function getNetworkAddress(address)
   local mask = cidrDecTbl[tonumber(cidr)]
   local binMask = getBinaryAddress(mask)
   local binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)}
-  local netAddr = ""
-  local netAddrOctet = {"","","",""}
+  local binNetAddr = ""
+  local binNetAddrOctet = {"","","",""}
   local b = 1
   local c = 1
   repeat
     repeat
       if(binMaskOctet[b]:sub(c,c) == "1" and binAddrOctet[b]:sub(c,c) == "1") then 
-        netAddr = netAddr.. "1"
-        netAddrOctet[b] = netAddrOctet[b].. "1"
+        binNetAddr = binNetAddr.. "1"
+        binNetAddrOctet[b] = binNetAddrOctet[b].. "1"
         c=c+1
       else
-        netAddr = netAddr.. "0"
-        netAddrOctet[b] = netAddrOctet[b].. "0"
+        binNetAddr = binNetAddr.. "0"
+        binNetAddrOctet[b] = binNetAddrOctet[b].. "0"
         c=c+1
       end
     until c == 9
     b=b+1
     c=1
   until b == 5
-  print(Utils.toDec(netAddrOctet[1],2).."."..Utils.toDec(netAddrOctet[2],2).."."..Utils.toDec(netAddrOctet[3],2).."."..Utils.toDec(netAddrOctet[4],2))
+  print(Utils.toDec(binNetAddrOctet[1],2).."."..Utils.toDec(binNetAddrOctet[2],2).."."..Utils.toDec(binNetAddrOctet[3],2).."."..Utils.toDec(binNetAddrOctet[4],2))
 end
 
 function getAddressInfo(address,rtnAddr,rtnFormat)
@@ -102,9 +102,11 @@ function getAddressInfo(address,rtnAddr,rtnFormat)
   local mask = cidrDecTbl[tonumber(cidr)]
   local binMask = getBinaryAddress(mask)
   local binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)}
+  local wildMask = ""
   
+  local binNetAddr = ""
+  local binNetAddrOctet = {"","","",""}
   local netAddr = ""
-  local netAddrOctet = {"","","",""}
   local bcastAddr = ""
   local netLen = ""
   local numHost = ""
@@ -119,12 +121,12 @@ function getAddressInfo(address,rtnAddr,rtnFormat)
   repeat
     repeat
       if(binMaskOctet[b]:sub(c,c) == "1" and binAddrOctet[b]:sub(c,c) == "1") then 
-        netAddr = netAddr.. "1"
-        netAddrOctet[b] = netAddrOctet[b].. "1"
+        binNetAddr = binNetAddr.. "1"
+        binNetAddrOctet[b] = binNetAddrOctet[b].. "1"
         c=c+1
       else
-        netAddr = netAddr.. "0"
-        netAddrOctet[b] = netAddrOctet[b].. "0"
+        binNetAddr = binNetAddr.. "0"
+        binNetAddrOctet[b] = binNetAddrOctet[b].. "0"
         c=c+1
       end
     until c == 9
@@ -132,19 +134,23 @@ function getAddressInfo(address,rtnAddr,rtnFormat)
     c=1
   until b == 5
   
-    --Get network length
+    --Get wildcard mask: Performs true bitwise NOT
   local d = 1
   local e = 1
   repeat
     repeat
       if(binMaskOctet[d]:sub(e,e) == "1") then 
-        netLen = netLen.. "0"
+        wildMask = wildMask.. "0"
+        e=e+1
       else
-        netLen = netLen.. "1"
+        wildMask = wildMask.. "1"
+        e=e+1
       end
     until e == 9
+    d=d+1
+    e=1
   until d == 5
-  
+  netLen = tonumber(wildMask,2)
     --Get BCast Addr :: Network + Len
   
    
@@ -152,4 +158,5 @@ function getAddressInfo(address,rtnAddr,rtnFormat)
   numHost = netLen-2
     
   --End: Pre-IF code
+  print("Network: "..netAddr
 end

@@ -110,36 +110,33 @@ function getNetworkAddress(address)
 end
 
 function getAddressInfo(address,rtnAddr)
-  if not type(address) == "string" then error("Expected string, got "..type(addr).."!",2) end
-  --split address from cidr mask
-  local split = {}
-  for token in address:gmatch("[^%/]+") do
-	split[#split+1] = token
-  end
-  
-  --init vars
-  local vars = {
-	addr = split[1]
-	cidr = split[2]
-  
-	binAddr = getBinaryAddress(addr)
-	binAddrOctet = {vars.binAddr:sub(1,8),vars.binAddr:sub(9,16),vars.binAddr:sub(17,24),vars.binAddr:sub(25,32)}
-  
-	mask = cidrDecTbl[tonumber(cidr)]
-	binMask = getBinaryAddress(mask)
-	binMaskOctet = {vars.binMask:sub(1,8),vars.binMask:sub(9,16),vars.binMask:sub(17,24),vars.binMask:sub(25,32)}
-	wildMask = ""
-  
-	binNetAddr = ""
-	binNetAddrOctet = {"","","",""}
-	netAddr = ""
-	binBcastAddr = ""
-	binBcastAddrOctet = {"","","",""}
-	bcastAddr = ""
-	netLen = ""
-	numHosts = ""
-	hostAddr = {}
-  }
+ 	if not type(address) == "string" then error("Expected string, got "..type(addr).."!",2) end
+ 	--split address from cidr mask
+ 	local split = {}
+ 	for token in address:gmatch("[^%/]+") do
+ 		split[#split+1] = token
+ 	end
+ 	
+ 	--init vars
+ 	local vars = {
+	addr = split[1],
+		cidr = split[2],
+		binAddr = getBinaryAddress(addr),
+		binAddrOctet = {vars.binAddr:sub(1,8),vars.binAddr:sub(9,16),vars.binAddr:sub(17,24),vars.binAddr:sub(25,32)},
+		mask = cidrDecTbl[tonumber(cidr)],
+		binMask = getBinaryAddress(mask),
+		binMaskOctet = {vars.binMask:sub(1,8),vars.binMask:sub(9,16),vars.binMask:sub(17,24),vars.binMask:sub(25,32)},
+		wildMask = "",
+		binNetAddr = "",
+		binNetAddrOctet = {"","","",""},
+		netAddr = "",
+		binBcastAddr = "",
+		binBcastAddrOctet = {"","","",""},
+		bcastAddr = "",
+		netLen = "",
+		numHosts = "",
+		hostAddr = {},
+	}
   
   --Calculate Addresses
   local b = 1

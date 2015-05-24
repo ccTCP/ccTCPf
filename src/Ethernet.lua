@@ -27,10 +27,10 @@ THE SOFTWARE.
 --Ethernet
 --Variables
 local mac = {}
-local stndFrame = {preamble = {100},dstMac,srcMac,type_len = {MTU = 1500,TTL = 255},data,crc = Utils.crc(stndFrame)}
-local dotQFrame = {preamble = {200},dstMac,srcMac,vlan,type_len = {MTU = 1504,TTL = 255},data,crc = Utils.crc(dotQFrame)}
-local stndFrameTemp = {preamble = {100},dstMac,srcMac,type_len = {MTU = 1500,TTL = 255},data,crc = Utils.crc(stndFrame)}
-local dotQFrameTemp = {preamble = {200},dstMac,srcMac,vlan,type_len = {MTU = 1504,TTL = 255},data,crc = Utils.crc(dotQFrame)}
+local stndFrame = {preamble = {100},type_len = {MTU = 1500,TTL = 255}}
+local dotQFrame = {preamble = {200},type_len = {MTU = 1504,TTL = 255}}
+local stndFrameTemp = {preamble = {100},type_len = {MTU = 1500,TTL = 255}}
+local dotQFrameTemp = {preamble = {200},type_len = {MTU = 1504,TTL = 255}}
 
 --Functions
 function createMac(side)

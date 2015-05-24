@@ -139,39 +139,27 @@ function getAddressInfo(address,rtnAddr)
 	}
   
   --Calculate Addresses
-  local b = 1
-  local c = 1
-  repeat
-	repeat
-	  if(vars.binMaskOctet[b]:sub(c,c) == "1" and vars.binAddrOctet[b]:sub(c,c) == "1") then 
-		vars.binNetAddr = vars.binNetAddr.. "1"
-		vars.binNetAddrOctet[b] = vars.binNetAddrOctet[b].. "1"
-		c=c+1
-	  else
-		vars.binNetAddr = vars.binNetAddr.. "0"
-		vars.binNetAddrOctet[b] = vars.binNetAddrOctet[b].. "0"
-		c=c+1
-	  end
-	until c == 9
-	b=b+1
-	c=1
-  until b == 5
+  for b=1,5 do
+    for c=1,9 do
+      if(vars.binMaskOctet[b]:sub(c,c) == "1" and vars.binAddrOctet[b]:sub(c,c) == "1") then 
+        vars.binNetAddr = vars.binNetAddr.. "1"
+        vars.binNetAddrOctet[b] = vars.binNetAddrOctet[b].. "1"
+      else
+        vars.binNetAddr = vars.binNetAddr.. "0"
+        vars.binNetAddrOctet[b] = vars.binNetAddrOctet[b].. "0"
+      end
+    end
+	end
   vars.netAddr = tostring(Utils.toDec(tonumber(binNetAddrOctet[1]),2).."."..Utils.toDec(tonumber(binNetAddrOctet[2]),2).."."..Utils.toDec(tonumber(binNetAddrOctet[3]),2).."."..Utils.toDec(tonumber(binNetAddrOctet[4]),2))
-  local d = 1
-  local e = 1
-  repeat
-	repeat
-	  if(vars.binMaskOctet[d]:sub(e,e) == "1") then 
-		vars.wildMask = vars.wildMask.. "0"
-		e=e+1
-	  else
-		vars.wildMask = vars.wildMask.. "1"
-		e=e+1
-	  end
-	until e == 9
-	d=d+1
-	e=1
-  until d == 5
+  for d=1,5 do
+    for e=1,9 do
+      if(vars.binMaskOctet[d]:sub(e,e) == "1") then 
+        vars.wildMask = vars.wildMask.. "0"
+      else
+        vars.wildMask = vars.wildMask.. "1"
+      end
+    end
+  end
   vars.netLen = tonumber(vars.wildMask,2)
   vars.numHosts = vars.netLen-2
   --End: Calculate Addresses

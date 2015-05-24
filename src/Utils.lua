@@ -27,6 +27,19 @@ THE SOFTWARE.
 config = {}
 config.dir = "ccTCP/"
 
+function log(dest,msg,app)
+	if not doLog then return end
+	local finalMsg = "["..os.day()..":"..os.time().."]"
+	if app then
+		finalMsg = finalMsg..".["..tostring(app).."]:"..tostring(msg)
+	else
+		finalMsg = finalMsg..":"..tostring(msg)
+	end
+	local m = fs.open(config.dir.."Logs/"..dest..".log","a")
+	m.write(finalMsg.."\n")
+	m.close()
+end
+
 function DecToBase(val,base)
 	if val == 0 then return 0 end
 	local b, k, result, d = base or 10, "0123456789ABCDEFGHIJKLMNOPQRSTUVW",""

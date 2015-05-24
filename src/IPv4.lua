@@ -94,7 +94,7 @@ function getAddressInfo(address,rtnAddr)
   end
   
   --init vars
-  local vars = {
+  local vars = {}
     addr = split[1]
     cidr = split[2]
   
@@ -115,7 +115,7 @@ function getAddressInfo(address,rtnAddr)
     netLen = ""
     numHosts = ""
     hostAddr = {}
-  }
+    
   --Calculate Addresses: network,broadcast and then derive: networkLenght,NumberofHosts,HostsAddressTbl, in the binary, binary_in_table and dotted decimal forms.
   local b = 1
   local c = 1

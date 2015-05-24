@@ -59,12 +59,12 @@ function receive()
 	local checksum = frame:sub(-5,-1)
 	local destMac = frame:sub(1,6)
 	local sourceMac = frame:sub(7,12)
-  local payloadLen = string.len(frame:sub(13,-6))
+	local payloadLen = string.len(frame:sub(13,-6))
 	if destMac == getMac(recvInt) then
 		if checksum == Utils.crc(frame:sub(1,-6)) then
-      if payloadLen > MTU then
-        return error("MTU exceeded. Payload: "..payloadLen.." > MTU: "..MTU,2)
-      else
+    		if payloadLen > MTU then
+        	return error("MTU exceeded. Payload: "..payloadLen.." > MTU: "..MTU,2)
+    	else
         return frame:sub(13,-6)
         
       end

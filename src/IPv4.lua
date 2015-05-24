@@ -87,7 +87,7 @@ function getAddressInfo(address,rtnAddr)
   if not type(address) == "string" then error("Expected string, got "..type(addr).."!",2) end
   --split address from cidr mask
   local i = 1
-  local split = {}
+  split = {}
   for token in address:gmatch("[^%/]+") do
     split[i] = token
     i=i+1

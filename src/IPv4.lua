@@ -96,14 +96,14 @@ function getAddressInfo(address,rtnAddr,rtnFormat)
   --init vars
   local vars = {
     addr = split[1]
-    cidr= split[2]
+    cidr = split[2]
   
     binAddr = getBinaryAddress(addr)
-    binAddrOctet = {binAddr:sub(1,8),binAddr:sub(9,16),binAddr:sub(17,24),binAddr:sub(25,32)}
+    binAddrOctet = {vars.binAddr:sub(1,8),vars.binAddr:sub(9,16),vars.binAddr:sub(17,24),vars.binAddr:sub(25,32)}
   
     mask = cidrDecTbltonumber[(cidr)]
     binMask = getBinaryAddress(mask)
-    binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)}
+    binMaskOctet = {vars.binMask:sub(1,8),vars.binMask:sub(9,16),vars.binMask:sub(17,24),vars.binMask:sub(25,32)}
     wildMask = ""
   
     binNetAddr = ""
@@ -112,24 +112,21 @@ function getAddressInfo(address,rtnAddr,rtnFormat)
     binBcastAddr = ""
     binBcastAddrOctet = {"","","",""}
     netLen = ""
-    numHost = ""
+    numHosts = ""
     hostAddr = {}
   }
 
-  --Pre-IF code
-  
-    --Get Network Addr: Performs true bitwise AND
   local b = 1
   local c = 1
   repeat
     repeat
-      if(vars.binMaskOctet[b]:sub(c,c) == "1" and binAddrOctet[b]:sub(c,c) == "1") then 
-        binNetAddr = binNetAddr.. "1"
-        binNetAddrOctet[b] = binNetAddrOctet[b].. "1"
+      if(vars.binMaskOctet[b]:sub(c,c) == "1" and vars.binAddrOctet[b]:sub(c,c) == "1") then 
+        vars.binNetAddr = vars.binNetAddr.. "1"
+        vars.binNetAddrOctet[b] = vars.binNetAddrOctet[b].. "1"
         c=c+1
       else
-        binNetAddr = binNetAddr.. "0"
-        binNetAddrOctet[b] = binNetAddrOctet[b].. "0"
+        vars.binNetAddr = vars.binNetAddr.. "0"
+        vars.binNetAddrOctet[b] = vars.binNetAddrOctet[b].. "0"
         c=c+1
       end
     until c == 9
@@ -137,28 +134,22 @@ function getAddressInfo(address,rtnAddr,rtnFormat)
     c=1
   until b == 5
   
-    --Get wildcard mask: Performs true bitwise NOT
   local d = 1
   local e = 1
   repeat
     repeat
-      if(binMaskOctet[d]:sub(e,e) == "1") then 
-        wildMask = wildMask.. "0"
+      if(vars.binMaskOctet[d]:sub(e,e) == "1") then 
+        vars.wildMask = vars.wildMask.. "0"
         e=e+1
       else
-        wildMask = wildMask.. "1"
+        vars.wildMask = vars.wildMask.. "1"
         e=e+1
       end
     until e == 9
     d=d+1
     e=1
   until d == 5
-  netLen = tonumber(wildMask,2)
-    --Get BCast Addr :: Network + Len
-  
-   
-    --Get number of hosts in network range
-  numHost = netLen-2
-    
-  --End: Pre-IF code
+  vars.netLen = tonumber(vars.wildMask,2)
+
+  vars.numHosts = vars.netLen-2
 end

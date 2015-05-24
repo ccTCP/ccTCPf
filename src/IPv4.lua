@@ -83,7 +83,7 @@ function getNetworkAddress(address)
   print(Utils.toDec(binNetAddrOctet[1],2).."."..Utils.toDec(binNetAddrOctet[2],2).."."..Utils.toDec(binNetAddrOctet[3],2).."."..Utils.toDec(binNetAddrOctet[4],2))
 end
 
-function getAddressInfo(address,rtnAddr,rtnFormat)
+function getAddressInfo(address,rtnAddr)
   if not type(address) == "string" then error("Expected string, got "..type(addr).."!",2) end
   --split address from cidr mask
   local i = 1

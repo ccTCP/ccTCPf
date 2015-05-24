@@ -134,7 +134,7 @@ function getAddressInfo(address,rtnAddr)
     b=b+1
     c=1
   until b == 5
-  vars.netAddr = Utils.toDec(tonumber(vars.binNetAddr),2)
+  vars.netAddr = Utils.toDec(tonumber(vars.binNetAddrOctet[1]),2).."."..Utils.toDec(tonumber(vars.binNetAddrOctet[2]),2).."."..Utils.toDec(tonumber(vars.binNetAddrOctet[3]),2).."."..Utils.toDec(tonumber(vars.binNetAddrOctet[4]),2)
   local d = 1
   local e = 1
   repeat

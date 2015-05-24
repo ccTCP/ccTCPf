@@ -25,9 +25,9 @@ function loadAPI( _sPath )
     return true
 end
 
-for i,v in pairs(fs.list("ccTCPf/src")) do
-    if not fs.isDir("ccTCPf/src/"..v) then
-        loadAPI("ccTCPf/src/"..v)
+for i,v in pairs(fs.list("src")) do
+    if not fs.isDir("src/"..v) then
+        loadAPI("src/"..v)
     end
 end
 Interface.open("top")

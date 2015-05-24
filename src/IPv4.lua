@@ -159,7 +159,7 @@ function getAddressInfo(address,rtnAddr)
 	b=b+1
 	c=1
   until b == 5
-  vars.netAddr = Utils.toDec(tonumber(vars.binNetAddr),2)
+  vars.netAddr = tostring(Utils.toDec(tonumber(binNetAddrOctet[1]),2).."."..Utils.toDec(tonumber(binNetAddrOctet[2]),2).."."..Utils.toDec(tonumber(binNetAddrOctet[3]),2).."."..Utils.toDec(tonumber(binNetAddrOctet[4]),2))
   local d = 1
   local e = 1
   repeat
@@ -177,5 +177,6 @@ function getAddressInfo(address,rtnAddr)
   until d == 5
   vars.netLen = tonumber(vars.wildMask,2)
   vars.numHosts = vars.netLen-2
+  vars.bcastAddr
   --End: Calculate Addresses
 end

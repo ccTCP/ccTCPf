@@ -140,7 +140,8 @@ function getAddressInfo(address,rtnAddr)
 	numHosts = ""
 	hostAddr = {}
   }
-
+  
+  --Calculate Addresses
   local b = 1
   local c = 1
   repeat
@@ -176,5 +177,5 @@ function getAddressInfo(address,rtnAddr)
   until d == 5
   vars.netLen = tonumber(vars.wildMask,2)
   vars.numHosts = vars.netLen-2
-  
+  --End: Calculate Addresses
 end

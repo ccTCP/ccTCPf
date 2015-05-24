@@ -58,3 +58,4 @@ end
 local file = fs.open("mount.lua","w")
 file.write("t = "..textutils.serialize(t).."\n\n"..ending)
 file.close()
+os.loadAPI("mount.lua")

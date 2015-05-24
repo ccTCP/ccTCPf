@@ -101,7 +101,7 @@ function getAddressInfo(address,rtnAddr)
     binAddr = getBinaryAddress(addr)
     binAddrOctet = {vars.binAddr:sub(1,8),vars.binAddr:sub(9,16),vars.binAddr:sub(17,24),vars.binAddr:sub(25,32)}
   
-    mask = cidrDecTbltonumber[(cidr)]
+    mask = cidrDecTbl[tonumber(cidr)]
     binMask = getBinaryAddress(mask)
     binMaskOctet = {vars.binMask:sub(1,8),vars.binMask:sub(9,16),vars.binMask:sub(17,24),vars.binMask:sub(25,32)}
     wildMask = ""

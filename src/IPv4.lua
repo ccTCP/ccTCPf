@@ -174,6 +174,6 @@ function getAddressInfo(address,rtnAddr)
   until d == 5
   vars.netLen = tonumber(vars.wildMask,2)
   vars.numHosts = vars.netLen-2
-  vars.bcastAddr
   --End: Calculate Addresses
+  
 end

@@ -76,6 +76,10 @@ function receive()
 	end
 end
 
+function typeRecevie()
+  local frame, recvInt = Interface.receive()
+  
+end
 
 
 function send(destination,data,int,option,vlan)

@@ -95,23 +95,17 @@ function getNetworkAddress(address)
 
 	local binNetAddr = ""
 	local binNetAddrOctet = {"","","",""}
-	local b = 1
-	local c = 1
-	repeat
-		repeat
-		if(binMaskOctet[b]:sub(c,c) == "1" and binAddrOctet[b]:sub(c,c) == "1") then 
-		binNetAddr = binNetAddr.. "1"
-		binNetAddrOctet[b] = binNetAddrOctet[b].. "1"
-		c=c+1
-		 else
-		binNetAddr = binNetAddr.. "0"
-		binNetAddrOctet[b] = binNetAddrOctet[b].. "0"
-		c=c+1
+	for b=1,5 do
+		for c = 1, 9 do
+			if binMaskOctet[b]:sub(c,c) == "1" and binAddrOctet[b]:sub(c,c) == "1" then 
+				binNetAddr = binNetAddr.. "1"
+				binNetAddrOctet[b] = binNetAddrOctet[b].. "1"
+			else
+				binNetAddr = binNetAddr.. "0"
+				binNetAddrOctet[b] = binNetAddrOctet[b].. "0"
+			end
 		end
-		until c == 9
-		b=b+1
-		c=1
-	until b == 5
+	end
 	print(Utils.toDec(binNetAddrOctet[1],2).."."..Utils.toDec(binNetAddrOctet[2],2).."."..Utils.toDec(binNetAddrOctet[3],2).."."..Utils.toDec(binNetAddrOctet[4],2))
 end
 

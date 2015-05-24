@@ -95,26 +95,26 @@ function getAddressInfo(address,rtnAddr)
   
   --init vars
   local vars = {}
-    addr = split[1]
-    cidr = split[2]
+    vars.addr = split[1]
+    vars.cidr = split[2]
   
-    binAddr = getBinaryAddress(addr)
-    binAddrOctet = {vars.binAddr:sub(1,8),vars.binAddr:sub(9,16),vars.binAddr:sub(17,24),vars.binAddr:sub(25,32)}
+    vars.binAddr = getBinaryAddress(addr)
+    vars.binAddrOctet = {vars.binAddr:sub(1,8),vars.binAddr:sub(9,16),vars.binAddr:sub(17,24),vars.binAddr:sub(25,32)}
   
-    mask = cidrDecTbl[tonumber(cidr)]
-    binMask = getBinaryAddress(mask)
-    binMaskOctet = {vars.binMask:sub(1,8),vars.binMask:sub(9,16),vars.binMask:sub(17,24),vars.binMask:sub(25,32)}
-    wildMask = ""
+    vars.mask = cidrDecTbl[tonumber(cidr)]
+    vars.binMask = getBinaryAddress(mask)
+    vars.binMaskOctet = {vars.binMask:sub(1,8),vars.binMask:sub(9,16),vars.binMask:sub(17,24),vars.binMask:sub(25,32)}
+    vars.wildMask = ""
   
-    binNetAddr = ""
-    binNetAddrOctet = {"","","",""}
-    netAddr = ""
-    binBcastAddr = ""
-    binBcastAddrOctet = {"","","",""}
-    bcastAddr = ""
-    netLen = ""
-    numHosts = ""
-    hostAddr = {}
+    vars.binNetAddr = ""
+    vars.binNetAddrOctet = {"","","",""}
+    vars.netAddr = ""
+    vars.binBcastAddr = ""
+    vars.binBcastAddrOctet = {"","","",""}
+    vars.bcastAddr = ""
+    vars.netLen = ""
+    vars.numHosts = ""
+    vars.hostAddr = {}
     
   --Calculate Addresses: network,broadcast and then derive: networkLenght,NumberofHosts,HostsAddressTbl, in the binary, binary_in_table and dotted decimal forms.
   local b = 1

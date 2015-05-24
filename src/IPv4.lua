@@ -111,6 +111,7 @@ function getAddressInfo(address,rtnAddr)
     netAddr = ""
     binBcastAddr = ""
     binBcastAddrOctet = {"","","",""}
+    bcastAddr = ""
     netLen = ""
     numHosts = ""
     hostAddr = {}
@@ -133,7 +134,7 @@ function getAddressInfo(address,rtnAddr)
     b=b+1
     c=1
   until b == 5
-  
+  vars.netAddr = Utils.toDec(tonumber(vars.binNetAddr),2)
   local d = 1
   local e = 1
   repeat
@@ -150,6 +151,6 @@ function getAddressInfo(address,rtnAddr)
     e=1
   until d == 5
   vars.netLen = tonumber(vars.wildMask,2)
-
   vars.numHosts = vars.netLen-2
+  
 end

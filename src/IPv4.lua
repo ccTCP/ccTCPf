@@ -98,11 +98,11 @@ function getAddressInfo(address,rtnAddr)
     vars.addr = split[1]
     vars.cidr = split[2]
   
-    vars.binAddr = getBinaryAddress(addr)
+    vars.binAddr = getBinaryAddress(vars.addr)
     vars.binAddrOctet = {vars.binAddr:sub(1,8),vars.binAddr:sub(9,16),vars.binAddr:sub(17,24),vars.binAddr:sub(25,32)}
   
-    vars.mask = cidrDecTbl[tonumber(cidr)]
-    vars.binMask = getBinaryAddress(mask)
+    vars.mask = cidrDecTbl[tonumber(vars.cidr)]
+    vars.binMask = getBinaryAddress(vars.mask)
     vars.binMaskOctet = {vars.binMask:sub(1,8),vars.binMask:sub(9,16),vars.binMask:sub(17,24),vars.binMask:sub(25,32)}
     vars.wildMask = ""
   

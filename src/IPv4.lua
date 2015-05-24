@@ -116,7 +116,7 @@ function getAddressInfo(address,rtnAddr)
     numHosts = ""
     hostAddr = {}
   }
-
+  --Calculate Addresses: network,broadcast and then derive: networkLenght,NumberofHosts,HostsAddressTbl, in the binary, binary_in_table and dotted decimal forms.
   local b = 1
   local c = 1
   repeat
@@ -152,5 +152,6 @@ function getAddressInfo(address,rtnAddr)
   until d == 5
   vars.netLen = tonumber(vars.wildMask,2)
   vars.numHosts = vars.netLen-2
+  --End: Calculate Addresses:
   
 end

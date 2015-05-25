@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 --]]
-
+debug = true
 config = {}
 config.dir = "ccTCP/"
 
@@ -38,6 +38,12 @@ function log(dest,msg,app)
 	local m = fs.open(config.dir.."Logs/"..dest..".log","a")
 	m.write(finalMsg.."\n")
 	m.close()
+end
+
+function debugPrint(...)
+	if debug then
+		print(...)
+	end
 end
 
 function DecToBase(val,base)

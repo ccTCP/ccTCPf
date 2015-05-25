@@ -61,12 +61,18 @@ function receive(bNotCheckDest)
 	if not bNotCheckDest then
 		while true do
 			local frame, recvInt = Interface.receive()
+			Utils.log("log",frame)
+			Utils.debugPrint(frame)
 			local checksum = frame:sub(-5,-1)
 			local destMac = frame:sub(1,6)
 			local sourceMac = frame:sub(7,12)
 			local payloadLen = string.len(frame:sub(13,-6))
 			if destMac == getMac(recvInt) then
+				Utils.log("log","Macs match")
+				Utils.debugPrint("Macs match")
 				if checksum == Utils.crc(frame:sub(1,-6)) then
+					Utils.log("log","CRC matches")
+					Utils.debugPrint("CRC matches")
 					if payloadLen > MTU then
 						return error("MTU exceeded. Payload: "..payloadLen.." > MTU: "..MTU,2)
 					else

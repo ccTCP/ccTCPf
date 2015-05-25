@@ -50,7 +50,7 @@ function getMac(side,rtnType)
 	end
   	if not rtnType then
     	return mac[side]
-  	elseif rtnType == "hex" then 
+  	elseif rtnType == "hex" then
     		return tostring(mac[side]:sub(1,4).."."..mac[side]:sub(5,8).."."..mac[side]:sub(9,12))
     elseif rtnType == "dec" then
        	return tostring(Utils.toDec(mac[side],16))
@@ -103,12 +103,12 @@ end
 
 function typeRecevie()
   local frame, recvInt = Interface.receive()
-  
+
 end
 
 
 function send(destination,data,int,option,vlan)
-	if not sidesTable[int] then error("The interface does not exist!",2)
+	if not sidesTable[int] then error("The interface does not exist!",2) end
 	if vlan then
    		dotQFrame.dstMac = destination
    		dotQFrame.srcMac = getMac(int)

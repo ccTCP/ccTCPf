@@ -150,7 +150,7 @@ function getAddressInfo(address,rtnAddr)
     d=d+1
     e=1
   until d == 5
-  vars.netLen = tonumber(vars.wildMask,2)
+  vars.netLen = tonumber(vars.wildMask,2)+1
   vars.numHosts = vars.netLen-2
   --End: Calculate Addresses:
   return vars[rtnAddr]

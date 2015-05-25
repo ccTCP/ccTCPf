@@ -108,18 +108,17 @@ end
 
 
 function send(destination,data,int,option,vlan)
-  if vlan then
-    dotQFrame.dstMac = destination
-    dotQFrame.srcMac = getMac(int)
-    dotQFrame.vlan = vlan
-    dotQFrame.data = data
-    Interface.send(dotQFrame,int)
-    dotQFrame = dotQFrameTemp
-  else
-    stndFrame.dstMac = destination
-    stndFrame.srcMac = getMac(int)
-    stndFrame.data = data
-    Interface.send(stndFrame,int)
-    stndFrame = stndFrameTemp
-  end
+	if not sidesTable[int] then error("The interface does not exist!",2)
+	if vlan then
+   		dotQFrame.dstMac = destination
+   		dotQFrame.srcMac = getMac(int)
+   		dotQFrame.vlan = vlan
+   		dotQFrame.data = data
+   		print(table.concat(dotQFrame))
+   		Interface.send(dotQFrame,int)
+   		dotQFrame = dotQFrameTemp
+	else
+		local msg = destination..getMac(int)..data..Utils.crc(destination..getMac(int)..data)
+   		Interface.send(msg,int)
+	end
 end

@@ -31,3 +31,18 @@ for i,v in pairs(fs.list("src")) do
     end
 end
 Interface.open("top")
+
+--[[
+```lua
+table.concat:
+table.concat({1=1,2="two",3=3,4="four"})
+==> 1two3four
+
+pairs:
+final = ""
+for key,value in pairs({1,"two",3,"four"}) do
+    final = final..value
+end
+==> 1two3four
+```
+]]--

@@ -1,0 +1,6 @@
+local m = peripheral.wrap("top")
+while true do
+ m.transmit(20613,20613,"100000000000111111111111hi00317")
+ print("wow")
+ os.pullEvent()
+end

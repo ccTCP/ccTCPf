@@ -102,7 +102,7 @@ function getAddressInfo(address,rtnAddr)
     vars.binAddrOctet = {vars.binAddr:sub(1,8),vars.binAddr:sub(9,16),vars.binAddr:sub(17,24),vars.binAddr:sub(25,32)}
   
     vars.mask = cidrDecTbl[tonumber(vars.cidr)]
-    vars.binMask = getBinaryAddress(vars.mask)
+    vars.binMask = getBinaryAddress(tostring(vars.mask))
     vars.binMaskOctet = {vars.binMask:sub(1,8),vars.binMask:sub(9,16),vars.binMask:sub(17,24),vars.binMask:sub(25,32)}
     vars.wildMask = ""
   
@@ -153,5 +153,5 @@ function getAddressInfo(address,rtnAddr)
   vars.netLen = tonumber(vars.wildMask,2)
   vars.numHosts = vars.netLen-2
   --End: Calculate Addresses:
-  return vars.rtnAddr
+  return vars[rtnAddr]
 end

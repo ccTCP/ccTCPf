@@ -43,16 +43,22 @@ function createMac(side)
 	end
 end
 
-function getMac(side)
-	if not side then error("You have to specify a side",2) end
+function getMac(side,rtnType)
+ 	if not side then error("You have to specify a side",2) end
 	if not mac[side] then
 		mac[side] = createMac(side)
 	end
-	return mac[side]
-end
-
-function getMacDec(side)
-	return Utils.toDec(getMac(side),10)
+  if not rtnType then
+    return mac[side]
+  else
+    if rtnType == "hex" then 
+      return tostring(mac[side]:sub(1,4).."."..mac[side]:sub(5,8).."."..mac[side]:sub(9,12))
+    else
+      if rtnType == "dec" then
+        return tostring(Utils.toDec(mac[side],16))
+      end
+    end
+  end
 end
 
 function receive(bNotCheckDest)

@@ -32,6 +32,7 @@ local stndFrame = {preamble = {100},type_len = {MTU = 1500,TTL = 255}}
 local dotQFrame = {preamble = {200},type_len = {MTU = 1504,TTL = 255}}
 local stndFrameTemp = {preamble = {100},type_len = {MTU = 1500,TTL = 255}}
 local dotQFrameTemp = {preamble = {200},type_len = {MTU = 1504,TTL = 255}}
+local MTU = stndFrame.type_len.MTU
 
 --Functions
 function createMac(side)
@@ -63,10 +64,11 @@ function receive(bNotCheckDest)
 			local frame, recvInt = Interface.receive()
 			Utils.log("log",frame)
 			Utils.debugPrint(frame)
+			Utils.debugPrint(getMac(recvInt))
 			local checksum = frame:sub(-5,-1)
-			local destMac = frame:sub(1,6)
-			local sourceMac = frame:sub(7,12)
-			local payloadLen = string.len(frame:sub(13,-6))
+			local destMac = frame:sub(1,12)
+			local sourceMac = frame:sub(13,24)
+			local payloadLen = string.len(frame:sub(25,-6))
 			if destMac == getMac(recvInt) then
 				Utils.log("log","Macs match")
 				Utils.debugPrint("Macs match")
@@ -76,7 +78,7 @@ function receive(bNotCheckDest)
 					if payloadLen > MTU then
 						return error("MTU exceeded. Payload: "..payloadLen.." > MTU: "..MTU,2)
 					else
-						return frame:sub(13,-6)
+						return frame:sub(25,-6)
 					end
 				else
 					print("Frame invalid")

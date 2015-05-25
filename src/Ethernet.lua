@@ -39,7 +39,7 @@ function createMac(side)
 	side = tostring(side)
 	if sidesTable[side] then
 		local macBuffer = tostring(Utils.DecToBase(os.computerID() * 6 + sidesTable[side],16))
-		return string.rep("0",6-#macBuffer).. macBuffer
+		return string.rep("0",12-#macBuffer).. macBuffer
 	end
 end
 
@@ -56,23 +56,24 @@ function getMacDec(side)
 end
 
 function receive()
-	local frame, recvInt = Interface.receive()
-	local checksum = frame:sub(-5,-1)
-	local destMac = frame:sub(1,6)
-	local sourceMac = frame:sub(7,12)
-	local payloadLen = string.len(frame:sub(13,-6))
-	if destMac == getMac(recvInt) then
-		if checksum == Utils.crc(frame:sub(1,-6)) then
-    		if payloadLen > MTU then
-        	return error("MTU exceeded. Payload: "..payloadLen.." > MTU: "..MTU,2)
-    	else
-        return frame:sub(13,-6)
-        
-      end
-		else
-			print("Frame invalid")
-			--ask for the message to be resent
-			--ask for message identifier
+	while true do
+		local frame, recvInt = Interface.receive()
+		local checksum = frame:sub(-5,-1)
+		local destMac = frame:sub(1,6)
+		local sourceMac = frame:sub(7,12)
+		local payloadLen = string.len(frame:sub(13,-6))
+		if destMac == getMac(recvInt) then
+			if checksum == Utils.crc(frame:sub(1,-6)) then
+    			if payloadLen > MTU then
+        			return error("MTU exceeded. Payload: "..payloadLen.." > MTU: "..MTU,2)
+    			else
+        			return frame:sub(13,-6)
+        		end
+			else
+				print("Frame invalid")
+				--ask for the message to be resent
+				--ask for message identifier
+			end
 		end
 	end
 end

@@ -67,7 +67,7 @@ local cidrDecTbl = {"128.0.0.0","192.0.0.0","224.0.0.0","240.0.0.0","248.0.0.0",
   local c = 1
   repeat
     repeat
-      if(binMaskOctet[b]:sub(c,c) == "1" and binAddrOctet[b]:sub(c,c) == "1") then 
+      if(binMaskOctet[b]:sub(c,c) == "1" and binAddrOctet[b]:sub(c,c) == "1") then
         binNetAddr = binNetAddr.. "1"
         binNetAddrOctet[b] = binNetAddrOctet[b].. "1"
         c=c+1
@@ -122,22 +122,22 @@ hostAddr#
     split[i] = token
     i=i+1
   end
-  
+
   --init vars
   local vars = {}
     vars.addr = split[1]
     vars.cidr = split[2]
-  
+
     vars.binAddr = getBinaryAddress(vars.addr)
     vars.binAddrOctet = {vars.binAddr:sub(1,8),vars.binAddr:sub(9,16),vars.binAddr:sub(17,24),vars.binAddr:sub(25,32)}
-  
+
     vars.mask = cidrDecTbl[tonumber(vars.cidr)]
     vars.binMask = getBinaryAddress(tostring(vars.mask))
     vars.binMaskOctet = {vars.binMask:sub(1,8),vars.binMask:sub(9,16),vars.binMask:sub(17,24),vars.binMask:sub(25,32)}
     vars.binWildMask = ""
     vars.binWildMaskOctet = {"","","",""}
     vars.wildMask = ""
-  
+
     vars.binNetAddr = ""
     vars.binNetAddrOctet = {"","","",""}
     vars.netAddr = ""
@@ -147,13 +147,13 @@ hostAddr#
     vars.netLen = ""
     vars.numHosts = ""
     vars.hostAddr = {}
-    
+
   --Calculate Addresses: network,broadcast and then derive: networkLenght,NumberofHosts,HostsAddressTbl, in the binary, binary_in_table and dotted decimal forms.
   local b = 1
   local c = 1
   repeat
     repeat
-      if(vars.binMaskOctet[b]:sub(c,c) == "1" and vars.binAddrOctet[b]:sub(c,c) == "1") then 
+      if(vars.binMaskOctet[b]:sub(c,c) == "1" and vars.binAddrOctet[b]:sub(c,c) == "1") then
         vars.binNetAddr = vars.binNetAddr.. "1"
         vars.binNetAddrOctet[b] = vars.binNetAddrOctet[b].. "1"
         c=c+1
@@ -171,7 +171,7 @@ hostAddr#
   local e = 1
   repeat
     repeat
-      if(vars.binMaskOctet[d]:sub(e,e) == "1") then 
+      if(vars.binMaskOctet[d]:sub(e,e) == "1") then
         vars.binWildMask = vars.binWildMask.. "0"
         vars.binWildMaskOctet[d] = vars.binWildMaskOctet[d].. "0"
         e=e+1
@@ -187,13 +187,11 @@ hostAddr#
   vars.netLen = tonumber(vars.binWildMask,2)+1
   vars.numHosts = vars.netLen-2
   --End: Calculate Addresses:
-  if not index then 
+  if not index then
       return vars[rtnAddr]
-  else
-    if index == "all" then
+  elseif index == "all" then
       return unpack(vars[rtnAddr])
-    else
+  else
       return vars[rtnAddr][index]
-    end 
   end
 end

@@ -166,5 +166,6 @@ hostAddr#
   else
       return vars[rtnAddr][index]
     end
+  --End: Simple Magic
   end
   --End: Simple Magic

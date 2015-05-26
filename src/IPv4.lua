@@ -45,7 +45,7 @@ end
 
 local cidrDecTbl = {"128.0.0.0","192.0.0.0","224.0.0.0","240.0.0.0","248.0.0.0","252.0.0.0","254.0.0.0","255.0.0.0","255.128.0.0","255.192.0.0","255.224.0.0","255.240.0.0","255.248.0.0","255.252.0.0","255.254.0.0","255.255.0.0","255.255.128.0","255.255.192.0","255.255.224.0","255.255.240.0","255.255.248.0","255.255.252.0","255.255.254.0","255.255.255.0","255.255.255.128","255.255.255.192","255.255.255.224","255.255.255.240","255.255.255.248","255.255.255.252","255.255.255.254","255.255.255.255"}
 
-function getNetworkAddress(address)
+--[[function getNetworkAddress(address)
   if not type(address) == "string" then error("Expected string, got "..type(addr).."!",2) end
   --split address from cidr
   local a = 1
@@ -82,6 +82,7 @@ function getNetworkAddress(address)
   until b == 5
   print(Utils.toDec(binNetAddrOctet[1],2).."."..Utils.toDec(binNetAddrOctet[2],2).."."..Utils.toDec(binNetAddrOctet[3],2).."."..Utils.toDec(binNetAddrOctet[4],2))
 end
+--]]
 
 function getAddressInfo(address,rtnAddr,index)
 
@@ -134,7 +135,7 @@ hostAddr#
     vars.binMask = getBinaryAddress(tostring(vars.mask))
     vars.binMaskOctet = {vars.binMask:sub(1,8),vars.binMask:sub(9,16),vars.binMask:sub(17,24),vars.binMask:sub(25,32)}
     vars.binWildMask = ""
-    vars.binWildMaskOctet = ""
+    vars.binWildMaskOctet = {"","","",""}
     vars.wildMask = ""
   
     vars.binNetAddr = ""
@@ -172,9 +173,11 @@ hostAddr#
     repeat
       if(vars.binMaskOctet[d]:sub(e,e) == "1") then 
         vars.binWildMask = vars.binWildMask.. "0"
+        vars.binWildMaskOctet[d] = vars.binWildMaskOctet[d].. "0"
         e=e+1
       else
         vars.binWildMask = vars.binWildMask.. "1"
+        vars.binWildMaskOctet[d] = vars.binWildMaskOctet[d].. "1"
         e=e+1
       end
     until e == 9
@@ -184,5 +187,13 @@ hostAddr#
   vars.netLen = tonumber(vars.binWildMask,2)+1
   vars.numHosts = vars.netLen-2
   --End: Calculate Addresses:
-  return vars[rtnAddr]
+  if not index then 
+      return vars[rtnAddr]
+  else
+    if index == "all" then
+      print("all")
+    else
+      return vars[rtnAddr][index]
+    end 
+  end
 end

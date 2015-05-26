@@ -191,7 +191,7 @@ hostAddr#
       return vars[rtnAddr]
   else
     if index == "all" then
-      print("all")
+      return vars[rtnAddr][1],vars[rtnAddr][2],vars[rtnAddr][3],vars[rtnAddr][4]
     else
       return vars[rtnAddr][index]
     end 

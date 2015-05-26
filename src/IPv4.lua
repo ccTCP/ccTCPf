@@ -45,45 +45,6 @@ end
 
 local cidrDecTbl = {"128.0.0.0","192.0.0.0","224.0.0.0","240.0.0.0","248.0.0.0","252.0.0.0","254.0.0.0","255.0.0.0","255.128.0.0","255.192.0.0","255.224.0.0","255.240.0.0","255.248.0.0","255.252.0.0","255.254.0.0","255.255.0.0","255.255.128.0","255.255.192.0","255.255.224.0","255.255.240.0","255.255.248.0","255.255.252.0","255.255.254.0","255.255.255.0","255.255.255.128","255.255.255.192","255.255.255.224","255.255.255.240","255.255.255.248","255.255.255.252","255.255.255.254","255.255.255.255"}
 
---[[function getNetworkAddress(address)
-  if not type(address) == "string" then error("Expected string, got "..type(addr).."!",2) end
-  --split address from cidr
-  local a = 1
-  local split = {}
-  for token in address:gmatch("[^%/]+") do --finds values not equal to "/" which will be the address before "/" and the cidr mask after "/"
-    split[a] = token
-    a=a+1
-  end
-  local addr = split[1]
-  local cidr = split[2]
-  local binAddr = getBinaryAddress(addr)
-  local binAddrOctet = {binAddr:sub(1,8),binAddr:sub(9,16),binAddr:sub(17,24),binAddr:sub(25,32)}
-  local mask = cidrDecTbl[tonumber(cidr)]
-  local binMask = getBinaryAddress(mask)
-  local binMaskOctet = {binMask:sub(1,8),binMask:sub(9,16),binMask:sub(17,24),binMask:sub(25,32)}
-  local binNetAddr = ""
-  local binNetAddrOctet = {"","","",""}
-  local b = 1
-  local c = 1
-  repeat
-    repeat
-      if(binMaskOctet[b]:sub(c,c) == "1" and binAddrOctet[b]:sub(c,c) == "1") then 
-        binNetAddr = binNetAddr.. "1"
-        binNetAddrOctet[b] = binNetAddrOctet[b].. "1"
-        c=c+1
-      else
-        binNetAddr = binNetAddr.. "0"
-        binNetAddrOctet[b] = binNetAddrOctet[b].. "0"
-        c=c+1
-      end
-    until c == 9
-    b=b+1
-    c=1
-  until b == 5
-  print(Utils.toDec(binNetAddrOctet[1],2).."."..Utils.toDec(binNetAddrOctet[2],2).."."..Utils.toDec(binNetAddrOctet[3],2).."."..Utils.toDec(binNetAddrOctet[4],2))
-end
---]]
-
 function getAddressInfo(address,rtnAddr,index)
 
 --[[Args_List
@@ -122,15 +83,15 @@ hostAddr#
     split[i] = token
     i=i+1
   end
-  
+
   --init vars
   local vars = {}
     vars.addr = split[1]
     vars.cidr = split[2]
-  
+
     vars.binAddr = getBinaryAddress(vars.addr)
     vars.binAddrOctet = {vars.binAddr:sub(1,8),vars.binAddr:sub(9,16),vars.binAddr:sub(17,24),vars.binAddr:sub(25,32)}
-  
+
     vars.mask = cidrDecTbl[tonumber(vars.cidr)]
     vars.binMask = getBinaryAddress(tostring(vars.mask))
     vars.binMaskOctet = {vars.binMask:sub(1,8),vars.binMask:sub(9,16),vars.binMask:sub(17,24),vars.binMask:sub(25,32)}
@@ -138,7 +99,7 @@ hostAddr#
     vars.binWildMaskOctet = {"","","",""}
     vars.wildMask = ""
     vars.wildMaskOctet = {"","","",""}
-    
+
     vars.binNetAddr = ""
     vars.binNetAddrOctet = {"","","",""}
     vars.netAddr = ""
@@ -150,13 +111,13 @@ hostAddr#
     vars.netLen = ""
     vars.numHosts = ""
     vars.hostAddr = {}
-    
+
   --Calculate Addresses: network,broadcast and then derive: networkLenght,NumberofHosts,HostsAddressTbl, in the binary, binary_in_table and dotted decimal forms.
   local b = 1
   local c = 1
   repeat
     repeat
-      if(vars.binMaskOctet[b]:sub(c,c) == "1" and vars.binAddrOctet[b]:sub(c,c) == "1") then 
+      if(vars.binMaskOctet[b]:sub(c,c) == "1" and vars.binAddrOctet[b]:sub(c,c) == "1") then
         vars.binNetAddr = vars.binNetAddr.. "1"
         vars.binNetAddrOctet[b] = vars.binNetAddrOctet[b].. "1"
         vars.netAddrOctet[b] = tonumber(vars.binNetAddrOctet[b],2)
@@ -176,7 +137,7 @@ hostAddr#
   local e = 1
   repeat
     repeat
-      if(vars.binMaskOctet[d]:sub(e,e) == "1") then 
+      if(vars.binMaskOctet[d]:sub(e,e) == "1") then
         vars.binWildMask = vars.binWildMask.. "0"
         vars.binWildMaskOctet[d] = vars.binWildMaskOctet[d].. "0"
         vars.wildMaskOctet[d] = tonumber(vars.binWildMaskOctet[d],2)
@@ -198,14 +159,12 @@ hostAddr#
   --End: Calculate Addresses:
   
   --Most simple magic ever
-  if not index then 
+  if not index then
       return vars[rtnAddr]
-  else
-    if index == "all" then
+  elseif index == "all" then
       return unpack(vars[rtnAddr])
-    else
+  else
       return vars[rtnAddr][index]
     end
   end
   --End: Simple Magic
-end

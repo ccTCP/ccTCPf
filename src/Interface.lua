@@ -28,7 +28,7 @@ THE SOFTWARE.
 --Variables
 
 local sides = {"top","bottom","left","right","back","front"}
-local sidesTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
+local sidesTable = {top = 1,bottom = 2,left = 3,right = 4,back = 5,front = 6}
 local modem = {}
 local defaultSide = ""
 local channel = 20613

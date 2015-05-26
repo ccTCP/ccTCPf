@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 --Ethernet
 --Variables
-local sidesTable = {top = 0,bottom = 1,left = 2,right = 3,back = 4,front = 5}
+local sidesTable = {top = 1,bottom = 2,left = 3,right = 4,back = 5,front = 6}
 local mac = {}
 local stndFrame = {preamble = {100},type_len = {MTU = 1500,TTL = 255}}
 local dotQFrame = {preamble = {200},type_len = {MTU = 1504,TTL = 255}}

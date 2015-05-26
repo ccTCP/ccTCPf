@@ -51,6 +51,7 @@ function open(int)
 end
 
 function close(int)
+	int = int or defaultSide
 	modem[int].close()
 end
 

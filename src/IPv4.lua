@@ -137,13 +137,16 @@ hostAddr#
     vars.binWildMask = ""
     vars.binWildMaskOctet = {"","","",""}
     vars.wildMask = ""
-  
+    vars.wildMaskOctet = {"","","",""}
+    
     vars.binNetAddr = ""
     vars.binNetAddrOctet = {"","","",""}
     vars.netAddr = ""
+    vars.netAddrOctet = {"","","",""}
     vars.binBcastAddr = ""
     vars.binBcastAddrOctet = {"","","",""}
     vars.bcastAddr = ""
+    vars.bcasAddrOctet = {"","","",""}
     vars.netLen = ""
     vars.numHosts = ""
     vars.hostAddr = {}
@@ -156,17 +159,19 @@ hostAddr#
       if(vars.binMaskOctet[b]:sub(c,c) == "1" and vars.binAddrOctet[b]:sub(c,c) == "1") then 
         vars.binNetAddr = vars.binNetAddr.. "1"
         vars.binNetAddrOctet[b] = vars.binNetAddrOctet[b].. "1"
+        vars.netAddrOctet[b] = tonumber(vars.binNetAddrOctet[b],2)
         c=c+1
       else
         vars.binNetAddr = vars.binNetAddr.. "0"
         vars.binNetAddrOctet[b] = vars.binNetAddrOctet[b].. "0"
+        vars.netAddrOctet[b] = tonumber(vars.binNetAddrOctet[b],2)
         c=c+1
       end
     until c == 9
     b=b+1
     c=1
   until b == 5
-  vars.netAddr = Utils.toDec(tonumber(vars.binNetAddrOctet[1]),2).."."..Utils.toDec(tonumber(vars.binNetAddrOctet[2]),2).."."..Utils.toDec(tonumber(vars.binNetAddrOctet[3]),2).."."..Utils.toDec(tonumber(vars.binNetAddrOctet[4]),2)
+  vars.netAddr = tostring(vars.netAddrOctet[1].."."..vars.netAddrOctet[2].."."..vars.netAddrOctet[3].."."..vars.netAddrOctet[4])
   local d = 1
   local e = 1
   repeat
@@ -174,19 +179,25 @@ hostAddr#
       if(vars.binMaskOctet[d]:sub(e,e) == "1") then 
         vars.binWildMask = vars.binWildMask.. "0"
         vars.binWildMaskOctet[d] = vars.binWildMaskOctet[d].. "0"
+        vars.wildMaskOctet[d] = tonumber(vars.binWildMaskOctet[d],2)
         e=e+1
       else
         vars.binWildMask = vars.binWildMask.. "1"
         vars.binWildMaskOctet[d] = vars.binWildMaskOctet[d].. "1"
+        vars.wildMaskOctet[d] = tonumber(vars.binWildMaskOctet[d],2)
         e=e+1
       end
     until e == 9
     d=d+1
     e=1
   until d == 5
+  vars.wildMask = tostring(vars.wildMaskOctet[1].."."..vars.wildMaskOctet[2].."."..vars.wildMaskOctet[3].."."..vars.wildMaskOctet[4])
   vars.netLen = tonumber(vars.binWildMask,2)+1
   vars.numHosts = vars.netLen-2
+  
   --End: Calculate Addresses:
+  
+  --Most simple magic ever
   if not index then 
       return vars[rtnAddr]
   else
@@ -194,6 +205,7 @@ hostAddr#
       return unpack(vars[rtnAddr])
     else
       return vars[rtnAddr][index]
-    end 
+    end
   end
+  --End: Simple Magic
 end

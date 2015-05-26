@@ -83,7 +83,36 @@ function getNetworkAddress(address)
   print(Utils.toDec(binNetAddrOctet[1],2).."."..Utils.toDec(binNetAddrOctet[2],2).."."..Utils.toDec(binNetAddrOctet[3],2).."."..Utils.toDec(binNetAddrOctet[4],2))
 end
 
-function getAddressInfo(address,rtnAddr)
+function getAddressInfo(address,rtnAddr,index)
+
+--[[Args_List
+addr
+binAddr
+
+cidr
+
+mask
+wildMask
+binMask
+binWildMask
+
+netAddr
+bcastAddr
+binNetAddr
+binBcastAddr
+
+netLen
+numHosts
+
+#=index
+binAddrOctet#
+binMaskOctet#
+binWildMaskOCtet#
+binNetAddrOctet#
+binBcastAddrOctet#
+
+hostAddr#
+--]]
   if not type(address) == "string" then error("Expected string, got "..type(addr).."!",2) end
   --split address from cidr mask
   local i = 1
@@ -104,6 +133,8 @@ function getAddressInfo(address,rtnAddr)
     vars.mask = cidrDecTbl[tonumber(vars.cidr)]
     vars.binMask = getBinaryAddress(tostring(vars.mask))
     vars.binMaskOctet = {vars.binMask:sub(1,8),vars.binMask:sub(9,16),vars.binMask:sub(17,24),vars.binMask:sub(25,32)}
+    vars.binWildMask = ""
+    vars.binWildMaskOctet = ""
     vars.wildMask = ""
   
     vars.binNetAddr = ""
@@ -140,17 +171,17 @@ function getAddressInfo(address,rtnAddr)
   repeat
     repeat
       if(vars.binMaskOctet[d]:sub(e,e) == "1") then 
-        vars.wildMask = vars.wildMask.. "0"
+        vars.binWildMask = vars.binWildMask.. "0"
         e=e+1
       else
-        vars.wildMask = vars.wildMask.. "1"
+        vars.binWildMask = vars.binWildMask.. "1"
         e=e+1
       end
     until e == 9
     d=d+1
     e=1
   until d == 5
-  vars.netLen = tonumber(vars.wildMask,2)+1
+  vars.netLen = tonumber(vars.binWildMask,2)+1
   vars.numHosts = vars.netLen-2
   --End: Calculate Addresses:
   return vars[rtnAddr]

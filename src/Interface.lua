@@ -34,8 +34,8 @@ local defaultSide = ""
 local channel = 20613
 
 function wrap()
-	for a = 1,6 do 
-		if peripheral.isPresent(sides[a]) then 
+	for a = 1,6 do
+		if peripheral.isPresent(sides[a]) then
 			if peripheral.getType(sides[a]) == "wireless_modem" or peripheral.getType(sides[a]) == "modem" then
 				if defaultSide == "" then defaultSide = sides[a] end
 				modem[sides[a]] = peripheral.wrap(sides[a])
@@ -46,6 +46,7 @@ function wrap()
 end
 
 function open(int)
+	int = int or defaultSide
 	modem[int].open(channel)
 end
 

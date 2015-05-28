@@ -155,16 +155,16 @@ hostAddr#
   vars.wildMask = tostring(vars.wildMaskOctet[1].."."..vars.wildMaskOctet[2].."."..vars.wildMaskOctet[3].."."..vars.wildMaskOctet[4])
   vars.netLen = tonumber(vars.binWildMask,2)+1
   vars.numHosts = vars.netLen-2
-  
+
   --End: Calculate Addresses:
-  
+
   --Most simple magic ever
   if not index then
       return vars[rtnAddr]
   elseif index == "all" then
       return unpack(vars[rtnAddr])
   else
-      return vars[rtnAddr][index]
-    end
-  --End: Simple Magic
+    return vars[rtnAddr][index]
   end
+  --End: Simple Magic
+end

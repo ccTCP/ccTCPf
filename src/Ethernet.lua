@@ -166,6 +166,8 @@ function altReceive()
 				else
 					if not first then first = true  number = totalNum end
 					received[id] = frame:sub(28,-6)
+					number = nuber + 1
+					if number == totalNum then return table.concat(received,"") end
 				end
 			else
 				print("Frame invalid")

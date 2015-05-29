@@ -152,12 +152,9 @@ function altReceive()
 		Utils.log("log",frame)
 		Utils.debugPrint(frame)
 		Utils.debugPrint(getMac(recvInt))
-		local checksum = frame:sub(-5,-1)
-		local destMac = frame:sub(1,12)
-		local sourceMac = frame:sub(13,24)
-		local payloadLen = string.len(frame:sub(28,-6))
-		local id = frame:sub(25,26)
-		local totalNum = frame:sub(27,28)
+		local checksum, destMac = frame:sub(-5,-1), frame:sub(1,12)
+		local sourceMac, payloadLen = frame:sub(13,24), string.len(frame:sub(28,-6))
+		local id, totalNum = frame:sub(25,26), frame:sub(27,28)
 		if destMac == getMac(recvInt) then
 			Utils.log("log","Macs match")
 			Utils.debugPrint("Macs match")
@@ -167,8 +164,8 @@ function altReceive()
 				if payloadLen > MTU then
 					return error("MTU exceeded. Payload: "..payloadLen.." > MTU: "..MTU,2)
 				else
-
-					--return frame:sub(25,-6)
+					if not first then first = true  number = totalNum end
+					received[id] = frame:sub(28,-6)
 				end
 			else
 				print("Frame invalid")

@@ -138,7 +138,38 @@ function altSend(destination,data,int,option)
 	local numBase256 = string.char(math.floor(numPackets/256))..string.char(((numPackets/256)-math.floor(numPackets/256))*256)
 	for i=0,numPackets do
 		local id = string.char(math.floor(i/256))..string.char(((i/256)-math.floor(i/256))*256)
-		local msg = destination..getMac(int)..id..numBase256..data..Utils.crc(destination..getMac(int)..data)
+		local msg = destination..getMac(int)..id..numBase256..data..Utils.crc( destination..getMac(int)..id..numBase256..data)
 		Interface.send(msg,int)
+	end
+end
+
+function altReceive()
+	local first = false
+	local number = 0
+	local received = {}
+	while true do
+		frame, int = Interface.receive()
+		Utils.log("log",frame)
+		Utils.debugPrint(frame)
+		Utils.debugPrint(getMac(recvInt))
+		local checksum, destMac = frame:sub(-5,-1), frame:sub(1,12)
+		local sourceMac, payloadLen = frame:sub(13,24), string.len(frame:sub(28,-6))
+		local id, totalNum = frame:sub(25,26), frame:sub(27,28)
+		if destMac == getMac(recvInt) then
+			Utils.log("log","Macs match")
+			Utils.debugPrint("Macs match")
+			if checksum == Utils.crc(frame:sub(1,-6)) then
+				Utils.log("log","CRC matches")
+				Utils.debugPrint("CRC matches")
+				if payloadLen > MTU then
+					return error("MTU exceeded. Payload: "..payloadLen.." > MTU: "..MTU,2)
+				else
+					if not first then first = true  number = totalNum end
+					received[id] = frame:sub(28,-6)
+				end
+			else
+				print("Frame invalid")
+			end
+		end
 	end
 end

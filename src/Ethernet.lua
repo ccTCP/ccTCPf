@@ -139,6 +139,8 @@ function altSend(destination,data,int,option)
 	for i=0,numPackets do
 		local id = string.char(math.floor(i/256))..string.char(((i/256)-math.floor(i/256))*256)
 		local msg = destination..getMac(int)..id..numBase256..data..Utils.crc( destination..getMac(int)..id..numBase256..data)
+		os.queueEvent("lol")
+		os.pullEvent()
 		Interface.send(msg,int)
 	end
 end

@@ -151,13 +151,13 @@ function altReceive()
 	local received = {}
 	while true do
 		frame, int = Interface.receive()
-		Utils.log("log",frame)
-		Utils.debugPrint(frame)
-		Utils.debugPrint(getMac(recvInt))
+		--Utils.log("log",frame)
+		--Utils.debugPrint(frame)
+		Utils.debugPrint(getMac(int))
 		local checksum, destMac = frame:sub(-5,-1), frame:sub(1,12)
 		local sourceMac, payloadLen = frame:sub(13,24), string.len(frame:sub(28,-6))
 		local id, totalNum = frame:sub(25,26), frame:sub(27,28)
-		if destMac == getMac(recvInt) then
+		if destMac == getMac(int) then
 			Utils.log("log","Macs match")
 			Utils.debugPrint("Macs match")
 			if checksum == Utils.crc(frame:sub(1,-6)) then
@@ -168,6 +168,7 @@ function altReceive()
 				else
 					if not first then first = true  number = totalNum end
 					received[id] = frame:sub(28,-6)
+					Utils.log("Msg",frame:sub(28,-6))
 					number = nuber + 1
 					if number == totalNum then return table.concat(received,"") end
 				end

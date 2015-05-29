@@ -75,7 +75,7 @@ binBcastAddrOctet#
 
 hostAddr#
 --]]
-  if not type(address) == "string" then error("Expected string, got "..type(addr).."!",2) end
+  if not type(address) == "string" then error("Expected string, got "..type(address).."!",2) end
   --split address from cidr mask
   local i = 1
   split = {}
@@ -91,19 +91,22 @@ hostAddr#
 
     vars.binAddr = getBinaryAddress(vars.addr)
     vars.binAddrOctet = {vars.binAddr:sub(1,8),vars.binAddr:sub(9,16),vars.binAddr:sub(17,24),vars.binAddr:sub(25,32)}
+    vars.addrOctet = {tonumber(vars.binAddrOctet[1],2),tonumber(vars.binAddrOctet[2],2),tonumber(vars.binAddrOctet[3],2),tonumber(vars.binAddrOctet[4],2)}
 
     vars.mask = cidrDecTbl[tonumber(vars.cidr)]
     vars.binMask = getBinaryAddress(tostring(vars.mask))
     vars.binMaskOctet = {vars.binMask:sub(1,8),vars.binMask:sub(9,16),vars.binMask:sub(17,24),vars.binMask:sub(25,32)}
+    vars.maskOctet = {tonumber(vars.binMaskOctet[1],2),tonumber(vars.binMaskOctet[2],2),tonumber(vars.binMaskOctet[3],2),tonumber(vars.binMaskOctet[4],2)}
     vars.binWildMask = ""
     vars.binWildMaskOctet = {"","","",""}
     vars.wildMask = ""
     vars.wildMaskOctet = {"","","",""}
 
-    vars.binNetAddr = ""
-    vars.binNetAddrOctet = {"","","",""}
-    vars.netAddr = ""
-    vars.netAddrOctet = {"","","",""}
+    vars.binNetAddr = tostring(Utils.DecToBase(bit.band(vars.maskOctet[1],vars.addrOctet[1]),2)..Utils.DecToBase(bit.band(vars.maskOctet[2],vars.addrOctet[2]),2)..Utils.DecToBase(bit.band(vars.maskOctet[3],vars.addrOctet[3]),2)..Utils.DecToBase(bit.band(vars.maskOctet[4],vars.addrOctet[4]),2))
+    print(vars.binNetAddr)
+    vars.binNetAddrOctet = {vars.binNetAddr:sub(1,8),vars.binNetAddr:sub(9,16),vars.binNetAddr:sub(17,24),vars.binNetAddr:sub(25,32)}
+    vars.netAddrOctet = {tonumber(vars.binNetAddrOctet[1],2),tonumber(vars.binNetAddrOctet[2],2),tonumber(vars.binNetAddrOctet[3],2),tonumber(vars.binNetAddrOctet[4],2)}
+    vars.netAddr = tostring(vars.netAddrOctet[1]..vars.netAddrOctet[2]..vars.netAddrOctet[3]..vars.netAddrOctet[4])
     vars.binBcastAddr = ""
     vars.binBcastAddrOctet = {"","","",""}
     vars.bcastAddr = ""
@@ -112,7 +115,8 @@ hostAddr#
     vars.numHosts = ""
     vars.hostAddr = {}
 
-  --Calculate Addresses: network,broadcast and then derive: networkLenght,NumberofHosts,HostsAddressTbl, in the binary, binary_in_table and dotted decimal forms.
+  --Calculate Addresses
+  --[[
   local b = 1
   local c = 1
   repeat
@@ -132,7 +136,7 @@ hostAddr#
     b=b+1
     c=1
   until b == 5
-  vars.netAddr = tostring(vars.netAddrOctet[1].."."..vars.netAddrOctet[2].."."..vars.netAddrOctet[3].."."..vars.netAddrOctet[4])
+]]
   local d = 1
   local e = 1
   repeat
@@ -155,7 +159,7 @@ hostAddr#
   vars.wildMask = tostring(vars.wildMaskOctet[1].."."..vars.wildMaskOctet[2].."."..vars.wildMaskOctet[3].."."..vars.wildMaskOctet[4])
   vars.netLen = tonumber(vars.binWildMask,2)+1
   vars.numHosts = vars.netLen-2
-
+  
   --End: Calculate Addresses:
 
   --Most simple magic ever

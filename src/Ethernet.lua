@@ -138,7 +138,7 @@ function altSend(destination,data,int,option)
 	local numBase256 = string.char(math.floor(numPackets/256))..string.char(((numPackets/256)-math.floor(numPackets/256))*256)
 	for i=0,numPackets do
 		local id = string.char(math.floor(i/256))..string.char(((i/256)-math.floor(i/256))*256)
-		local msg = destination..getMac(int)..id..numBase256..data..Utils.crc( destination..getMac(int)..id..numBase256..data)
+		local msg = destination..getMac(int)..id..numBase256..data:sub(MTU*i+1,MTU*(i+1))..Utils.crc( destination..getMac(int)..id..numBase256..data)
 		os.queueEvent("lol")
 		os.pullEvent()
 		Interface.send(msg,int)
@@ -151,9 +151,9 @@ function altReceive()
 	local received = {}
 	while true do
 		frame, int = Interface.receive()
-		--Utils.log("log",frame)
+		Utils.log("log",frame)
 		--Utils.debugPrint(frame)
-		Utils.debugPrint(getMac(int))
+		--Utils.debugPrint(getMac(int))
 		local checksum, destMac = frame:sub(-5,-1), frame:sub(1,12)
 		local sourceMac, payloadLen = frame:sub(13,24), string.len(frame:sub(28,-6))
 		local id, totalNum = frame:sub(25,26), frame:sub(27,28)
@@ -167,6 +167,7 @@ function altReceive()
 					return error("MTU exceeded. Payload: "..payloadLen.." > MTU: "..MTU,2)
 				else
 					if not first then first = true  number = totalNum end
+					print(id)
 					received[id] = frame:sub(28,-6)
 					Utils.log("Msg",frame:sub(28,-6))
 					number = nuber + 1

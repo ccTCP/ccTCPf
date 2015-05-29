@@ -28,14 +28,14 @@ config = {}
 config.dir = "ccTCP/"
 
 function log(dest,msg,app)
-	if not doLog then return end
+	if not debug then return end
 	local finalMsg = "["..os.day()..":"..os.time().."]"
 	if app then
 		finalMsg = finalMsg..".["..tostring(app).."]:"..tostring(msg)
 	else
 		finalMsg = finalMsg..":"..tostring(msg)
 	end
-	local m = fs.open(config.dir.."Logs/"..dest..".log","a")
+	local m = fs.open("Logs/"..dest..".log","a")
 	m.write(finalMsg.."\n")
 	m.close()
 end

@@ -139,6 +139,8 @@ function altSend(destination,data,int,option)
 	for i=0,numPackets do
 		local id = string.char(math.floor(i/256))..string.char(((i/256)-math.floor(i/256))*256)
 		local msg = destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1))..Utils.crc( destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1)))
+		Utils.log(Utils.crc( destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1)))..":"..tostring(#Utils.crc( destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1)))))
+		print(Utils.crc( destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1)))..":"..tostring(#Utils.crc( destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1)))))
 		os.queueEvent("lol")
 		os.pullEvent()
 		Interface.send(msg,int)

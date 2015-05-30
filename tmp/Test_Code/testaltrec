@@ -1,1 +1,1 @@
-print(Ethernet.altReceive())
+Utils.log("Rec",Ethernet.altReceive())

@@ -149,6 +149,7 @@ end
 
 function altReceive()
 	local first = false
+	local count = 0
 	local number = 0
 	local received = {}
 	while true do
@@ -173,8 +174,8 @@ function altReceive()
 					if not first then first = true  number = totalNum end
 					received[id] = frame:sub(28,-6)
 					Utils.log("Msg",frame:sub(28,-6))
-					number = number + 1
-					if number == totalNum then return table.concat(received,"") end
+					if number == count then return table.concat(received,"") end
+					count = count + 1
 				end
 			else
 				print("Frame invalid")

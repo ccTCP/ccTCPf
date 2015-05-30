@@ -172,7 +172,7 @@ function altReceive()
 					print(id)
 					received[id] = frame:sub(28,-6)
 					Utils.log("Msg",frame:sub(28,-6))
-					number = nuber + 1
+					number = number + 1
 					if number == totalNum then return table.concat(received,"") end
 				end
 			else

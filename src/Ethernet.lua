@@ -159,6 +159,8 @@ function altReceive()
 		local id = ((frame:sub(25,25)):byte(1,1)*256)+(frame:sub(26,26)):byte(1,1)
 		print("ID: "..tostring(id))
 		local totalNum = ((frame:sub(27,27)):byte(1,1)*256)+(frame:sub(28,28)):byte(1,1)
+		print("#: "..tostring(totalNum))
+		print(type(totalNum))
 		if destMac == getMac(int) then
 			Utils.log("log","Macs match")
 			Utils.debugPrint("Macs match")
@@ -169,7 +171,6 @@ function altReceive()
 					return error("MTU exceeded. Payload: "..payloadLen.." > MTU: "..MTU,2)
 				else
 					if not first then first = true  number = totalNum end
-					print(id)
 					received[id] = frame:sub(28,-6)
 					Utils.log("Msg",frame:sub(28,-6))
 					number = number + 1

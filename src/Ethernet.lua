@@ -134,11 +134,11 @@ end
 function altSend(destination,data,int,option)
 	--Frame structure: destination, sender, packetID, total#packets, the usual things
 	if not sidesTable[int] then error("The interface does not exist!",2) end
-	local numPackets = math.ceil(#data,MTU)
+	local numPackets = math.ceil(#data/MTU)
 	local numBase256 = string.char(math.floor(numPackets/256))..string.char(((numPackets/256)-math.floor(numPackets/256))*256)
 	for i=0,numPackets do
 		local id = string.char(math.floor(i/256))..string.char(((i/256)-math.floor(i/256))*256)
-		local msg = destination..getMac(int)..id..numBase256..data:sub(MTU*i+1,MTU*(i+1))..Utils.crc( destination..getMac(int)..id..numBase256..data:sub(MTU*i+1,MTU*(i+1)))
+		local msg = destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1))..Utils.crc( destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1)))
 		os.queueEvent("lol")
 		os.pullEvent()
 		Interface.send(msg,int)

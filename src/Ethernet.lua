@@ -175,7 +175,11 @@ function altReceive()
 					received[id] = frame:sub(28,-6)
 					Utils.log("Msg",frame:sub(28,-6))
 					if number == count then
-						return table.concat(received,"")
+						local toRet = ""
+						for i=0,#received do
+							toRet = toRet..received[i]
+						end
+						return toRet
 					end
 					count = count + 1
 				end

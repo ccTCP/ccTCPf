@@ -174,7 +174,9 @@ function altReceive()
 					if not first then first = true  number = totalNum end
 					received[id] = frame:sub(28,-6)
 					Utils.log("Msg",frame:sub(28,-6))
-					if number == count then return table.concat(received,"") end
+					if number == count then
+						return table.concat(received,"")
+					end
 					count = count + 1
 				end
 			else

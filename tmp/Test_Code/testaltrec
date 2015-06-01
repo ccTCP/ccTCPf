@@ -1,1 +1,1 @@
-Utils.log("Rec",Ethernet.altReceive())
+Utils.log("Rec","Final message: "..Ethernet.altReceive())

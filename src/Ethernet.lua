@@ -136,7 +136,7 @@ function altSend(destination,data,int,option)
 	if not sidesTable[int] then error("The interface does not exist!",2) end
 	local numPackets = math.ceil(#data/MTU)
 	local numBase256 = string.char(math.floor(numPackets/256))..string.char(((numPackets/256)-math.floor(numPackets/256))*256)
-	for i=0,numPackets do
+	for i=0,numPackets-1 do
 		local id = string.char(math.floor(i/256))..string.char(((i/256)-math.floor(i/256))*256)
 		local msg = destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1))..Utils.crc( destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1)))
 		Utils.log(Utils.crc( destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1)))..":"..tostring(#Utils.crc( destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1)))))

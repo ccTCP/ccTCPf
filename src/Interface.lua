@@ -30,14 +30,12 @@ THE SOFTWARE.
 local sides = {"top","bottom","left","right","back","front"}
 local sidesTable = {top = 1,bottom = 2,left = 3,right = 4,back = 5,front = 6}
 local modem = {}
-local defaultSide = ""
 local channel = 20613
 
 function wrap()
 	for a = 1,6 do
 		if peripheral.isPresent(sides[a]) then
 			if peripheral.getType(sides[a]) == "wireless_modem" or peripheral.getType(sides[a]) == "modem" then
-				if defaultSide == "" then defaultSide = sides[a] end
 				modem[sides[a]] = peripheral.wrap(sides[a])
 			end
 		end
@@ -46,17 +44,19 @@ function wrap()
 end
 
 function open(int)
-	int = int or defaultSide
+	int = int
 	modem[int].open(channel)
+  Utils.log("log","Interface: "..int.."state changed to up")
 end
 
 function close(int)
-	int = int or defaultSide
+	int = int
 	modem[int].close()
+  Utils.log("log","Interface: "..int.." state changed to administratively shutdown")
 end
 
 function send(data,int)
-	modem[int or defaultSide].transmit(channel,channel,data)
+	modem[int].transmit(channel,channel,data)
 end
 
 function receive()

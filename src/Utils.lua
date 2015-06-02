@@ -28,7 +28,6 @@ config = {}
 config.dir = "ccTCP/"
 
 function log(dest,msg,app)
-	if not debug then return end
 	local finalMsg = "["..os.day()..":"..os.time().."]"
 	if app then
 		finalMsg = finalMsg..".["..tostring(app).."]:"..tostring(msg)
@@ -40,9 +39,22 @@ function log(dest,msg,app)
 	m.close()
 end
 
+function debugLog(dest,msg,app)
+	if not debug then return end
+	local finalMsg = "["..os.day()..":"..os.time().."]"
+	if app then
+		finalMsg = finalMsg..".["..tostring(app).."]:"..tostring(msg)
+	else
+		finalMsg = finalMsg..":"..tostring(msg)
+	end
+	local m = fs.open("Logs/Debug"..dest..".log","a")
+	m.write(finalMsg.."\n")
+	m.close()
+end
+
 function debugPrint(...)
 	if debug then
-		print(...)
+		print("["..os.day()..":"..os.time().."]"...)
 	end
 end
 

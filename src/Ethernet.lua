@@ -51,7 +51,7 @@ function getMac(side,rtnType)
 	end
   	if not rtnType then
     	return mac[side]
-  	elseif rtnType == "hex" then
+  	elseif rtnType == "dotHex" then
     		return tostring(mac[side]:sub(1,4).."."..mac[side]:sub(5,8).."."..mac[side]:sub(9,12))
     elseif rtnType == "dec" then
        	return tostring(Utils.toDec(mac[side],16))
@@ -62,21 +62,20 @@ function receive(bNotCheckDest)
 	if not bNotCheckDest then
 		while true do
 			local frame, recvInt = Interface.receive()
-			Utils.log("log",frame)
-			Utils.debugPrint(frame)
-			Utils.debugPrint(getMac(recvInt))
+			Utils.debugLog("log",frame)
+      Utils.debugPrint("["..getMac(recvInt).."]: "..frame)
 			local checksum = frame:sub(-5,-1)
 			local destMac = frame:sub(1,12)
 			local sourceMac = frame:sub(13,24)
 			local payloadLen = string.len(frame:sub(25,-6))
 			if destMac == getMac(recvInt) then
-				Utils.log("log","Macs match")
+				Utils.debugLog("log","Macs match")
 				Utils.debugPrint("Macs match")
 				if checksum == Utils.crc(frame:sub(1,-6)) then
-					Utils.log("log","CRC matches")
+					Utils.debugLog("log","CRC matches")
 					Utils.debugPrint("CRC matches")
 					if payloadLen > MTU then
-						return error("MTU exceeded. Payload: "..payloadLen.." > MTU: "..MTU,2)
+						return error("MTU exceeded. MTU: "..MTU.." Received: "..payloadLen,2)
 					else
 						return frame:sub(25,-6)
 					end
@@ -96,7 +95,7 @@ function receive(bNotCheckDest)
 			local payloadLen = string.len(frame:sub(13,-6))
 			if checksum == Utils.crc(frame:sub(1,-6)) then
 				if payloadLen > MTU then
-					return error("MTU exceeded. Payload: "..payloadLen.." > MTU: "..MTU,2)
+				return error("MTU exceeded. MTU: "..MTU.." Received: "..payloadLen,2)
 				else
 					return frame:sub(13,-6)
 				end
@@ -108,12 +107,6 @@ function receive(bNotCheckDest)
 		end
 	end
 end
-
-function typeRecevie()
-  local frame, recvInt = Interface.receive()
-
-end
-
 
 function send(destination,data,int,option,vlan)
 	if not sidesTable[int] then error("The interface does not exist!",2) end

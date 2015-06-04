@@ -30,6 +30,7 @@ THE SOFTWARE.
 local sides = {"top","bottom","left","right","back","front"}
 local sidesTable = {top = 1,bottom = 2,left = 3,right = 4,back = 5,front = 6}
 local modem = {}
+local intStatus = {}
 local channel = 20613
 
 function wrap()
@@ -37,6 +38,7 @@ function wrap()
 		if peripheral.isPresent(sides[a]) then
 			if peripheral.getType(sides[a]) == "wireless_modem" or peripheral.getType(sides[a]) == "modem" then
 				modem[sides[a]] = peripheral.wrap(sides[a])
+        close(modem[sides[a]])
 			end
 		end
 		a = a+1
@@ -46,26 +48,30 @@ end
 function open(int)
 	int = int
 	modem[int].open(channel)
+  intStatus[int] = 1
   Utils.log("log","Interface: "..int.."state changed to up")
 end
 
 function close(int)
 	int = int
 	modem[int].close()
+  intStatus[int] = 0
   Utils.log("log","Interface: "..int.." state changed to administratively shutdown")
 end
 
 function send(data,int)
-	modem[int].transmit(channel,channel,data)
+  if intStatus[int] = 0 then return error("Invalid source interface, interface is down",2) else 
+    modem[int].transmit(channel,channel,data)
+  end
 end
 
 function receive()
-	while true do
-		local event = {os.pullEvent("modem_message")}
-		if event[3] == channel then
-			return event[5], event[2]
-		end
-	end
+    while true do
+      local event = {os.pullEvent("modem_message")}
+      if event[3] == channel and intStatus[event[2]] == 1 then
+        return event[5], event[2]
+      end
+    end
 end
 
 wrap()

@@ -68,7 +68,7 @@ end
 
 function receive(waitTime)
   if waitTime and type(waitTime) == "number" then
-    Utils.timer("-","ccTCPfInterfaceRecv"..corCount,waitTime)
+    Utils.timer("ccTCPfInterfaceRecv"..corCount,"-",waitTime)
     corCount = corCount+1
     while Utils.timerCount["ccTCPfInterfaceRecv"..corCount] do
       local event = {os.pullEvent("modem_message")}

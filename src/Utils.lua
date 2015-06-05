@@ -88,7 +88,7 @@ timer = coroutine.wrap(function (countDirection,timerName,countTime)
     timerCount[timerName] = countTime
     while timerCount[timerName] > 0 do
       os.sleep(0.01)
-      timerCount[timerName] = countTime-0.01
+      timerCount[timerName] = timerCount[timerName]-0.01
       coroutine.yield()
     end
     timerCount[timerName] = nil

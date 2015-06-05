@@ -32,6 +32,7 @@ local sidesTable = {top = 1,bottom = 2,left = 3,right = 4,back = 5,front = 6}
 local modem = {}
 local intStatus = {}
 local channel = 20613
+local corCount = "0"
 
 function wrap()
 	for a = 1,6 do
@@ -67,12 +68,14 @@ end
 
 function receive(waitTime)
   if waitTime and type(waitTime) == "number" then
-    Utils.timer("-","ccTCPfInterfaceRecv",waitTime)
-    while timerCount["ccTCPfInterfaceRecv"] do 
+    Utils.timer("-","ccTCPfInterfaceRecv"..corCount,waitTime)
+    corCount = corCount+1
+    while Utils.timerCount["ccTCPfInterfaceRecv"..corCount] do
       local event = {os.pullEvent("modem_message")}
       if event[3] == channel and intStatus[event[2]] == 1 then
         return event[5], event[2]
       end
+      Utils.timer()
     end
   else
     while true do

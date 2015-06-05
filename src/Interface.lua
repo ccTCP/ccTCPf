@@ -48,13 +48,13 @@ end
 function open(int)
 	modem[int].open(channel)
   intStatus[int] = 1
-  Utils.log("log","Interface: "..int.."state changed to up")
+  Utils.log("log","L1: \""..int.."\" state changed to up")
 end
 
 function close(int)
 	modem[int].close(channel)
   intStatus[int] = 0
-  Utils.log("log","Interface: "..int.." state changed to administratively down")
+  Utils.log("log","L1: \""..int.."\" state changed to administratively down")
 end
 
 function send(data,int)

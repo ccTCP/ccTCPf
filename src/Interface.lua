@@ -68,14 +68,16 @@ end
 
 function receive(waitTime)
   if waitTime and type(waitTime) == "number" then
-    Utils.timer("ccTCPfInterfaceRecv"..corCount,"-",waitTime)
-    corCount = corCount+1
-    while Utils.timerCount["ccTCPfInterfaceRecv"..corCount] do
+    local timer = os.startTimer(waitTime)
+    while true do
+      local event, timerEvent = os.pullEvent("timer")
+      if timerEvent == timer then break end
       local event = {os.pullEvent("modem_message")}
       if event[3] == channel and intStatus[event[2]] == 1 then
         return event[5], event[2]
+      else
+        print("00")
       end
-      Utils.timer()
     end
   else
     while true do

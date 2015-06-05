@@ -26,8 +26,6 @@ THE SOFTWARE.
 debug = true
 config = {}
 config.dir = "ccTCP/"
-timerCount = {}
-
 
 function log(dest,msg,app)
 	local finalMsg = "["..os.day()..":"..os.time().."]"
@@ -82,33 +80,3 @@ function crc(msg)
 	end
 	return string.rep("0",5-#tostring(DecToBase(add,16)))..tostring(DecToBase(add,16))
 end
-
-timer = coroutine.wrap(function (countDirection,timerName,countTime)
-  if countDirection == "-" then
-    timerCount[timerName] = countTime
-    while timerCount[timerName] > 0 do
-      os.sleep(0.01)
-      timerCount[timerName] = timerCount[timerName]-0.01
-      coroutine.yield()
-    end
-    timerCount[timerName] = nil
-    return timerName..": Wait "..countTime.." seconds :Complete"
-  elseif countDirection == "+" then
-    if countTime and type(countTime) == "number" then
-      timerCount[timerName] = 0
-      while timerCount[timerName] < countTime do
-        os.sleep(0.01)
-        timerCount[timerName] = timerCount[timerName]+0.01
-        coroutine.yield()
-      end
-      timerCount[timerName] = nil
-      return timerName..": Wait "..countTime.." seconds :Complete"
-    else
-      while true do
-        os.sleep(0.01)
-        timerCount[timerName] = timerCount[timerName]+0.01
-        coroutine.yield()
-      end
-    end
-  else error("direction or name not specified: [+ or -] or [name]",2) end
-end)

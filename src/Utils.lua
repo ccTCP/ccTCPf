@@ -54,7 +54,7 @@ end
 
 function debugPrint(...)
 	if debug then
-		print("["..os.day()..":"..os.time().."]"...)
+		print("["..os.day()..":"..os.time().."]")
 	end
 end
 

@@ -46,12 +46,14 @@ function wrap()
 end
 
 function open(int)
+  int = int
 	modem[int].open(channel)
   intStatus[int] = 1
   Utils.log("log","L1: \""..int.."\" state changed to up")
 end
 
 function close(int)
+  int = int
 	modem[int].close(channel)
   intStatus[int] = 0
   Utils.log("log","L1: \""..int.."\" state changed to administratively down")
@@ -63,13 +65,23 @@ function send(data,int)
   end
 end
 
-function receive()
+function receive(waitTime)
+  if waitTime and type(waitTime) == "number" then
+    Utils.timer("-","ccTCPfInterfaceRecv",waitTime)
+    while timerCount["ccTCPfInterfaceRecv"] do 
+      local event = {os.pullEvent("modem_message")}
+      if event[3] == channel and intStatus[event[2]] == 1 then
+        return event[5], event[2]
+      end
+    end
+  else
     while true do
       local event = {os.pullEvent("modem_message")}
       if event[3] == channel and intStatus[event[2]] == 1 then
         return event[5], event[2]
       end
     end
+  end
 end
 
 wrap()

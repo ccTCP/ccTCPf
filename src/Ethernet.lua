@@ -34,6 +34,8 @@ local stndFrameTemp = {preamble = {100},type_len = {MTU = 1500,TTL = 255}}
 local dotQFrameTemp = {preamble = {200},type_len = {MTU = 1504,TTL = 255}}
 local MTU = stndFrame.type_len.MTU
 
+
+
 --Functions
 function createMac(side)
 	if not side then error("No side specified",2) end

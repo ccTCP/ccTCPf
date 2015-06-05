@@ -36,16 +36,18 @@ local MTU = stndFrame.type_len.MTU
 
 --Functions
 function createMac(side)
-	if not side then error("You have to specify a side",2) end
+	if not side then error("No side specified",2) end
 	side = tostring(side)
 	if sidesTable[side] then
 		local macBuffer = tostring(Utils.DecToBase(os.computerID() * 6 + sidesTable[side],16))
-		return string.rep("0",12-#macBuffer).. macBuffer
+    local MACaddr = string.rep("0",12-#macBuffer).. macBuffer
+    mac[side] = MACaddr
+		return MACaddr
 	end
 end
 
 function getMac(side,rtnType)
- 	if not side then error("You have to specify a side",2) end
+ 	if not side then error("No side specified",2) end
 	if not mac[side] then
 		mac[side] = createMac(side)
 	end

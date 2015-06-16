@@ -71,12 +71,13 @@ function receive(waitTime)
     local timer = os.startTimer(waitTime)
     while true do
       local event, timerEvent = os.pullEvent("timer")
-      if timerEvent == timer then break end
+      if timerEvent == timer then break else
       local event = {os.pullEvent("modem_message")}
       if event[3] == channel and intStatus[event[2]] == 1 then
         return event[5], event[2]
       else
         print("00")
+      end
       end
     end
   else

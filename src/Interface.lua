@@ -32,7 +32,6 @@ local sidesTable = {top = 1,bottom = 2,left = 3,right = 4,back = 5,front = 6}
 local modem = {}
 local intStatus = {}
 local channel = 20613
-local corCount = "0"
 
 function wrap()
 	for a = 1,6 do
@@ -48,6 +47,7 @@ end
 
 function open(int)
   int = int
+  if not modem[int] then error("L1: Interface: \""..int.."\" does not exist",2) end
 	modem[int].open(channel)
   intStatus[int] = 1
   Utils.log("log","L1: \""..int.."\" state changed to up")
@@ -55,6 +55,7 @@ end
 
 function close(int)
   int = int
+  if not modem[int] then error("L1: Interface: \""..int.."\" does not exist",2) end
 	modem[int].close(channel)
   intStatus[int] = 0
   Utils.log("log","L1: \""..int.."\" state changed to administratively down")
@@ -70,6 +71,7 @@ function receive(waitTime)
   if waitTime and type(waitTime) == "number" then
     local timer = os.startTimer(waitTime)
     while true do
+<<<<<<< HEAD
       local event, timerEvent = os.pullEvent("timer")
       if timerEvent == timer then break else
       local event = {os.pullEvent("modem_message")}

@@ -32,7 +32,7 @@ local stndFrame = {preamble = {100},type_len = {MTU = 1500,TTL = 255}}
 local dotQFrame = {preamble = {200},type_len = {MTU = 1504,TTL = 255}}
 local stndFrameTemp = {preamble = {100},type_len = {MTU = 1500,TTL = 255}}
 local dotQFrameTemp = {preamble = {200},type_len = {MTU = 1504,TTL = 255}}
-local MTU = stndFrame.type_len.MTU
+local MTU = stndFrame.type_len.MTU or dotQFrame.type_len.MTU
 
 
 
@@ -84,7 +84,7 @@ function receive(bNotCheckDest)
 						return frame:sub(25,-6)
 					end
 				else
-					print("Frame invalid")
+          print("Frame invalid")
 					--ask for the message to be resent
 					--ask for message identifier
 				end
@@ -113,23 +113,27 @@ function receive(bNotCheckDest)
 end
 
 function send(destination,data,int,option,vlan)
-	if not sidesTable[int] then error("The interface does not exist!",2) end
+	if not sidesTable[int] or Interface.intStatus == nil or Interface.intStatus == 0 then error("Invalid source interface, interface is down",2) end
 	if vlan then
    		dotQFrame.dstMac = destination
    		dotQFrame.srcMac = getMac(int)
    		dotQFrame.vlan = vlan
    		dotQFrame.data = data
-   		print(table.concat(dotQFrame))
-   		Interface.send(dotQFrame,int)
+   		local CdotQFrame = table.concat(dotQFrame)
+   		Interface.send(CdotQFrame,int)
    		dotQFrame = dotQFrameTemp
 	else
-		local msg = destination..getMac(int)..data..Utils.crc(destination..getMac(int)..data)
-   		Interface.send(msg,int)
+		stndFrame.dstMac = destination
+    stndFrame.srcMac = getMac(int)
+    stndFrame.data = data
+    local CstndFrame = table.concat(stndFrame)
+    Interface.send(CstndFrame,int)
+    stndFrame = stndFrameTemp
 	end
 end
 
 function altSend(destination,data,int,option)
-	--Frame structure: destination, sender, packetID, total#packets, the usual things
+	--Frame structure: dst, src, frame#, totalFrameCount, the usual things
 	if not sidesTable[int] then error("The interface does not exist!",2) end
 	local numPackets = math.ceil(#data/MTU)-1
 	local numBase256 = string.char(math.floor(numPackets/256))..string.char(((numPackets/256)-math.floor(numPackets/256))*256)

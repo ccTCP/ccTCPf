@@ -30,7 +30,7 @@ THE SOFTWARE.
 local sides = {"top","bottom","left","right","back","front"}
 local sidesTable = {top = 1,bottom = 2,left = 3,right = 4,back = 5,front = 6}
 local modem = {}
-local intStatus = {}
+intStatus = {}
 local channel = 20613
 
 function wrap()

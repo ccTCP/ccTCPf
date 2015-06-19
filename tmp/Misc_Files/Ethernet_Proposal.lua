@@ -32,6 +32,7 @@ function send(dst,interface,data,...)
   local option = (...)
   
   local options = {}
+  local options.names = {"vlan","ttl","mtu"}
   options.vlan = 0
   options.ttl = 0
   options.mtu = 0
@@ -49,7 +50,7 @@ function send(dst,interface,data,...)
         Interface.send(frame,interface)
         return true
       else
-        error("MTU of 1500 Exceeded by "..#frameBuffer.payload-1500 .." bytes",2)
+        error("MTU of 1500 Exceeded by "..#frameBuffer.payload - 1500 .." bytes",2)
       end
     end
     

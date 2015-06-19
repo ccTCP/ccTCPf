@@ -71,7 +71,6 @@ function receive(waitTime)
   if waitTime and type(waitTime) == "number" then
     local timer = os.startTimer(waitTime)
     while true do
-<<<<<<< HEAD
       local event, timerEvent = os.pullEvent("timer")
       if timerEvent == timer then break else
       local event = {os.pullEvent("modem_message")}

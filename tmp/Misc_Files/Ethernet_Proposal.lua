@@ -28,8 +28,8 @@ function getMac(side,rtnType)
     end
 end
 
-function send(dst,interface,data,option,...)
-  local optionArg = (...)
+function send(dst,interface,data,...)
+  local option = (...)
   
   local options = {}
   options.vlan = 0
@@ -46,12 +46,13 @@ function send(dst,interface,data,option,...)
       frameBuffer.fcs = crc
       local frame = table.concat(frameBuffer)
       Interface.send(frame,interface)
+      return true
     end
   end
 end
 
-function receive(option,...)
-  local optionArg = (...)
+function receive(...)
+  local option = (...)
   
   local options = {}
   options.time = 0

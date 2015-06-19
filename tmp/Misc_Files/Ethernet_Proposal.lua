@@ -45,9 +45,14 @@ function send(dst,interface,data,...)
       local crc = table.concat(frameBuffer)
       frameBuffer.fcs = crc
       local frame = table.concat(frameBuffer)
-      Interface.send(frame,interface)
-      return true
+      if not #frameBuffer.payload > 1500 then
+        Interface.send(frame,interface)
+        return true
+      else
+        error("MTU of 1500 Exceeded by "..#frameBuffer.payload-1500 .." bytes",2)
+      end
     end
+    
   end
 end
 

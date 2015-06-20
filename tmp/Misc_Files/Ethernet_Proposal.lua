@@ -34,26 +34,30 @@ function send(dst,interface,data,...)
   local options = {}
   local options.names = {"vlan","ttl","mtu"}
   options.vlan = 0
-  options.ttl = 0
-  options.mtu = 0
+  options.ttl = 255
+  options.mtu = 1500
+  
+  local frameCount = math.ceil(#data/options.mtu)
+  local segment = {}
   
   if not sidesTable[interface] or Interface.intStatus == 0 or Interface.intStatus == nil then 
     if not option then
-      local frameBuffer = stndFrame
-      frameBuffer.dstMac = dst
-      frameBuffer.srcMac = getMac(interface)
-      frameBuffer.payload = data
-      local crc = table.concat(frameBuffer)
-      frameBuffer.fcs = crc
-      local frame = table.concat(frameBuffer)
-      if not #frameBuffer.payload > 1500 then
-        Interface.send(frame,interface)
-        return true
-      else
-        error("MTU of 1500 Exceeded by "..#frameBuffer.payload - 1500 .." bytes",2)
+      for a=0, frameCount do
+        b = a+1
+        segment[b] = data:sub((options.mtu*a)+1,options.mtu*(a+1))
+        local frameBuffer = stndFrame
+        frameBuffer.dstMac = dst
+        frameBuffer.srcMac = getMac(interface)
+        frameBuffer.payload = segment[b]
+        local crc = table.concat(frameBuffer)
+        frameBuffer.fcs = crc
+        local frame = table.concat(frameBuffer)
+        if #frameBuffer.payload <= 1500 then
+          Interface.send(frame,interface)
+          return true
+        end
       end
     end
-    
   end
 end
 

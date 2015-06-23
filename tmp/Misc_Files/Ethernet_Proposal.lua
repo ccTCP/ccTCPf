@@ -1,7 +1,6 @@
 local sidesTable = {top = 1,bottom = 2,left = 3,right = 4,back = 5,front = 6}
 local mac = {}
-local stndFrame = {preamble = {100},type_len = {MTU = 1500,TTL = 255}}
-local dotQFrame = {preamble = {200},type_len = {MTU = 1504,TTL = 255}}
+local Frame = {"00000000","000000","000000","00","","0000"}
 
 function createMac(side)
   if not side then error("No side given",2) end
@@ -32,10 +31,13 @@ function send(dst,interface,data,...)
   local option = (...)
   
   local options = {}
-  local options.names = {"vlan","ttl","mtu"}
+  options.etherType = {ip = 0x0800, arp = 0x0806, rarp = 0x8035, lldp = 0x88CC, dot1q = 0x8100}
   options.vlan = 0
   options.ttl = 255
-  options.mtu = 1500
+  options.mtu = 0x05DC --[[sets frame to enet v2 and mtu to 1500 bytes]]
+  options.srcMac = 0
+  
+  
   
   local frameCount = math.ceil(#data/options.mtu)
   local segment = {}
@@ -45,16 +47,7 @@ function send(dst,interface,data,...)
       for a=0, frameCount do
         b = a+1
         segment[b] = data:sub((options.mtu*a)+1,options.mtu*(a+1))
-        local frameBuffer = stndFrame
-        frameBuffer.dstMac = dst
-        frameBuffer.srcMac = getMac(interface)
-        frameBuffer.payload = segment[b]
-        local crc = table.concat(frameBuffer)
-        frameBuffer.fcs = crc
-        local frame = table.concat(frameBuffer)
-        if #frameBuffer.payload <= 1500 then
-          Interface.send(frame,interface)
-          return true
+        
         end
       end
     end
@@ -69,9 +62,13 @@ function receive(...)
   options.interface = {--[["interface" = recvTime]]}
   options.capture = {--[["interface" = captureTime]]}
   
+  --Spawn coroutine to run receive loop
+  
   if not sidesTable[interface] or Interface.intStatus == 0 or Interface.intStatus == nil then 
     if not option then
-      
+      --Capture handles from coroutine and perform data parsing / manipulation
+      --Kill coroutine
+      --Return
     end
   end
 end

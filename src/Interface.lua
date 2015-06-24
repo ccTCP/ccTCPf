@@ -83,9 +83,11 @@ function receive(waitTime)
     end
   else
     while true do
-      local event = {os.pullEvent("modem_message")}
-      if event[3] == channel and intStatus[event[2]] == 1 then
-        return event[5], event[2]
+      local event = {os.pullEvent()}
+      if event[2] == "modem_message" then
+        if event[4] == channel and intStatus[event[3]] == 1 then
+          return event[6], event[3]
+        end
       end
     end
   end

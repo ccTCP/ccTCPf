@@ -46,7 +46,7 @@ function wrap()
 end
 
 function open(int)
-  int = int
+  Utils.assert(type(int) == "number","Faggit",2)
   if not modem[int] then error("L1: Interface: \""..int.."\" does not exist",2) end
 	modem[int].open(channel)
   intStatus[int] = 1
@@ -54,7 +54,7 @@ function open(int)
 end
 
 function close(int)
-  int = int
+  
   if not modem[int] then error("L1: Interface: \""..int.."\" does not exist",2) end
 	modem[int].close(channel)
   intStatus[int] = 0

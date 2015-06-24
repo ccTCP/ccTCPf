@@ -80,3 +80,8 @@ function crc(msg)
 	end
 	return string.rep("0",5-#tostring(DecToBase(add,16)))..tostring(DecToBase(add,16))
 end
+
+function assert(test,errorMsg,lvl)
+	if not type(lvl) == "number" then error("You faggot, we need a fucking number!",2) end
+	if not test then error(errorMsg,lvl+1) end
+end

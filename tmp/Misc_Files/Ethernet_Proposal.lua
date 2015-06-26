@@ -29,10 +29,41 @@ function getMac(side,rtnType)
 end
 
 function receive()
-  frame = {Interface.receive()}
+  local frame, int = Interface.receive()
+  frame = textutils.unserialize(frame)
+  
+  
   
 end
 
 function send()
   
 end
+
+--[[
+function t()
+return {one = 1,two = 2}, "three"
+end
+frame, int = t()
+print(frame.one)
+
+------------------
+
+function send()
+  local frame = {dst = 0, src =  1}
+  Interface.send(textutils.serialize(frame),int)
+end
+
+function recv()
+  while true do
+    local e = {os.pullEvent()}
+    if e and e[2] == "modem_message" and e[6] then
+      local frame = textutils.unserialize(e[6])
+      --do my stuff from here
+    end
+  end
+end
+
+--]]
+
+

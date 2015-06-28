@@ -26,6 +26,7 @@ THE SOFTWARE.
 debug = true
 config = {}
 config.dir = "ccTCP/"
+config.l2-interComm = "l2-interComm"
 
 function log(dest,msg,app)
 	local finalMsg = "["..os.day()..":"..os.time().."]"

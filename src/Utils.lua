@@ -72,7 +72,8 @@ function toDec(val,base)
 	return tonumber(val,base)
 end
 
-function crc(msg)
+function crc(data)
+  local msg = tostring(data)
 	local buffer = {msg:byte(1,#msg)}
 	local add = 0
 	for i,v in pairs(buffer) do

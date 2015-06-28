@@ -1,4 +1,5 @@
 local sidesTable = {top = 1,bottom = 2,left = 3,right = 4,back = 5,front = 6}
+local sides = {"top","bottom","left","right","back","front"}
 local Bind = {--[[    "interface" = localAddr                  ]]}
 local CAM = {--[[    "interface" = {remote device(s) addr}    ]]}
 local Frame = {}
@@ -29,41 +30,43 @@ function getMac(side,rtnType)
 end
 
 function receive()
-  local frame, int = Interface.receive()
-  frame = textutils.unserialize(frame)
-  
-  
-  
-end
 
-function send()
-  
-end
 
---[[
-function t()
-return {one = 1,two = 2}, "three"
-end
-frame, int = t()
-print(frame.one)
-
-------------------
-
-function send()
-  local frame = {dst = 0, src =  1}
-  Interface.send(textutils.serialize(frame),int)
-end
-
-function recv()
-  while true do
-    local e = {os.pullEvent()}
-    if e and e[2] == "modem_message" and e[6] then
-      local frame = textutils.unserialize(e[6])
-      --do my stuff from here
+  local function check()
+    local frame, int = Interface.receive()
+    local fields = {"dstMac","srcMac","type_len","payload","fcs"}
+    for a=1,5 do 
+      if not frame.fields[a] then Utils.debugLog("log","Frame Dropped: Incomplete Frame, Missing field: "..fields[a]) end
+    end
+    local recvFCS = frame.fcs
+    frame.fcs = nil
+    if not recvFCS == Utils.crc(frame) then Utils.debugLog("log","Frame Dropped: Invalid FCS") else
+      if not frame.dstMac == getMac[int] then
+        for a=1,6 do
+          if frame.dstMac == getMac[sides[a]] then
+            local file = fs.open(config.dir..config.interComm,"a")
+            file.writeLine(frame)
+            file.close()
+          end
+          return nil
+        end
+      else
+        return true, frame.payload
+      end
     end
   end
+  --Simple Recv
+  while true do
+    local checkPassed, data = check() 
+    if checkPassed then 
+      return true, data
+    end
+  end
+  
+  
 end
 
---]]
+function send(dst,etherType,data,vlan)
+end
 
 

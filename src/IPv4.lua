@@ -116,7 +116,7 @@ hostAddr#
     vars.hostAddr = {}
 
   --Calculate Addresses
-  --[[
+
   local b = 1
   local c = 1
   repeat
@@ -136,7 +136,7 @@ hostAddr#
     b=b+1
     c=1
   until b == 5
-]]
+
   local d = 1
   local e = 1
   repeat

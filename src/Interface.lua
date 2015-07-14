@@ -32,6 +32,7 @@ local sidesTable = {top = 1,bottom = 2,left = 3,right = 4,back = 5,front = 6}
 local modem = {}
 intStatus = {}
 local channel = 20613
+msgBuffer = {}
 
 function wrap()
 	for a = 1,6 do
@@ -46,7 +47,6 @@ function wrap()
 end
 
 function open(int)
-  Utils.assert(type(int) == "number","Faggit",2)
   if not modem[int] then error("L1: Interface: \""..int.."\" does not exist",2) end
 	modem[int].open(channel)
   intStatus[int] = 1
@@ -63,27 +63,15 @@ end
 function send(data,int)
   if intStatus[int] == 0 or intStatus[int] == nil then return error("Invalid source interface, interface is down",2) else 
     modem[int].transmit(channel,channel,data)
+    return true
   end
 end
 
-function receive(waitTime)
-  if waitTime and type(waitTime) == "number" then
-    local timer = os.startTimer(waitTime)
-    while true do
-      local event, eventName, timerEvent = os.pullEvent()
-      if eventName == "timer" and timerEvent == timer then break else
-        local event = {os.pullEvent()}
-        if event and event[2] == "modem_message" and event[3] == channel and intStatus[event[2]] == 1 and event[5] then
-          return event[5], event[2]
-        end
-      end
-    end
-  else
-    while true do
-      local event = {os.pullEvent()}
-      if event and event[2] == "modem_message" and event[4] == channel and intStatus[event[3]] == 1 and event[6] then
-        return event[6], event[3]
-      end
+function receive()
+  while true do
+    local event = {os.pullEvent()}
+    if event and event[2] == "modem_message" and event[4] == channel and intStatus[event[3]] == 1 and event[6] then
+      msgBuffer[#msgBuffer+1] = {event[6], event[3]}
     end
   end
 end

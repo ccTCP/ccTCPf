@@ -26,7 +26,6 @@ THE SOFTWARE.
 debug = true
 config = {}
 config.dir = "ccTCP/"
-config.l2-interComm = "l2-interComm"
 
 function log(dest,msg,app)
 	local finalMsg = "["..os.day()..":"..os.time().."]"
@@ -84,6 +83,25 @@ function crc(data)
 end
 
 function assert(test,errorMsg,lvl)
-	if not type(lvl) == "number" then error("You faggot, we need a fucking number!",2) end
+	if not type(lvl) == "number" then error(lvl..' is not a number',2) end
 	if not test then error(errorMsg,lvl+1) end
+end
+
+--Backup os.pullEventRaw
+local pullEventRaw_Backup = os.pullEventRaw
+--Create coroutines
+local coReceive = coroutine.create(Interface.receive)
+--Override os.pullEventRaw()
+function os.pullEventRaw(sFilter)
+  while true do
+    local event = {pullEventRaw_Backup()}
+    --Define internal coroutines to check for
+    if coroutine.status(coReceive) == "suspended" then
+      coroutine.resume(coReceive, unpack(event))
+    end
+    --Return any events
+    if sFilter == event[1] or not sFilter then
+      return unpack(event)
+    end
+  end
 end

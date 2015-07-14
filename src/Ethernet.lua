@@ -28,13 +28,6 @@ THE SOFTWARE.
 --Variables
 local sidesTable = {top = 1,bottom = 2,left = 3,right = 4,back = 5,front = 6}
 local mac = {}
-local stndFrame = {preamble = {100},type_len = {MTU = 1500,TTL = 255}}
-local dotQFrame = {preamble = {200},type_len = {MTU = 1504,TTL = 255}}
-local stndFrameTemp = {preamble = {100},type_len = {MTU = 1500,TTL = 255}}
-local dotQFrameTemp = {preamble = {200},type_len = {MTU = 1504,TTL = 255}}
-local MTU = stndFrame.type_len.MTU or dotQFrame.type_len.MTU
-
-
 
 --Functions
 function createMac(side)
@@ -62,61 +55,16 @@ function getMac(side,rtnType)
     end
 end
 
-function altSend(destination,data,int,option)
-	--Frame structure: dst, src, frame#, totalFrameCount, the usual things
-	if not sidesTable[int] then error("The interface does not exist!",2) end
-	local numPackets = math.ceil(#data/MTU)-1
-	local numBase256 = string.char(math.floor(numPackets/256))..string.char(((numPackets/256)-math.floor(numPackets/256))*256)
-	for i=0,numPackets do
-		local id = string.char(math.floor(i/256))..string.char(((i/256)-math.floor(i/256))*256)
-		local msg = destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1))..Utils.crc( destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1)))
-		Utils.log(Utils.crc( destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1)))..":"..tostring(#Utils.crc( destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1)))))
-		print(Utils.crc( destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1)))..":"..tostring(#Utils.crc( destination..getMac(int)..id..numBase256..data:sub((MTU*i)+1,MTU*(i+1)))))
-		os.queueEvent("lol")
-		os.pullEvent()
-		Interface.send(msg,int)
-	end
+function send()
+
 end
 
-function altReceive()
-	local first = false
-	local count = 0
-	local number = 0
-	local received = {}
-	while true do
-		frame, int = Interface.receive()
-		Utils.log("log",frame)
-		local checksum, destMac = frame:sub(-5,-1), frame:sub(1,12)
-		local sourceMac, payloadLen = frame:sub(13,24), string.len(frame:sub(29,-6))
-		local id = ((frame:sub(25,25)):byte(1,1)*256)+(frame:sub(26,26)):byte(1,1)
-		print("ID: "..tostring(id))
-		local totalNum = ((frame:sub(27,27)):byte(1,1)*256)+(frame:sub(28,28)):byte(1,1)
-		print("#: "..tostring(totalNum))
-		print(type(totalNum))
-		if destMac == getMac(int) then
-			Utils.log("log","Macs match")
-			Utils.debugPrint("Macs match")
-			if checksum == Utils.crc(frame:sub(1,-6)) then
-				Utils.log("log","CRC matches")
-				Utils.debugPrint("CRC matches")
-				if payloadLen > MTU then
-					return error("MTU exceeded. Payload: "..payloadLen.." > MTU: "..MTU,2)
-				else
-					if not first then first = true  number = totalNum end
-					received[id] = frame:sub(28,-6)
-					Utils.log("Msg",frame:sub(28,-6))
-					if number == count then
-						local toRet = ""
-						for i=0,#received do
-							toRet = toRet..received[i]
-						end
-						return toRet
-					end
-					count = count + 1
-				end
-			else
-				print("Frame invalid")
-			end
-		end
-	end
+function receive()
+  if not Interface.msgBuffer then return error("No messages in buffer",2)
+  local r = Interface.msgBuffer[1]
+  local frame = r[1]
+  local interface = r[2]
+  
+  table.remove(Interface.msgBuffer,1)
+  return 
 end

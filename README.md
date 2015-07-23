@@ -42,5 +42,5 @@ __All Devices__:
 
 * CmdPwnd[CCNAX]:       &lt;cmdpwnd.github@gmail.com&gt; (Active)
 * Creator:       &lt;creator.github@gmail.com&gt; (Active)
-* RainbowDashDC: &lt;rainbowdashdc@pony.so&gt; (Active)
+* Jared Allard &lt;jaredallard@outlook.com&gt; (Semi-Active)
 * InDieTasten:   &lt;&gt;(Left Project 5/18/2015)

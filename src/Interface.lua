@@ -34,7 +34,7 @@ intStatus = {}
 local channel = 20613
 msgBuffer = {}
 
-function wrap()
+function detectInt()
 	for a = 1,6 do
 		if peripheral.isPresent(sides[a]) then
 			if peripheral.getType(sides[a]) == "wireless_modem" or peripheral.getType(sides[a]) == "modem" then
@@ -46,14 +46,14 @@ function wrap()
 	end
 end
 
-function open(int)
+function noshut(int)
   if not modem[int] then error("L1: Interface: \""..int.."\" does not exist",2) end
 	modem[int].open(channel)
   intStatus[int] = 1
   Utils.log("log","L1: \""..int.."\" state changed to up")
 end
 
-function close(int)
+function shut(int)
   if not modem[int] then error("L1: Interface: \""..int.."\" does not exist",2) end
 	modem[int].close(channel)
   intStatus[int] = 0
@@ -76,4 +76,4 @@ function receive()
   end
 end
 
-wrap()
+detectInt()

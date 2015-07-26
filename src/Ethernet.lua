@@ -60,7 +60,7 @@ function send()
 end
 
 function receive()
-  if not Interface.msgBuffer then return error("No messages in buffer",2)
+  if not Interface.msgBuffer then return Utils.log("log","No messages in buffer")
   local r = Interface.msgBuffer[1]
   local frame = r[1]
   local interface = r[2]

@@ -90,14 +90,14 @@ end
 --Backup os.pullEventRaw
 local pullEventRaw_Backup = os.pullEventRaw
 --Create coroutines
-local coReceive = coroutine.create(Interface.receive)
+local coMsgBuffer = coroutine.create(Interface.receive)
 --Override os.pullEventRaw()
 function os.pullEventRaw(sFilter)
   while true do
     local event = {pullEventRaw_Backup()}
     --Define internal coroutines to check for
-    if coroutine.status(coReceive) == "suspended" then
-      coroutine.resume(coReceive, unpack(event))
+    if coroutine.status(coMsgBuffer) == "suspended" then
+      coroutine.resume(coMsgBuffer, unpack(event))
     end
     --Return any events
     if sFilter == event[1] or not sFilter then

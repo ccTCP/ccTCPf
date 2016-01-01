@@ -73,7 +73,7 @@ function receive(...)
 		for i=1,#interface do
 			if not tInterfaceWrap[interface[i]].ingressQueue[1] then i=i+1 else
 				t[interface[i]] = tInterfaceWrap[i].ingressQueue[1]
-				table.remove(tInterfaceWrap[i].ingressQueue,1)
+				table.remove(tInterfaceWrap[interface[i]].ingressQueue,1)
 			end
 		end
 		if #t < 1 then return else

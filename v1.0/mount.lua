@@ -1,4 +1,3 @@
-
 function loadAPI( _sPath )
     local sName = fs.getName( _sPath )
     local tEnv = {}

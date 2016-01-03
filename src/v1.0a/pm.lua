@@ -15,7 +15,7 @@ function cctcpReceive() --This will evolve to become the core of the switching e
 				table.insert(interface.tInterfaceWrap[i].ingressQueue,event[6])
 			end
 		end
-		coroutine.yield()
+		coroutine.yield(event)
 	end
 end
 

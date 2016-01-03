@@ -16,6 +16,4 @@ rename "%appdata%\.minecraft\saves\%world%\computer\%id%\interface.lua" interfac
 rename "%appdata%\.minecraft\saves\%world%\computer\%id%\pm.lua" pm >nul
 echo Done.
 echo.
-pause
-ping ::1 -n 1 >nul
 @echo on

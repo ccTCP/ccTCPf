@@ -1,5 +1,6 @@
 --processManager.lua
 
+
 function _init_()
 	if not _PM_RUN_STATUS then
 		_PM_RUN_STATUS=1
@@ -36,3 +37,23 @@ function os.pullEventRaw(sFilter)
 end
 
 _init_()
+
+
+--[[Overwrite]]--
+
+local rawMessages = {}
+
+
+local oldPullEventRaw = os.pullEventRaw
+local unpack = unpack or table.unpack
+
+function os.pullEventRaw(filter)
+	local event = {oldPullEventRaw()}
+	if event[1] == "modem_message" then
+
+	end
+
+	if event[1] == filter or filter == nil then
+		return unpack(event)
+	end
+end

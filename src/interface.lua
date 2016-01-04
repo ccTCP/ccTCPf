@@ -17,7 +17,7 @@ function wrap()
 	local peripherals = peripheral.getNames()
 	--print(#peripherals)
 	for i=1,#peripherals do
-		if not (peripheral.getType(peripherals[i])=="modem") then --print('index: '..peripherals[i]..' skipped') ; i=i+1 else
+		if not (peripheral.getType(peripherals[i])=="modem") then --[[print('index: '..peripherals[i]..' skipped') ;]] i=i+1 else
 			tInterface.count = tInterface.count+1
 			local index = peripherals[i]
 			--print('index: '..index)
@@ -50,7 +50,6 @@ function shut(interface)
 end
 
 function noshut(interface)
-	print(interface)
 	tInterface[interface].state = 'up'
 	return tInterface[interface].wrap.open(channel)
 end

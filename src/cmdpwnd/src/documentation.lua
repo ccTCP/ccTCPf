@@ -35,7 +35,7 @@
 
 --]]
 
---[[physical.lua L1
+--[=[physical.lua L1
 	Controls physical network Interface Cards [NICs]
 	
 	NICs connect to the physical network
@@ -70,10 +70,8 @@
 		[[send(data,int)
 			
 		]]
-	]]
-
-			
---]]
+	]]		
+--]=]
 
 --[[Error Codes
 		Format: 0x000000

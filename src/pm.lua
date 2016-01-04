@@ -9,19 +9,22 @@ function _init_()
 	end
 end
 
-function cctcpReceive() --This will evolve to become the core of the switching engine and route processor. Receive is currently the top level init function of this daemon.
+function cctcpReceive(...) --This will evolve to become the core of the switching engine and route processor. Receive is currently the top level init function of this daemon.
+	tArgs = {...}
+	print('tArgs: '..unpack(tArgs))
 	while true do
 		--print('inside')
 		--print('wrapNum = '..interface.tInterface.count)
 		for i=1,interface.tInterface.count do
 			local event = {os.pullEventRaw()}
 			--print('pullinside')
+			print('pull: '..unpack(event))
 			if event and event[2] == "modem_message" and event[4] == interface.channel and interface.tInterface[event[3]].state == 'up' and event[6] then
 				--print('msg')
 				table.insert(interface.tInterface[i].ingressQueue,event[6])
 			end
 		end
-		coroutine.yield(event)
+		coroutine.yield()
 	end
 end
 

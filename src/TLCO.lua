@@ -1,5 +1,7 @@
 --[[
   A TLCO for CCTCP by Creator
+  
+  proposal [cmdpwnd]: If you are going to intercept the events and redirect them to the correct coroutine. What about firing custom 'cctcp' events? would look nice and be easier to source for troubleshooting. Not a requirement. Just recommendation
 --]]
 
 local oldPrintError = _G.printError
